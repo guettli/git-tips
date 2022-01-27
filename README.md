@@ -40,3 +40,42 @@ I don't care much. In the past there have been endless discussion about this.
 Avoid long running branches and then it matters even less.
 
 
+
+## Learn "git bisect"
+
+"git bisect" is a great tool in conjunction with unit tests. It is easy
+to find the commit, which introduced an error. Unfortunately, it is not a
+one-liner for now. You can use it like this:
+
+``` {.sourceCode .shell}
+user@host> git bisect start HEAD HEAD~10 
+
+
+user@host> git bisect run py.test -k test_something
+ ...
+c8bed9b56861ea626833637e11a216555d7e7414 is the first bad commit
+Author: ...
+```
+
+But if your pull-requests get tested before they get merged, then you
+hardly need "git bisect".
+
+## `git diff` of pull-request
+
+Imagine you work on a branch which is a pull-request.
+
+You want to see all changes of your pull-request.
+
+What was changed on the branch since the branch was created?
+
+```
+git diff main...
+```
+
+Unfortunately this does not show your local changes, which are not committed yet.
+
+To see them, too:
+
+```
+git diff $(git merge-base main HEAD)
+```
