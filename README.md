@@ -7,6 +7,7 @@ not sorted by date.
 
 `git branch --sort=-committerdate` this lists the branches with the most recent branches on top.
 
+I have an alias in my .bashrc: `alias gbs="git branch --sort=-committerdate"`
 
 ## Switch branches
 
