@@ -33,12 +33,6 @@ But you want to work in a feature-branch before first. Then you can `git stash` 
 Then you checkout or create the branch you want to work on. After that you `git stash pop` and
 take your changes out of your backpack. 
 
-## rebase vs merge
-
-I don't care much. In the past there have been endless discussion about this.
-
-Avoid long running branches and then it matters even less.
-
 
 
 ## Learn "git bisect"
@@ -80,6 +74,30 @@ To see them, too:
 git diff $(git merge-base main HEAD)
 ```
 
+## Find removed code
+
+You are looking for a variable/method/class name which was in the code once, but which
+is no longer in the current code.
+
+Which commit removed or renamed it?
+
+`git log -S my_name`
+
+## Find string in all branches
+
+If you know a co-worker introduced a variable/method/class, but
+it is not in your code, and `git log -S my_name` does not help,
+then you can use `git log --all -S my_name`. This will search in 
+all branches.
+
+## Find branch which contains a commit
+
+You found a commit (maybe via `git log -S ...`) and now you
+want to know which branches contain this commit:
+
+`git branch --contains 684d9cc74d2`
+
+
 ## I don't care for the git tree
 
 Many developers like to investigate the git tree.
@@ -87,6 +105,13 @@ Many developers like to investigate the git tree.
 I almost never do this.
 
 If you avoid long running git branches, then it is even less important.
+
+## rebase vs merge
+
+I don't care much. In the past there have been endless discussion about this.
+
+Avoid long running branches and then it matters even less.
+
 
 # Related
 
