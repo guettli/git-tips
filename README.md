@@ -80,6 +80,13 @@ To see them, too:
 git diff $(git merge-base main HEAD)
 ```
 
+## I don't care for the git tree
+
+Many developers like to investigate the git tree.
+
+I almost never do this.
+
+If you avoid long running git branches, then it is even less important.
 
 # Related
 
