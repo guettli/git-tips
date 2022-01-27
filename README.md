@@ -79,3 +79,14 @@ To see them, too:
 ```
 git diff $(git merge-base main HEAD)
 ```
+
+
+# Related
+
+* [Güttli's opinionated Programming Guidelines](https://github.com/guettli/programming-guidelines)
+* [Güttli's opinionated Python Tips](https://github.com/guettli/python-tips)
+* [Güttli working-out-loud](https://github.com/guettli/wol)
+
+
+
+
