@@ -96,7 +96,7 @@ I don't care much. In the past there have been endless discussion about this.
 Avoid long running branches and then it matters even less.
 
 
-## Learn "git bisect"
+## git bisect
 
 "git bisect" is a great tool in conjunction with unit tests. It is easy
 to find the commit, which introduced an error. Unfortunately, it is not a
@@ -112,7 +112,7 @@ c8bed9b56861ea626833637e11a216555d7e7414 is the first bad commit
 Author: ...
 ```
 
-But if your pull-requests get tested before they get merged, then you
+But if your pull-requests get tested before they get merged (Continous-Integration), then you
 hardly need "git bisect".
 
 # Related
