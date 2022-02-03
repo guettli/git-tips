@@ -152,7 +152,7 @@ If you want to use `grep` on all files which get tracked by git, you can use
 this:
 
 ```
-git ls-files | xargs grep -P '...'
+git ls-files | xargs -d'\n' grep -P '...'
 ```
 
 # Related
