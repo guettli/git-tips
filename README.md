@@ -115,6 +115,34 @@ Author: ...
 But if your pull-requests get tested before they get merged (Continous-Integration), then you
 hardly need "git bisect".
 
+## Merge several commits
+
+Sometimes you want to merge small commits into one bigger commit. For example if you worked on a branch
+which was not merged to main yet.
+
+But be careful. This re-writes the git history. This means other people developing on this branch
+will get trouble if you do this.
+
+But if this branch is your Merge-Request (aka Pull-Request), and you know nobody else uses this branch,
+then it is fine to do so:
+
+```
+git rebase -i
+```
+This asks you for every commit what you want to do.
+
+More about rewriting the git history: [Git Book: Rewriting History](https://git-scm.com/book/en/v2/Git-Tools-Rewriting-History)
+
+But you can't push the branch with the re-written history. You need
+to use:
+
+```
+git push --force-with-lease
+```
+
+But overall: Don't do this to often. This is not very productive (compared to writing new code,
+fixing old bugs or writing more detailed tests)
+
 # Related
 
 * [Güttli's opinionated Programming Guidelines](https://github.com/guettli/programming-guidelines)
