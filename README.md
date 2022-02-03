@@ -143,6 +143,18 @@ git push --force-with-lease
 But overall: Don't do this to often. This is not very productive (compared to writing new code,
 fixing old bugs or writing more detailed tests)
 
+# List all files
+
+Git directories often contain a lot of auto-created files. For example
+files created during running tests.
+
+If you want to use `grep` on all files which get tracked by git, you can use
+this:
+
+```
+git ls-files | xargs grep -P '...'
+```
+
 # Related
 
 * [Güttli's opinionated Programming Guidelines](https://github.com/guettli/programming-guidelines)
