@@ -155,6 +155,17 @@ this:
 git ls-files | xargs -d'\n' grep -P '...'
 ```
 
+# Architecture: Keep Backend and Frontend in one git Repo
+
+If you split your code into two repos. One for the backend code, one for the frontend code,
+then you will make your life harder. The problem is that often a frontend change needs a corresponding
+change in the backend. Syncing the deployment of both changes is usualy easier if you have one
+repo.
+
+BTW, many big companies use a gigantic monorepo for all their code. [Wikipedia Monorepo](https://en.wikipedia.org/wiki/Monorepo)
+
+
+
 # Related
 
 * [Güttli's opinionated Programming Guidelines](https://github.com/guettli/programming-guidelines)
