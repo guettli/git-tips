@@ -164,7 +164,15 @@ repo.
 
 BTW, many big companies use a gigantic monorepo for all their code. [Wikipedia Monorepo](https://en.wikipedia.org/wiki/Monorepo)
 
+# Autocompletion
 
+If you configured auto-completion, then you can easy checkout a branch if you know the first characters of the branch name:
+
+```
+git checkout foo[TAB] 
+ --->        foobar
+```
+ 
 
 # Related
 
