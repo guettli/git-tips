@@ -173,6 +173,15 @@ git checkout foo[TAB]
  --->        foobar
 ```
  
+# Show current branch (for loop)
+
+show the current branch name: `git rev-parse --abbrev-ref HEAD`
+
+Example: you are in a directory containing many git repos. You want to know which one is not on the "main" branch:
+
+```
+for repo in *; do (cd $repo; echo $repo $(git rev-parse --abbrev-ref HEAD) ); done| grep -v main
+```
 
 # Related
 
