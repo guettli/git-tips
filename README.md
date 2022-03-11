@@ -115,6 +115,14 @@ Author: ...
 But if your pull-requests get tested before they get merged (Continous-Integration), then you
 hardly need "git bisect".
 
+## git bisect for lazy people
+
+```
+git log --oneline | cut -d' ' -f1| while read hash; do echo; echo =============== ; echo    $hash; echo =============== ; git checkout $hash; YOUR COMMAND TO CHECK IF TESTS PASS; if [ $? -eq 0 ]; then echo this is good: $hash; break; fi; done
+```
+
+
+
 ## Merge several commits
 
 Sometimes you want to merge small commits into one bigger commit. For example if you worked on a branch
