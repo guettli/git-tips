@@ -64,18 +64,18 @@ is no longer in the current code.
 
 Which commit removed or renamed it?
 
-`git log -S my_name`
+`git log -G my_name`
 
 ## Find string in all branches
 
 If you know a co-worker introduced a variable/method/class, but
-it is not in your code, and `git log -S my_name` does not help,
-then you can use `git log --all -S my_name`. This will search in 
+it is not in your code, and `git log -G my_name` does not help,
+then you can use `git log --all -G my_name`. This will search in 
 all branches.
 
 ## Find branch which contains a commit
 
-You found a commit (maybe via `git log -S ...`) and now you
+You found a commit (maybe via `git log -G ...`) and now you
 want to know which branches contain this commit:
 
 `git branch --contains 684d9cc74d2`
