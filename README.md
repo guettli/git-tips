@@ -135,8 +135,11 @@ But if this branch is your Merge-Request (aka Pull-Request), and you know nobody
 then it is fine to do so:
 
 ```
-git rebase -i
+git rebase -i HEAD~N
 ```
+
+N is the number of commits you want to work on.
+
 This asks you for every commit what you want to do.
 
 More about rewriting the git history: [Git Book: Rewriting History](https://git-scm.com/book/en/v2/Git-Tools-Rewriting-History)
