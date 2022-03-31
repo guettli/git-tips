@@ -193,6 +193,13 @@ Example: you are in a directory containing many git repos. You want to know whic
 ```
 for repo in *; do (cd $repo; echo $repo $(git rev-parse --abbrev-ref HEAD) ); done| grep -v main
 ```
+# Empty commit
+
+Most web-GUIs of CI-systems have a "retry" button. But sometimes this does not work, or you don't want to leave your context.
+
+```
+git commit --allow-empty -m "Trigger CI"
+```
 
 # Related
 
