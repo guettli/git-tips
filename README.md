@@ -83,13 +83,15 @@ want to know which branches contain this commit:
 `git branch --contains 684d9cc74d2`
 
 
-## I don't care for the git tree
+## I don't care much for the git tree
 
 Many developers like to investigate the git tree.
 
 I almost never do this.
 
 If you avoid long running git branches, then it is even less important.
+
+The native GUI `gitk` gives you a graphical overview.
 
 ## rebase vs merge
 
