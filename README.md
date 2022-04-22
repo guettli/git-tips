@@ -25,6 +25,8 @@ I do 95% of my git actions on the command-line. But "history for selection" is s
 It is a feature of my IDE (PyCharm). I can select a region in the code and then I can
 have a look at the history of this region.
 
+On the command-line you can use `git blame some-file`
+
 ## git stash
 
 `git stash` is like a backpack. 
