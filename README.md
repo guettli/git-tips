@@ -207,6 +207,23 @@ Most web-GUIs of CI-systems have a "retry" button. But sometimes this does not w
 git commit --allow-empty -m "Trigger CI"
 ```
 
+
+# side by side diff
+
+Imagine you want to see an old commit side-by-side.
+
+You could do `git show 8d73caed`, but this would not be side-by-side.
+
+```
+git difftool 8d73caed~1 8d73caed
+```
+
+~1 means "commit before 8d73caed"
+
+--> launches [meld](https://meldmerge.org/), if installed, or your
+prefered diff-tool. See [git-difftool](https://git-scm.com/docs/git-difftool)
+
+
 # Related
 
 * [Güttli's opinionated Programming Guidelines](https://github.com/guettli/programming-guidelines)
