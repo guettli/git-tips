@@ -223,6 +223,14 @@ git difftool 8d73caed~1 8d73caed
 --> launches [meld](https://meldmerge.org/), if installed, or your
 prefered diff-tool. See [git-difftool](https://git-scm.com/docs/git-difftool)
 
+# Resolve, take theirs
+
+You merged a branch into your branch, and now you have conflicts. You want
+to discard your change, and take their changes:
+
+```
+git checkout --theirs path/to/file
+```
 
 # Related
 
