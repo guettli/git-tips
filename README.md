@@ -145,7 +145,7 @@ git rebase -i HEAD~N
 ```
 
 N is the number of commits you want to work on. If you are working on a branch which was branched of "main", and you want to
-rebase all your changes: `git rebase -i main`
+rebase all your changes: `git rebase -i $(git merge-base main @)`
 
 Interactive rebase asks you for every commit what you want to do.
 
