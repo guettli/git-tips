@@ -144,9 +144,10 @@ then it is fine to do so:
 git rebase -i HEAD~N
 ```
 
-N is the number of commits you want to work on.
+N is the number of commits you want to work on. If you are working on a branch which was branched of "main", and you want to
+rebase all your changes: `git rebase -i main`
 
-This asks you for every commit what you want to do.
+Interactive rebase asks you for every commit what you want to do.
 
 More about rewriting the git history: [Git Book: Rewriting History](https://git-scm.com/book/en/v2/Git-Tools-Rewriting-History)
 
