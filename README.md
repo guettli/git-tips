@@ -233,6 +233,19 @@ to discard your change, and take their changes:
 git checkout --theirs path/to/file
 ```
 
+# git log over many git repos
+
+You have a directory called "all-repos". This contains many git-repos. Now you want to use `git log -G FooBar` over all git repos. And you
+want to sort the result by the timestamp of the commit.
+
+A bit ugly, but works:
+
+```
+for repo in *; do (cd $repo; echo $repo; git log -G FooBar --pretty=format:"%ad %h in $repo by %an, %s" --date=iso --since=2020-01-01  >> /tmp/git-log-FooBar; echo >> /tmp/git-log-FooBar  ) ; done; sort -rn /tmp/git-log-FooBar | head
+```
+
+
+
 # Related
 
 * [Güttli's opinionated Programming Guidelines](https://github.com/guettli/programming-guidelines)
