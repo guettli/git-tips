@@ -241,8 +241,10 @@ want to sort the result by the timestamp of the commit.
 A bit ugly, but works:
 
 ```
-for repo in *; do (cd $repo; echo $repo; git log -G FooBar --pretty=format:"%ad %h in $repo by %an, %s" --date=iso --since=2020-01-01  >> /tmp/git-log-FooBar; echo >> /tmp/git-log-FooBar  ) ; done; sort -rn /tmp/git-log-FooBar | head
+for repo in *; do (cd $repo; git log -G FooBar --pretty=format:"%ad %h in $repo by %an, %s" --date=iso --since=2022-05-01; echo) ; done | sort -r| head
 ```
+
+Unfortunately git does not terminate the output with a newline, so that the "echo" is needed.
 
 
 
