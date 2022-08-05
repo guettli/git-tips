@@ -13,9 +13,9 @@ I have an alias in my .bashrc: `alias gbs="git branch --sort=-committerdate"`
 
 Often I want to switch between two branches. This is handy:
 
-`git checkout -`
+`git switch -`
 
-This switches to the previous branch. And to get back ... again `git checkout -`.
+This switches to the previous branch. And to get back ... again `git switch -`.
 
 Like `cd -` in the bash shell.
 
@@ -33,7 +33,7 @@ On the command-line you can use `git blame some-file`
 
 Example: You started to code. Then you realize (before you commit) that you work on the master branch.
 But you want to work in a feature-branch before first. Then you can `git stash` your uncommitted changes.
-Then you checkout or create the branch you want to work on. After that you `git stash pop` and
+Then you switch or create the branch you want to work on. After that you `git stash pop` and
 take your changes out of your backpack. 
 
 
@@ -124,7 +124,7 @@ hardly need "git bisect".
 ## git bisect for lazy people
 
 ```
-git log --oneline | cut -d' ' -f1| while read hash; do echo; echo =============== ; echo    $hash; echo =============== ; git checkout $hash; YOUR COMMAND TO CHECK IF TESTS PASS; if [ $? -eq 0 ]; then echo this is good: $hash; break; fi; done
+git log --oneline | cut -d' ' -f1| while read hash; do echo; echo =============== ; echo    $hash; echo =============== ; git switch $hash; YOUR COMMAND TO CHECK IF TESTS PASS; if [ $? -eq 0 ]; then echo this is good: $hash; break; fi; done
 ```
 
 
@@ -196,10 +196,10 @@ BTW, many big companies use a gigantic monorepo for all their code. [Wikipedia M
 
 # Autocompletion
 
-If you configured auto-completion, then you can easy checkout a branch if you know the first characters of the branch name:
+If you configured auto-completion, then you can easy switch a branch if you know the first characters of the branch name:
 
 ```
-git checkout foo[TAB] 
+git switch foo[TAB] 
  --->        foobar
 ```
  
