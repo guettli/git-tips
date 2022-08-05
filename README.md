@@ -173,6 +173,18 @@ this:
 git ls-files | xargs -d'\n' grep -P '...'
 ```
 
+You can give `ls-files` a glob expression. This matches the whole filename (including the parent directories).
+
+Imagine you have a directory containing many git repos, and there are files in `REPO/foo/test_project_bar/settings.py`, you
+can use grep like this:
+
+```
+for repo in *; do (cd $repo; git ls-files '*test_project*settings.py' |xargs  -r -d'\n' grep RECAP ); done
+```
+
+Don't forget the `*` before "test_project".
+
+
 # Architecture: Keep Backend and Frontend in one git Repo
 
 If you split your code into two repos. One for the backend code, one for the frontend code,
