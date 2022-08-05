@@ -256,9 +256,6 @@ A bit ugly, but works:
 for repo in *; do (cd $repo; git log -G FooBar --pretty="%ad %h in $repo by %an, %s" --date=iso --since=2022-05-01) ; done | sort -r| head
 ```
 
-Unfortunately git does not terminate the output with a newline, so that the "echo" is needed.
-
-
 
 # Related
 
