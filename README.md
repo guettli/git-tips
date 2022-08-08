@@ -256,6 +256,18 @@ A bit ugly, but works:
 for repo in *; do (cd $repo; git log -G FooBar --pretty="%ad %h in $repo by %an, %s" --date=iso --since=2022-05-01) ; done | sort -r| head
 ```
 
+# show change os merge commit
+
+This shows no changes for merge commits:
+```
+git show <commit-hash>
+```
+
+Use:
+````
+git show -m <commit-hash>
+```
+The output of above command has several parts. For each parent commit one part.
 
 # Related
 
