@@ -129,7 +129,7 @@ git log --oneline | cut -d' ' -f1| while read hash; do echo; echo ==============
 
 
 
-## Merge several commits
+## Merge several commits into one commit
 
 Sometimes you want to merge small commits into one bigger commit. For example if you worked on a branch
 which was not merged to main yet.
@@ -160,6 +160,28 @@ git push --force-with-lease
 
 But overall: Don't do this to often. This is not very productive (compared to writing new code,
 fixing old bugs or writing more detailed tests)
+
+# Change a git branch "inplace"
+
+Imagine you developed your changes on a branch called "feature-foo". 
+This branch was created from branch "feature-base".
+
+Requirements change, and now you need to merge your changes into the main branch,
+but not the changes from branch "feature-base".
+
+You could create a new branch, but since the central git-UI (github/gitlab) already references
+"feature-foo", you want to change the branch "inplace". 
+
+This creates the patches in a directory:
+```
+git switch feature-foo
+git format-patch feature-base -o ~/tmp/foo-patches
+```
+
+```
+git reset --hard origin/main
+patch -p0 < ~/tmp/foo-patches/000... (files one by one)
+```
 
 # List all files
 
