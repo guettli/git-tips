@@ -183,6 +183,13 @@ git reset --hard origin/main
 patch -p0 < ~/tmp/foo-patches/000... (files one by one)
 ```
 
+# Apply difference between two branches on a third branch
+
+The tip /Change a git branch "inplace"/ uses external patches.
+
+This can be used to [Apply difference between two branches on a third branch](https://stackoverflow.com/questions/73279330)
+
+
 # List all files
 
 Git directories often contain a lot of auto-created files. For example
