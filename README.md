@@ -9,6 +9,16 @@ not sorted by date.
 
 I have an alias in my .bashrc: `alias gbs="git branch --sort=-committerdate"`
 
+## checkout --> switch+restore
+
+In the past `git checkout` was used for different use-cases.
+
+I think it is time to use the new commands: 
+
+`git switch` to switch to a different branch
+
+`git restore` to restore files
+
 ## Switch branches
 
 Often I want to switch between two branches. This is handy:
@@ -18,6 +28,7 @@ Often I want to switch between two branches. This is handy:
 This switches to the previous branch. And to get back ... again `git switch -`.
 
 Like `cd -` in the bash shell.
+
 
 ## History for selection
 
@@ -271,7 +282,7 @@ You merged a branch into your branch, and now you have conflicts. You want
 to discard your change, and take their changes:
 
 ```
-git checkout --theirs path/to/file
+git restore --theirs path/to/file
 ```
 
 # git log over many git repos
