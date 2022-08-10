@@ -285,6 +285,11 @@ to discard your change, and take their changes:
 git restore --theirs path/to/file
 ```
 
+# After resolving conflict: git diff HEAD~1
+
+After resolving a conflict by hand, `git diff HEAD~1` shows the file compared
+to the previous version. Somehow `git diff` shows something else.
+
 # git log over many git repos
 
 You have a directory called "all-repos". This contains many git-repos. Now you want to use `git log -G FooBar` over all git repos. And you
