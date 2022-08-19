@@ -313,7 +313,7 @@ relax and create a copy of your git repo before you execute command which
 make you feel uncomfortable.
 
 
-# show change os merge commit
+# show change of merge commit
 
 This shows no changes for merge commits:
 ```
