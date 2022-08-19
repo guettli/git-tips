@@ -321,7 +321,7 @@ git show <commit-hash>
 ```
 
 Use:
-````
+```
 git show -m <commit-hash>
 ```
 The output of above command has several parts. For each parent commit one part.
