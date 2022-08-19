@@ -301,6 +301,18 @@ A bit ugly, but works:
 for repo in *; do (cd $repo; git log -G FooBar --pretty="%ad %h in $repo by %an, %s" --date=iso --since=2022-05-01) ; done | sort -r| head
 ```
 
+# Think outside the box
+
+Your local git repo is just a simple directory. Sometimes it is easier to just use `cp -a my-repo my-repo2` to create
+a copy of your git repo. 
+
+Now you can checkout branch1 in one git repo, and branch2 in the second git repo.
+
+Especialy if you are new to git, and unsure what will happen. Then
+relax and create a copy of your git repo before you execute command which
+make you feel uncomfortable.
+
+
 # show change os merge commit
 
 This shows no changes for merge commits:
