@@ -312,6 +312,27 @@ Especialy if you are new to git, and unsure what will happen. Then
 relax and create a copy of your git repo before you execute command which
 make you feel uncomfortable.
 
+# Merge-tool (Meld)
+
+I like [Meld](https://meldmerge.org/), which is a visual diff and merge tool.
+
+Imagine I changed several parts in a file. Now a realize that some parts are good, and should
+stay. And some parts should get removed again.
+
+I am on a feature-branch which was created from "main".
+
+```
+# Create a copy of the file
+cp my-dir/my-file.xyz ~/tmp/
+
+# restore the file to the original version
+git restore -s main my-dir/my-file.xyz
+
+meld my-dir/my-file.xyz ~/tmp/my-file.xyz
+```
+
+Now Meld opens and I can easily choose which parts I want to take into my branch, and which parts I don't need.
+
 
 # show change of merge commit
 
