@@ -219,7 +219,7 @@ Imagine you have a directory containing many git repos, and there are files in `
 can use grep like this:
 
 ```
-for repo in *; do (cd $repo; git ls-files '*test_project*settings.py' |xargs  -r -d'\n' grep RECAP ); done
+for repo in *; do (cd "$repo"; git ls-files '*test_project*settings.py' |xargs  -r -d'\n' grep RECAP ); done
 ```
 
 Don't forget the `*` before "test_project".
@@ -250,7 +250,7 @@ show the current branch name: `git rev-parse --abbrev-ref HEAD`
 Example: you are in a directory containing many git repos. You want to know which one is not on the "main" branch:
 
 ```
-for repo in *; do (cd $repo; echo $repo $(git rev-parse --abbrev-ref HEAD) ); done| grep -v main
+for repo in *; do (cd "$repo"; echo $repo $(git rev-parse --abbrev-ref HEAD) ); done| grep -v main
 ```
 # Empty commit
 
@@ -298,7 +298,7 @@ want to sort the result by the timestamp of the commit.
 A bit ugly, but works:
 
 ```
-for repo in *; do (cd $repo; git log -G FooBar --pretty="%ad %h in $repo by %an, %s" --date=iso --since=2022-05-01) ; done | sort -r| head
+for repo in *; do (cd "$repo"; git log -G FooBar --pretty="%ad %h in $repo by %an, %s" --date=iso --since=2022-05-01) ; done | sort -r| head
 ```
 
 # Think outside the box
