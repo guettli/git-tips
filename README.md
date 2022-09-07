@@ -104,7 +104,8 @@ I almost never do this.
 
 If you avoid long running git branches, then it is even less important.
 
-The native GUI `gitk` gives you a graphical overview.
+The native GUI `gitk --all` gives you a graphical overview. Don't ask me why the `--all`
+parameter is not the default. Without it, you won't see other branches.
 
 ## rebase vs merge
 
