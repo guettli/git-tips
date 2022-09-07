@@ -21,6 +21,8 @@ I think it is time to use the new commands:
 
 `git restore` to restore files
 
+I avoid `git checkout`.
+
 ## Switch branches
 
 Often I want to switch between two branches. This is handy:
