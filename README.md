@@ -9,6 +9,8 @@ not sorted by date.
 
 I have an alias in my .bashrc: `alias gbs="git branch --sort=-committerdate"`
 
+The alias is able to show remote branches, too: `gbs -a`
+
 ## checkout --> switch+restore
 
 In the past `git checkout` was used for different use-cases.
