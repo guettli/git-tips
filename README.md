@@ -138,9 +138,14 @@ But if your pull-requests get tested before they get merged (Continous-Integrati
 hardly need "git bisect".
 
 ## git bisect for lazy people
+This walks the git history down from the current commit to the older commits.
 
 ```
-git log --oneline | cut -d' ' -f1| while read hash; do echo; echo =============== ; echo    $hash; echo =============== ; git switch $hash; YOUR COMMAND TO CHECK IF TESTS PASS; if [ $? -eq 0 ]; then echo this is good: $hash; break; fi; done
+git log --oneline | cut -d' ' -f1| while read hash; \
+    do echo; echo =============== ; echo    $hash; echo =============== ; \
+    git switch $hash; \
+    YOUR COMMAND TO CHECK IF TESTS PASS; \
+    if [ $? -eq 0 ]; then echo this is good (the commit above this introduced the bug): $hash; break; fi; done
 ```
 
 
