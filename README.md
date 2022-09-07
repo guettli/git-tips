@@ -33,7 +33,7 @@ Like `cd -` in the bash shell.
 ## History for selection
 
 I do 95% of my git actions on the command-line. But "history for selection" is super cool.
-It is a feature of my IDE (PyCharm). I can select a region in the code and then I can
+It is a feature of IntelliJ-based IDEs. You can select a region in the code and then you can
 have a look at the history of this region.
 
 On the command-line you can use `git blame some-file`
