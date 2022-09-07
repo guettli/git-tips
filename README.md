@@ -220,7 +220,7 @@ If you want to use `grep` on all files which get tracked by git, you can use
 this:
 
 ```
-git ls-files | xargs -d'\n' grep -P '...'
+git ls-files | xargs -r -d'\n' grep -P '...'
 ```
 
 You can give `ls-files` a glob expression. This matches the whole filename (including the parent directories).
@@ -229,7 +229,7 @@ Imagine you have a directory containing many git repos, and there are files in `
 can use grep like this:
 
 ```
-for repo in *; do (cd "$repo"; git ls-files '*test_project*settings.py' |xargs  -r -d'\n' grep RECAP ); done
+for repo in *; do (cd "$repo"; git ls-files '*test_project*settings.py' |xargs -r -d'\n' grep RECAP ); done
 ```
 
 Don't forget the `*` before "test_project".
