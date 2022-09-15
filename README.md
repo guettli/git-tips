@@ -357,6 +357,15 @@ git show -m <commit-hash>
 ```
 The output of above command has several parts. For each parent commit one part.
 
+# Git config
+
+```
+git config --global diff.colormoved dimmed-zebra
+```
+
+Source: [How to color moved code in Git](https://dev.to/cloudx/how-to-color-the-moved-code-in-git-10ei#dimming-the-moved-code)
+
+
 # Related
 
 * [Güttli's opinionated Programming Guidelines](https://github.com/guettli/programming-guidelines)
