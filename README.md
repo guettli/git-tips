@@ -302,13 +302,15 @@ to the previous version. Somehow `git diff` shows something else.
 
 # git log over many git repos
 
-You have a directory called "all-repos". This contains many git-repos. Now you want to use `git log -G FooBar` over all git repos. And you
+You have a directory called "all-repos". This contains many git-repos. Now you want to use `git log -G FooBar` over all git repos. You only
+want to search for commits which where done during the last 8 months and you
 want to sort the result by the timestamp of the commit.
+
 
 A bit ugly, but works:
 
 ```
-for repo in *; do (cd "$repo"; git log -G FooBar --pretty="%ad %h in $repo by %an, %s" --date=iso --since=2022-05-01) ; done | sort -r| head
+for repo in *; do (cd "$repo"; git log -G FooBar --pretty="%ad %h in $repo by %an, %s" --date=iso --since=$(date -d "8 months ago" --iso)) ; done | sort -r| head
 ```
 
 # Think outside the box
