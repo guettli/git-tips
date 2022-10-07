@@ -367,6 +367,33 @@ git config --global diff.colormoved dimmed-zebra
 
 Source: [How to color moved code in Git](https://dev.to/cloudx/how-to-color-the-moved-code-in-git-10ei#dimming-the-moved-code)
 
+# revert a merge commit
+
+You want to revert this merge commit:
+
+```
+commit 67181091ac5069fc78cc2e79cc5641ee43516eee (HEAD -> main, origin/main, origin/HEAD)
+Merge: 90d4ee9c 14f8548e
+Author: Some One <someone@example.com>
+
+    Merge branch 'super-feature' into 'main'
+```
+
+A merge commit has two parents: 90d4ee9c and 14f8548e. You need to tell git which parent you want to choose.
+
+If you want to keep 90d4ee9c you use `-m 1`. If you want to keep 14f8548e, you use `-m 2`.
+
+This following line will keep 14f8548e and drop 90d4ee9c.
+
+```
+git revert 67181091 -m 2
+```
+
+Related [Stackoverflow Answer](https://stackoverflow.com/a/7100005/633961)
+
+
+
+
 
 # Related
 
