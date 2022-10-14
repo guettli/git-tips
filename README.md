@@ -392,6 +392,11 @@ git revert 67181091 -m 2
 Related [Stackoverflow Answer](https://stackoverflow.com/a/7100005/633961)
 
 
+# cherry-pick -n
+
+`git cherry-pick ...` creates a new commit automatically. Sometimes you don't want only some changes of the original commit.
+
+You can use the option `-n` to only get the changes. Now you can modify the changes and commit manually.
 
 
 
