@@ -166,8 +166,7 @@ git log --oneline | cut -d' ' -f1 | while read hash;
         echo "this is good (the commit above this introduced the bug): $hash"
         break
     fi
-	   cd - > /dev/null
-	   git restore .
+    git restore .
     sleep 1
 done
 git switch $BRANCH
