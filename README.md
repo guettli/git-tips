@@ -162,7 +162,7 @@ git log --oneline | cut -d' ' -f1 | while read hash;
     echo    $hash;
     git switch -d $hash
     DO_SOMETHING
-	   if YOUR_COMMAND; then
+    if YOUR_COMMAND; then
         echo "this is good (the commit above this introduced the bug): $hash"
         break
     fi
