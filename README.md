@@ -138,7 +138,10 @@ But if your pull-requests get tested before they get merged (Continous-Integrati
 hardly need "git bisect".
 
 ## git bisect for lazy people
+
 This walks the git history down from the current commit to the older commits.
+
+Copy and adapt for your needs.
 
 ```
 #!/bin/bash
