@@ -141,14 +141,41 @@ hardly need "git bisect".
 This walks the git history down from the current commit to the older commits.
 
 ```
-git log --oneline | cut -d' ' -f1| while read hash; \
-    do echo; echo =============== ; echo    $hash; echo =============== ; \
-    git switch $hash; \
-    YOUR COMMAND TO CHECK IF TESTS PASS; \
-    if [ $? -eq 0 ]; then echo this is good (the commit above this introduced the bug): $hash; break; fi; done
+#!/bin/bash
+
+BRANCH=your_branch
+
+set -euxo pipefail
+log_report() {
+    echo "Error on line $1"
+} 
+trap 'log_report $LINENO' ERR
+
+
+git switch $BRANCH
+git log --oneline | cut -d' ' -f1 | while read hash; 
+    do
+    echo
+    echo    $hash;
+    git switch -d $hash
+    DO_SOMETHING
+	   if YOUR_COMMAND; then
+        echo "this is good (the commit above this introduced the bug): $hash"
+        break
+    fi
+	   cd - > /dev/null
+	   git restore .
+    sleep 1
+done
+git switch $BRANCH
 ```
 
+You need to adapt these parts:
 
+* BRANCH
+* DO_SOMETHING
+* YOUR_COMMAND: Should return `0` if everything is fine.
+* remove "sleep 1", if you need to walk back a lot of commits.
 
 ## Merge several commits into one commit
 
