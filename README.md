@@ -452,7 +452,7 @@ git show-branch -a 2>/dev/null \
 | perl -ple 's/\[[A-Za-z]+-\d+\][^\]]+$//; s/^.*\[([^~^\]]+).*$/$1/'
 ```
 
-
+Source: https://stackoverflow.com/a/74314172/633961
 
 # Related
 
