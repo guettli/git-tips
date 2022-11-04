@@ -427,6 +427,31 @@ Related [Stackoverflow Answer](https://stackoverflow.com/a/7100005/633961)
 
 You can use the option `-n` to only get the changes. Now you can modify the changes and commit manually.
 
+# parent branch
+
+Unfortunately it is not straight forward to find the branch name of the parent branch.
+
+Example:
+
+You created "feature-1" by branching off "main".
+
+Then you create "feature-2" by branching off "feature-1" (because the second feature depends 
+on a change which was done in feature-1).
+
+Then for some weeks different things are more urgent, and now you are unsure
+if you branched off main or from an other branch.
+
+I stored this in my local script directory
+```
+#!/bin/bash
+# parent-branch.sh
+git show-branch -a 2>/dev/null \
+| grep '\*' \
+| grep -v `git rev-parse --abbrev-ref HEAD` \
+| head -n1 \
+| perl -ple 's/\[[A-Za-z]+-\d+\][^\]]+$//; s/^.*\[([^~^\]]+).*$/$1/'
+```
+
 
 
 # Related
