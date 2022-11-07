@@ -461,7 +461,7 @@ After some months there are too many old branches. Time to clean up.
 This deletes all branches which are completely merged. This only deletes local branches.
 
 ```
-❯ git branch --merged | grep -Pv '^\s*(\*|master|main|staging)' | xargs git branch -d
+❯ git branch --merged | grep -Pv '^\s*(\*|master|main|staging)' | xargs -r git branch -d
 ```
 
 Unfortunately there will be several branches left which are not merged yet. No script can
