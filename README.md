@@ -454,6 +454,21 @@ git show-branch -a 2>/dev/null \
 
 Source: https://stackoverflow.com/a/74314172/633961
 
+# delete merged branches
+
+After some months there are too many old branches. Time to clean up.
+
+This deletes all branches which are completely merged. This only deletes local branches.
+
+```
+❯ git branch --merged | grep -Pv '^\s*(\*|master|main|staging)' | xargs git branch -d
+```
+
+Unfortunately there will be several branches left which are not merged yet. No script can
+decide if they can be deleted or not.
+
+Use `branch -rd` to delete the remote branch, too.
+
 # Related
 
 * [Güttli's opinionated Programming Guidelines](https://github.com/guettli/programming-guidelines)
