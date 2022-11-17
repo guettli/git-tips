@@ -339,7 +339,7 @@ want to sort the result by the timestamp of the commit.
 A bit ugly, but works:
 
 ```
-for repo in *; do (cd "$repo"; git log -G FooBar --pretty="%ad %h in $repo by %an, %s" --date=iso --since=$(date -d "8 months ago" --iso)) ; done | sort -r| head
+for repo in *; do (cd "$repo"; git log -G FooBar --all --pretty="%ad %h in $repo by %an, %s" --date=iso --since=$(date -d "8 months ago" --iso)) ; done | sort -r| head
 ```
 
 # Think outside the box
