@@ -74,6 +74,24 @@ To see them, too:
 git diff $(git merge-base main HEAD)
 ```
 
+## Don't be afraid to to delete your local branch
+
+Imagine you did some strange things on your local branch "foo",
+and all you want is to get back to the "origin/foo" branch.
+
+That's easy:
+
+```
+# create a backup of your current local branch
+> git switch -c backup-of-foo
+
+# delete the local copy of the branch.
+> git branch -D foo
+
+# switch to "origin/foo"
+> git switch foo
+```
+
 ## Find removed code
 
 You are looking for a variable/method/class name which was in the code once, but which
