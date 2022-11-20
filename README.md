@@ -487,6 +487,13 @@ decide if they can be deleted or not.
 
 Use `branch -rd` to delete the remote branch, too.
 
+# tig: text based GUI for git
+
+[tig](https://jonas.github.io/tig/) is a text based GUI for git.
+
+Much better than `git log` on the command line.
+
+
 # Related
 
 * [Güttli's opinionated Programming Guidelines](https://github.com/guettli/programming-guidelines)
