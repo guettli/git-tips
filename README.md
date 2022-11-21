@@ -493,6 +493,11 @@ Use `branch -rd` to delete the remote branch, too.
 
 Much better than `git log` on the command line.
 
+# ripgrep: recursive grep which respects .gitignore
+
+[ripgrep](https://github.com/BurntSushi/ripgrep): recursive grep which respects .gitignore
+
+Handy, if there are huge directories in you git-repo which you usualy want to skip.
 
 # Related
 
