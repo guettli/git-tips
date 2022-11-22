@@ -281,6 +281,16 @@ for repo in *; do (cd "$repo"; git ls-files '*test_project*settings.py' |xargs -
 
 Don't forget the `*` before "test_project".
 
+If you add a comment at the end, you can easily find this command in your shell history (for example via `ctrl-r` (backward search)):
+
+```
+(cd ~/projects/; for repo in * ; do (
+     cd "$repo"; git ls-files '*.my-extension' |
+     xargs -r -d'\n' grep -P 'my-term' ) ;
+ done) # grep over all repos
+```
+
+Once you executed this once, you can easily get back to this line by ctrl-r (search backwards in history) and then type “over all”
 
 # Architecture: Keep Backend and Frontend in one git Repo
 
