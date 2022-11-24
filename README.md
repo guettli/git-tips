@@ -11,6 +11,8 @@ I have an alias in my .bashrc: `alias gbs="git branch --sort=-committerdate"`
 
 The alias is able to show remote branches, too: `gbs -a`
 
+Or you can use [tig](https://jonas.github.io/tig/): `tig refs` then cursor-down, then C for "checkout".
+
 ## checkout --> switch+restore
 
 In the past `git checkout` was used for different use-cases.
