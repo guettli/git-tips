@@ -511,6 +511,25 @@ Much better than `git log` on the command line.
 
 Handy, if there are huge directories in you git-repo which you usualy want to skip.
 
+# Undelete a branch
+
+Imagine you accidentally deleted a branch:
+
+```
+❯ git branch -D foo-branch 
+Deleted branch foo-branch (was d885d38).
+```
+
+Oh my god! What have I done?
+
+Relax, you can easily create the branch again.
+
+```
+❯ git switch -d d885d38
+❯ git switch -c foo-branch
+```
+
+
 # Related
 
 * [Güttli's opinionated Programming Guidelines](https://github.com/guettli/programming-guidelines)
