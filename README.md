@@ -432,6 +432,12 @@ git config --global diff.colormoved dimmed-zebra
 
 Source: [How to color moved code in Git](https://dev.to/cloudx/how-to-color-the-moved-code-in-git-10ei#dimming-the-moved-code)
 
+```
+git config --global diff.colormovedws "allow-indentation-change"
+```
+
+Source: [How to color moved code in Git](https://dev.to/cloudx/how-to-color-the-moved-code-in-git-10ei#ignoring-the-white-spaces)
+
 # revert a merge commit
 
 You want to revert this merge commit:
