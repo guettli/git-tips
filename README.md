@@ -541,6 +541,12 @@ Relax, you can easily create the branch again.
 ❯ git switch -c foo-branch
 ```
 
+# git subrepo
+
+If you want to include code of a third-party into your git repo, you can "vendor" it via [git subrepo](https://github.com/ingydotnet/git-subrepo).
+
+This is a handy tool, which in most cases better than git-submodules or git-subtree.
+
 
 # Related
 
