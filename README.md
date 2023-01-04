@@ -541,6 +541,35 @@ Relax, you can easily create the branch again.
 ❯ git switch -c foo-branch
 ```
 
+# How to Use Multiple Git Configs on One Computer
+
+Create two gitconfig files:
+
+```
+cd $HOME
+cp .gitconfig .gitconfig-personal
+mv .gitconfig .gitconfig-work
+```
+
+```
+# change email address to your address for work related mails
+
+vi .gitconfig-work
+```
+
+vi .gitconfig
+```
+[includeIf "gitdir:~/personal/"]
+  path = ~/.gitconfig-personal
+[includeIf "gitdir:~/work/"]
+  path = ~/.gitconfig-work
+```
+
+
+Source: [How to Use Multiple Git Configs on One Computer](https://www.freecodecamp.org/news/how-to-handle-multiple-git-configurations-in-one-machine/)
+
+
+
 # git subrepo
 
 If you want to include code of a third-party into your git repo, you can "vendor" it via [git subrepo](https://github.com/ingydotnet/git-subrepo).
