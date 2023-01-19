@@ -92,6 +92,8 @@ git switch -c foobar-backup
 git switch -
 ```
 
+You could use [tagging](https://git-scm.com/book/en/v2/Git-Basics-Tagging) for this, too. But I prefer above solution.
+
 ## Don't be afraid to to delete your local branch
 
 Imagine you did some strange things on your local branch "foo",
