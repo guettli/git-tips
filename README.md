@@ -82,6 +82,16 @@ To see them, too:
 git diff $(git merge-base main HEAD)
 ```
 
+## Create a backup of a branch
+
+```
+# Create a new branch
+git switch -c foobar-backup
+
+# Switch back from "foobar-backup" to the previous branch
+git switch -
+```
+
 ## Don't be afraid to to delete your local branch
 
 Imagine you did some strange things on your local branch "foo",
