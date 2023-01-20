@@ -155,6 +155,15 @@ I don't care much. In the past there have been endless discussion about this.
 
 Avoid long running branches and then it matters even less.
 
+## force the local branch to be like the remote
+
+```
+# make a copy of the current state
+git switch -c backup; git switch -
+
+git fetch
+git reset --hard origin/your-branch-name
+```
 
 ## git bisect
 
