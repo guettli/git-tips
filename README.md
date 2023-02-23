@@ -590,6 +590,24 @@ vi .gitconfig
 Source: [How to Use Multiple Git Configs on One Computer](https://www.freecodecamp.org/news/how-to-handle-multiple-git-configurations-in-one-machine/)
 
 
+# pre-commit.com
+
+I use [pre-commit.com](//pre-commit.com).
+
+For example I use this to avoid committing, if there are untracked files:
+
+```
+# See https://pre-commit.com/hooks.html for more hooks
+repos:
+  - repo: local
+    hooks:
+      - id: no-untracked-files-in-git
+        name: no-untracked-files-in-git
+        language: system
+        entry: "bash -c 'files=$(git ls-files --exclude-standard --others); echo $files; test -z \"$files\"'"
+```
+
+Related: https://stackoverflow.com/a/75543767/633961
 
 # git subrepo
 
