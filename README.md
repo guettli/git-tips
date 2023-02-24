@@ -589,6 +589,27 @@ vi .gitconfig
 
 Source: [How to Use Multiple Git Configs on One Computer](https://www.freecodecamp.org/news/how-to-handle-multiple-git-configurations-in-one-machine/)
 
+# vscode for selective application of changes
+
+Imagine you want to take some changes of a different branch into your code.
+
+If you care about the lines of code, not the commits, then you can use the following way to get the changed lines into your code.
+
+Switch to your branch (the branch which should get updated).
+
+In the vscode choose Branches, then "Compare with HEAD".
+
+Then there is a new tab at the bottom: "Search & Compare".
+
+Expand the part "N files changed".
+
+Then choose the first file and use "Open Changes with Working File".
+
+Now you can easily fetch the lines which you want to get into your code. 
+
+You see a splitted windows. Your code is on the right side.
+
+In the middle are arrow symbols to pick changes.
 
 # pre-commit.com
 
