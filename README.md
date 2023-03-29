@@ -296,8 +296,15 @@ If you want to use `grep` on all files which get tracked by git, you can use
 this:
 
 ```
-git ls-files | xargs -r -d'\n' grep -P '...'
+git ls-files | grep -vP 'exclude1|exclude2' | xargs -r -d'\n' grep -nP '...'
 ```
+
+In detail:
+
+* `git ls-files` list all files which are tracked in git.
+* `grep -vP 'exclude1|exclude2'` (optional): exclude some lines from the stream of file names.
+* `xargs -r -d'\n'` for every line in stdin stream do ...
+* `grep -nP '...'` search in the file for a pattern. The `-n` displays the line number. This is handy if you start the command from the terminal of your IDE, then you can click on the output (like `myfile.go:42`) to jump to the matching line in your IDE.
 
 You can give `ls-files` a glob expression. This matches the whole filename (including the parent directories).
 
