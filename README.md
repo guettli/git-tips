@@ -7,9 +7,7 @@ not sorted by date.
 
 `git branch --sort=-committerdate` this lists the branches with the most recent branches on top.
 
-I have an alias in my .bashrc: `alias gbs="git branch --sort=-committerdate"`
-
-The alias is able to show remote branches, too: `gbs -a`
+I have an alias in my .bashrc: `alias gbs="git branch --sort=-committerdate | fzf --header Checkout | tr '*' ' ' | xargs git checkout`
 
 Or you can use [tig](https://jonas.github.io/tig/): `tig refs` then cursor-down, then C for "checkout".
 
