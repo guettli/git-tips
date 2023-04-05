@@ -641,6 +641,10 @@ If you want to include code of a third-party into your git repo, you can "vendor
 
 This is a handy tool, which in most cases better than git-submodules or git-subtree.
 
+# Github: Tab width: 4
+
+If you use tabs for indentation (for example in Golang), then you might want to
+change the default tab width from 8 to 4: https://github.com/settings/appearance
 
 # Related
 
