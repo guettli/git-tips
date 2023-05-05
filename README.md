@@ -569,6 +569,11 @@ Relax, you can easily create the branch again.
 
 # How to Use Multiple Git Configs on One Computer
 
+Image you up to now had only a personal Github account.
+
+Now you want to have two (on one computer): one for your personal
+stuff and one for work related stuff. 
+
 Create two gitconfig files:
 
 ```
