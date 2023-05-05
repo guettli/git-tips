@@ -278,7 +278,7 @@ This can be used to [Apply difference between two branches on a third branch](ht
 # List all files
 
 Git directories often contain a lot of auto-created files. For example
-files created during running tests.
+files created by tests.
 
 If you want to use `grep` on all files which get tracked by git, you can use
 this:
