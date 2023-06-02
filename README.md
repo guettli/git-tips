@@ -636,6 +636,41 @@ If you want to include code of a third-party into your git repo, you can "vendor
 
 This is a handy tool, which in most cases better than git-submodules or git-subtree.
 
+# Personal Notes per git Repo
+
+I want to have personal notes per git repo which are not part of the git repo.
+
+I use this pattern:
+
+First I create a global git ignore:
+
+```
+git config --global core.excludesfile ~/.gitignore
+```
+
+Then I create ~/.gitignore, and add `me`:
+
+```
+me
+```
+
+If I want to save personal notes or scripts I create a symlink from the git repo a file in ~/docs:
+
+```
+mkdir ~/doc/COMPANY/some-git-repo
+cd ~/COMPANY/some-git-repo
+ln -s ~/doc/COMPANY/some-git-repo me
+```
+
+Now I can edit notes easily:
+
+```
+code me/foo.txt
+```
+
+But don't be careful. Don't increase the "bus factor" by building a single-person "information silo".
+
+
 # Github: Tab width: 4
 
 If you use tabs for indentation (for example in Golang), then you might want to
