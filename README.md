@@ -250,9 +250,9 @@ fixing old bugs or writing more detailed tests)
 
 Pull-Requests in Kubernetes should be squashed. See [PR Guidelines](https://www.kubernetes.dev/docs/guide/pull-requests/#squashing).
 
-`git rebase -i HEAD~N` works fine, except you merged the main branch into your branch after creating the branch.
+`git rebase -i HEAD~N` works fine, except you merged the main branch into your branch after creating the branch. Then your branch will contain merge commits, and the normal procedure won't work.
 
-Then you branch will contain merge commits.
+You can use `git reset --soft`, and then create a new commit which contains all the changes between "main" and "your-pr-branch".
 
 ```
 git switch your-pr-branch
