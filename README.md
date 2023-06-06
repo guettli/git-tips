@@ -246,6 +246,21 @@ git push --force-with-lease
 But overall: Don't do this to often. This is not very productive (compared to writing new code,
 fixing old bugs or writing more detailed tests)
 
+# Squash all commits into a single commit
+
+Pull-Requests in Kubernetes should be squashed. See [PR Guidelines](https://www.kubernetes.dev/docs/guide/pull-requests/#squashing).
+
+`git rebase -i HEAD~N` works fine, except you merged the main branch into your branch after creating the branch.
+
+Then you branch will contain merge commits.
+
+```
+git switch your-pr-branch
+git reset --soft $(git merge-base main HEAD)
+git commit
+git push --force-with-lease --set-upstream origin your-pr-branch
+```
+
 # Change a git branch "inplace"
 
 Imagine you developed your changes on a branch called "feature-foo". 
