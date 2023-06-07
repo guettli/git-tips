@@ -258,7 +258,7 @@ You can use `git reset --soft`, and then create a new commit which contains all 
 git switch your-pr-branch
 git reset --soft $(git merge-base main HEAD)
 git commit
-git push --force-with-lease --set-upstream origin your-pr-branch
+git push --force-with-lease
 ```
 
 # Change a git branch "inplace"
