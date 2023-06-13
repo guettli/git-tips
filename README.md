@@ -645,6 +645,19 @@ repos:
 
 Related: https://stackoverflow.com/a/75543767/633961
 
+# Better `git diff`
+
+I use this config in my ~/.gitconfig
+
+```
+[pager]
+	diff = diffr
+``` 
+
+This way you see small change in long lines easily.
+
+You can see screenshots here: [diffr at Github](https://github.com/mookid/diffr)
+ 
 # git subrepo
 
 If you want to include code of a third-party into your git repo, you can "vendor" it via [git subrepo](https://github.com/ingydotnet/git-subrepo).
