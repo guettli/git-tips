@@ -455,19 +455,10 @@ git show -m <commit-hash>
 ```
 The output of above command has several parts. For each parent commit one part.
 
-# Git config
+# Git pager
 
-```
-git config --global diff.colormoved dimmed-zebra
-```
-
-Source: [How to color moved code in Git](https://dev.to/cloudx/how-to-color-the-moved-code-in-git-10ei#dimming-the-moved-code)
-
-```
-git config --global diff.colormovedws "allow-indentation-change"
-```
-
-Source: [How to color moved code in Git](https://dev.to/cloudx/how-to-color-the-moved-code-in-git-10ei#ignoring-the-white-spaces)
+I use [delta](https://github.com/dandavison/delta) which shows `git diff` colorful, so that you can easily
+spot small changes in long lines.
 
 # revert a merge commit
 
@@ -644,19 +635,6 @@ repos:
 ```
 
 Related: https://stackoverflow.com/a/75543767/633961
-
-# Better `git diff`
-
-I use this config in my ~/.gitconfig
-
-```
-[pager]
-	diff = diffr
-``` 
-
-This way you see small change in long lines easily.
-
-You can see screenshots here: [diffr at Github](https://github.com/mookid/diffr)
  
 # git subrepo
 
