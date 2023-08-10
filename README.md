@@ -289,6 +289,17 @@ The above tip _Change a git branch "inplace"_ uses external patches.
 
 This can be used to [Apply difference between two branches on a third branch](https://stackoverflow.com/questions/73279330)
 
+# Restore a single file
+
+Imagine you are working on a feature branch. But you want to restore one file to the original version of the main branch.
+
+```
+git restore -s main path/to/file
+```
+`s` like "source branch"
+
+Source: https://stackoverflow.com/a/59756673/633961
+
 
 # List all files
 
