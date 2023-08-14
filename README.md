@@ -693,6 +693,19 @@ But don't be careful. Don't increase the "bus factor" by building a single-perso
 If you use tabs for indentation (for example in Golang), then you might want to
 change the default tab width from 8 to 4: https://github.com/settings/appearance
 
+# Which line ignores a file?
+
+You have a file `foo/bar.baz` which gets somehow ignored by a line in a .gitignore.
+
+But you are unsure which line is responsible for ignoring this file.
+
+You can use `git check-ignore -v`:
+
+```
+❯ git check-ignore -v foo/bar.baz
+.gitignore:23:foo/*.baz foo/bar.baz
+```
+
 # Related
 
 * [Güttli's opinionated Programming Guidelines](https://github.com/guettli/programming-guidelines)
