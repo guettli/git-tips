@@ -574,6 +574,23 @@ Relax, you can easily create the branch again.
 ❯ git switch -c foo-branch
 ```
 
+# Feature branch, only one commit
+
+For some git repos exists a policy that your feature branch
+should contain only one commit before the branch can get merged.
+
+Nevertheless I want to commit several times.
+
+I could do `git rebase -i HEAD~N` before the PR gets merged,
+but an alternative is this:
+
+I use `--amend` to alter the previous commit. This
+needs a force-push, because it rewrites the history.
+
+```
+git commit --amend . && git push --force-with-lease
+```
+
 # How to Use Multiple Git Configs on One Computer
 
 Image you up to now had only a personal Github account.
