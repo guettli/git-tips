@@ -723,6 +723,28 @@ You can use `git check-ignore -v`:
 .gitignore:23:foo/*.baz foo/bar.baz
 ```
 
+# Never commit a .envrc file
+
+I use [direnv](https://direnv.net/) to manage environment variables. The tool direnv uses `.envrc` files to 
+set environment variables.
+
+In never want the `.envrc` file to be part of a git repo, because it usualy contains credentials (for example GITHUB_TOKEN).
+
+To prevent accidental commits of .envrc files in all your Git repositories, you can set up a global .gitignore file:
+
+Create a Global .gitignore File:
+
+Run git config `--global core.excludesfile '~/.gitignore_global'` to tell Git where your global ignore file is located.
+
+Add .envrc to the Global .gitignore:
+
+Open ~/.gitignore_global in a text editor.
+
+Add .envrc to the file and save it.
+
+This will apply the ignore rule for .envrc files across all your repositories on your machine.
+
+
 # Related
 
 * [Güttli's opinionated Programming Guidelines](https://github.com/guettli/programming-guidelines)
