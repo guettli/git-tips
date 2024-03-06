@@ -260,6 +260,13 @@ You can use `git reset --soft`, and then create a new commit which contains all 
 
 ```
 git switch your-pr-branch
+
+# create a backup, just in case something goes wrong
+git switch your-pr-branch-backup
+
+# switch back to your-pr-branch
+git switch -
+
 git reset --soft $(git merge-base main HEAD)
 git commit
 git push --force-with-lease
