@@ -259,6 +259,9 @@ Pull-Requests in Kubernetes should be squashed. See [PR Guidelines](https://www.
 You can use `git reset --soft`, and then create a new commit which contains all the changes between "main" and "your-pr-branch".
 
 ```
+git switch main
+git pull
+
 git switch your-pr-branch
 
 # create a backup, just in case something goes wrong
