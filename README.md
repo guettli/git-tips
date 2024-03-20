@@ -139,6 +139,26 @@ want to know which branches contain this commit:
 
 `git branch --contains 684d9cc74d2`
 
+## Hyperlink from git commit hash to preview
+
+If I do `git log -Smysearchterm` in the vscode terminal, then I see 
+a list of commits.
+
+Now I would like to see a preview of these commits.
+
+It is very easy, I was just not aware of that at the beginning.
+
+Example:
+
+```
+commit 6ae936342d2c3c30fba47eec5a543ce6c53d0ebb
+Author: foobar <foobar@example.com>
+Date:   Wed Feb 14 01:54:04 2024 +0530
+```
+
+The commit hash "6ae936..." is a **hyperlink**.
+
+You just need to click on it, and you can inspect the details of the commit.
 
 ## I don't care much for the git tree
 
