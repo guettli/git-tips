@@ -290,6 +290,9 @@ git switch your-pr-branch-backup
 # switch back to your-pr-branch
 git switch -
 
+# If you want to copy commit messages from your branch,
+# then copy them now. After the following command, you need
+# to look into your backup branch.
 git reset --soft $(git merge-base main HEAD)
 git commit
 git push --force-with-lease
