@@ -489,6 +489,39 @@ meld my-dir/my-file.xyz ~/tmp/my-file.xyz
 
 Now Meld opens and I can easily choose which parts I want to take into my branch, and which parts I don't need.
 
+---
+
+Image you created a PR containing several changes. Now you decide that you want to create three PRs and not one.
+
+First, create a backup of your branch:
+
+```
+git switch -c my-backup; git switch -
+```
+
+Create the branch for the first feature, create a copy of your whole directory, and switch the copy to main:
+
+```
+git switch -c feature-1
+cd ..
+cp -a myrepo myrepo-main
+cd myrepo-main
+git switch main
+git pull
+```
+Now launch `meld`:
+```
+cd ..
+meld myrepo-main myrepo
+```
+
+Now you can easily remove all changes from belonging to feature-2 and feature-3.
+
+I tried that with vscode, but somehow `meld` is more usable for that. You can copy files between both directories with the context menu.
+
+You can accept (click on arrow) or reject (shift-click) single changes.
+
+
 
 # show change of merge commit
 
