@@ -285,7 +285,7 @@ git pull
 git switch your-pr-branch
 
 # create a backup, just in case something goes wrong
-git switch your-pr-branch-backup
+git switch -c your-pr-branch-backup
 
 # switch back to your-pr-branch
 git switch -
