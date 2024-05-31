@@ -734,11 +734,19 @@ repos:
 
 Related: https://stackoverflow.com/a/75543767/633961
  
-# git subrepo
+# git submodules
+
+I like to update submodules automatically:
+
+```
+git config --global submodule.recurse true
+```
+
+Don't ask me why this is no the default.
+
+# git subrepo (Alternative to submodule)
 
 If you want to include code of a third-party into your git repo, you can "vendor" it via [git subrepo](https://github.com/ingydotnet/git-subrepo).
-
-This is a handy tool, which in most cases better than git-submodules or git-subtree.
 
 # Personal Notes per git Repo
 
