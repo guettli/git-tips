@@ -15,6 +15,8 @@ git config --global branch.sort -committerdate
 
 I have an alias in my .bashrc: `alias gbs="git branch --sort=-committerdate | fzf --header Checkout | tr '*' ' ' | xargs git switch`
 
+Update: I switched from the Bash shell to the Fish shell. This gives me a better autocomplete. When I type `git switch TABTAB`, then I get the latest branches. In Bash I get unfortunately just a long list of branches sorted by the alphabet. I think I won't use above alias any more.
+
 ## checkout --> switch+restore
 
 In the past `git checkout` was used for different use-cases.
