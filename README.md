@@ -695,7 +695,7 @@ vi .gitconfig
 
 Source: [How to Use Multiple Git Configs on One Computer](https://www.freecodecamp.org/news/how-to-handle-multiple-git-configurations-in-one-machine/)
 
-# vscode for selective application of changes
+# Pick some lines from an other branch with `git difftool`
 
 Imagine you want to take some changes of a different branch into your code.
 
@@ -703,19 +703,13 @@ If you care about the lines of code, not the commits, then you can use the follo
 
 Switch to your branch (the branch which should get updated).
 
-In the vscode choose Branches, then "Compare with HEAD".
+I like the GUI tool `meld` as difftool.
 
-Then there is a new tab at the bottom: "Search & Compare".
+```
+git difftool -t meld other-branch -- your-file.txt
+```
 
-Expand the part "N files changed".
-
-Then choose the first file and use "Open Changes with Working File".
-
-Now you can easily fetch the lines which you want to get into your code. 
-
-You see a splitted windows. Your code is on the right side.
-
-In the middle are arrow symbols to pick changes.
+This will open `meld` and you can take some lines to your local version.
 
 # pre-commit.com
 
