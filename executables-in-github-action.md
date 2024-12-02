@@ -1,5 +1,8 @@
 # Executables in Github Actions
-These executables are available in Github Actions:
+
+These executables are available in Github Actions.
+
+There are two lists: from `/bin` and from `/usr/bin`.
 
 ... in bin
 ```
