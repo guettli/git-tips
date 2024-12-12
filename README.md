@@ -807,7 +807,40 @@ You can use `git check-ignore -v`:
 ❯ git check-ignore -v foo/bar.baz
 .gitignore:23:foo/*.baz foo/bar.baz
 ```
+# Ignore files, but only locally
 
+We store `.vscode/settings.json` in the git repo and change the color. This has the benefit, that you can
+easier distinguish between different vscode windows. Repo foo has this color, and repo bar has an other color.
+
+Sometimes I want to open a git repo twice: main branch, and dev branch.
+
+I do `cp -a` and create a copy of the git repo. Now I want to have two different colors, so that I can
+easily see which vscode window is open.
+
+Now:
+
+```terminal
+❯ git status
+...
+        modified:   .vscode/settings.json
+```
+
+```sh
+git pull
+error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+```
+
+I want to ignore the changes to the file, but only for me localy.
+
+This helps:
+
+
+```sh
+git update-index --assume-unchanged .vscode/settings.json
+```
+
+Now I can pull without `stash`.
 
 # Related
 
