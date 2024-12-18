@@ -272,9 +272,22 @@ git push --force-with-lease
 But overall: Don't do this to often. This is not very productive (compared to writing new code,
 fixing old bugs or writing more detailed tests)
 
+# Squash via Github
+
+During development I want to do many small commits on a branch. This gives me a better overview about the changes I do.
+When the diff gets too big, then it is likely that I overlook something.
+
+In the git history, I usualy do not care about the small commits I while working on a PR/branch.
+
+I like Squashing via Github. This has the benefit, that you can see the list of a small PRs, when looking at the Github UI of PR.
+
+But it keeps the history of the main branch clean: Every PR gets merged in one commit. Nice, I like it.
+
 # Squash all commits into a single commit
 
-Pull-Requests in Kubernetes should be squashed. See [PR Guidelines](https://www.kubernetes.dev/docs/guide/pull-requests/#squashing).
+Unfortunately in Kubernetes related projects squash via Github (like explained above) is disabled.
+
+ See [PR Guidelines](https://www.kubernetes.dev/docs/guide/pull-requests/#squashing).
 
 `git rebase -i HEAD~N` works fine, except you merged the main branch into your branch after creating the branch. Then your branch will contain merge commits, and the normal procedure won't work.
 
