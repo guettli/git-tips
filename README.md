@@ -802,6 +802,17 @@ In never want the `.envrc` file to be part of a git repo, because it usualy cont
 To prevent accidental commits of .envrc files in all your Git repositories, you can set up a global .gitignore file like above,
 and add `.envrc` to the file.
 
+# Ignore a file, but only locally
+
+I like to change the colors for repos. I use the vscode plugin [peacock](https://marketplace.visualstudio.com/items?itemName=johnpapa.vscode-peacock) for that.
+
+This modifies `.vscode/settings.json`. In my own git repos, I add that file, but not for third party repos.
+
+This means I want to ignore that file without modifing `.gitignore`. This is easy:
+
+```
+code .git/info/exclude
+```
 
 # Github: Tab width: 4
 
