@@ -866,6 +866,24 @@ git update-index --assume-unchanged .vscode/settings.json
 
 Now I can pull without `stash`.
 
+# Starship Prompt
+
+I use [Starship Prompt](https://starship.rs/config/#git-status), so that I get notified in the prompt, when the git status is not clean.
+
+My config:
+```toml
+[git_status]
+conflicted = ' conflicted'
+ahead = ' ahead'
+behind = ' behind'
+diverged = ' diverged'
+up_to_date = ''
+stashed = ' stashes'
+untracked = ' untracked'
+```
+
+This shows nothing, when the git state is clean, and a readable warning, when something is wrong.
+
 # Related
 
 * [Güttli's opinionated Programming Guidelines](https://github.com/guettli/programming-guidelines)
