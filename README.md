@@ -39,6 +39,30 @@ This switches to the previous branch. And to get back ... again `git switch -`.
 
 Like `cd -` in the bash shell.
 
+## Accidentally Commit on Branch Main
+
+You accidentally created a commit on your local main branch.
+That was a mistake because every change should be done via a pull request.
+You have not pushed your changes yet.
+
+You can help yourself like this:
+
+```
+# Create a new branch
+git switch -c my-new-branch
+
+# Push your new branch to origin
+git push --set-upstream origin my-new-branch
+
+# Create pull request. Usually you just need to follow
+# the instructions which were printed by the previous command.
+
+# Switch back to main
+git switch main
+
+# Remove the commit which was done accidentally on the main branch.
+git reset --hard HEAD~1
+```
 
 ## History for selection
 
