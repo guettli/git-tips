@@ -843,6 +843,14 @@ code .git/info/exclude
 If you use tabs for indentation (for example in Golang), then you might want to
 change the default tab width from 8 to 4: https://github.com/settings/appearance
 
+# Github: open PR in web UI.
+
+This command opens the current PR in your browser:
+
+```sh
+gh pr view --web
+```
+
 # Which line ignores a file?
 
 You have a file `foo/bar.baz` which gets somehow ignored by a line in a .gitignore.
