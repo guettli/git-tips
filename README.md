@@ -838,6 +838,24 @@ This means I want to ignore that file without modifing `.gitignore`. This is eas
 code .git/info/exclude
 ```
 
+# Chain of branches: Add base branch to name of second branch
+
+Sometime you create a chain/train of branches. The first branch is still in review,
+but you start to work on the next items in a second branch.
+
+This gets confusing if you have several branches in this chain.
+
+To makes things easier to understand, I sometimes add the branch name into the
+name of second branch.
+
+First branch: `foo`
+
+Then I call the second branch: `name-of-second-branch--based-on-foo`.
+
+The third would be: `name-of-third-branch--based-on-name-of-second-branch`.
+
+And so on.
+
 # Github: Tab width: 4
 
 If you use tabs for indentation (for example in Golang), then you might want to
