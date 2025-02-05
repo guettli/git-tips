@@ -869,6 +869,10 @@ This command opens the current PR in your browser:
 gh pr view --web
 ```
 
+# vscode: autoFetch
+
+I like the vscode git [`autoFetch` setting](https://code.visualstudio.com/docs/sourcecontrol/overview#_remotes). This fetches the latest changes from the remote every N seconds.
+
 # Which line ignores a file?
 
 You have a file `foo/bar.baz` which gets somehow ignored by a line in a .gitignore.
