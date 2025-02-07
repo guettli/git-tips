@@ -873,6 +873,18 @@ gh pr view --web
 
 I like the vscode git [`autoFetch` setting](https://code.visualstudio.com/docs/sourcecontrol/overview#_remotes). This fetches the latest changes from the remote every N seconds.
 
+# Keep Github Action Workflows simple
+
+I prefer to keep Github Action Workflows simple. I like that Github does CI for me, but 
+calling third pary Github Actions has the draw back, that I can not reproduce that on my local machine.
+
+There are tools like [act](https://github.com/nektos/act), but I often it did not work for me.
+
+Keep things simple by using a reliable Bash script in [Bash Strict Mode](https://github.com/guettli/bash-strict-mode).
+
+This works in Github CI and on my local Linux device.
+
+
 # Which line ignores a file?
 
 You have a file `foo/bar.baz` which gets somehow ignored by a line in a .gitignore.
