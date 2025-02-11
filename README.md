@@ -856,6 +856,14 @@ The third would be: `name-of-third-branch--based-on-name-of-second-branch`.
 
 And so on.
 
+# Long branch names are fine
+
+I think it is perfectly fine to have long branch names like:
+
+```text
+tg/check-workspace-providers-on-create-of-apc--based-on-disallow-change-of-controlplane-location
+```
+
 # Github: Tab width: 4
 
 If you use tabs for indentation (for example in Golang), then you might want to
