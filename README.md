@@ -958,6 +958,20 @@ untracked = ' untracked'
 
 This shows nothing, when the git state is clean, and a readable warning, when something is wrong.
 
+# Github: Play sound, when CI Job is finished
+
+Sometimes I need to wait until a Github CI Job is finished. Waiting is not very productive, so I do other things while waiting.
+
+When the job is done, I want to get notified. This can be done like this:
+
+```sh
+gh run watch; music
+```
+
+`gh run watch` gives you a list of jobs, you can select one. When it is finished, the next command is called `music`. Use whatever command you want for that. For
+me `music` is a smal script which plays a song I like.
+
+
 # Related
 
 * [Güttli's opinionated Programming Guidelines](https://github.com/guettli/programming-guidelines)
