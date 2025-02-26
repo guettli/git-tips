@@ -881,6 +881,8 @@ gh pr view --web
 
 I like the vscode git [`autoFetch` setting](https://code.visualstudio.com/docs/sourcecontrol/overview#_remotes). This fetches the latest changes from the remote every N seconds.
 
+This is handy, because I see `[behind]` if you use the [my Starship prompt git config](#starship-prompt).
+
 # Keep Github Action Workflows simple
 
 I prefer to keep Github Action Workflows simple. I like that Github does CI for me, but 
