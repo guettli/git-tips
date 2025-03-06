@@ -469,6 +469,42 @@ git difftool 8d73caed~1 8d73caed
 --> launches [meld](https://meldmerge.org/), if installed, or your
 prefered diff-tool. See [git-difftool](https://git-scm.com/docs/git-difftool)
 
+# Solving conflicts with `meld`
+
+I am on a branch which was created from the main branch some hours ago.
+
+Now I want to merge the new main branch into my branch again.
+
+```console
+❯ git merge main
+Auto-merging internal/foo/api/v1beta1/mycrd_types.go
+CONFLICT (content): Merge conflict in internal/foo/api/v1beta1/mycrd_types.go
+```
+
+I use `meld` for solving conflicts:
+
+```
+git mergetool --tool=meld
+```
+
+Now a nice UI opens. You see three columns.
+
+On the left side you see your original code (before starting the merge). 
+In the middle you see the result of the automatic merges done by git.
+On the right side you see "theirs" (new main branch).
+
+Green: Addition/Deletion
+
+Blue: Changes, but no conflict
+
+Red: Conflict.
+
+Handling green and blue parts is usualy easy. Take yours (left <-> middle) or take theirs (middle <-> right).
+
+You need to be careul with the red parts.
+
+I tried several other tools, but `meld` is still my favorite.
+
 # Resolve, take theirs
 
 You merged a branch into your branch, and now you have conflicts. You want
@@ -507,12 +543,12 @@ Especialy if you are new to git, and unsure what will happen. Then
 relax and create a copy of your git repo before you execute command which
 make you feel uncomfortable.
 
-# Merge-tool (Meld)
+# Merging some parts of a different branch.
 
 I like [Meld](https://meldmerge.org/), which is a visual diff and merge tool.
 
 Imagine I changed several parts in a file. Now a realize that some parts are good, and should
-stay. And some parts should get removed again.
+stay, and some parts should get removed again.
 
 I am on a feature-branch which was created from "main".
 
@@ -652,12 +688,6 @@ Unfortunately there will be several branches left which are not merged yet. No s
 decide if they can be deleted or not.
 
 Use `branch -rd` to delete the remote branch, too.
-
-# tig: text based GUI for git
-
-[tig](https://jonas.github.io/tig/) is a text based GUI for git.
-
-Much better than `git log` on the command line.
 
 # ripgrep: recursive grep which respects .gitignore
 
