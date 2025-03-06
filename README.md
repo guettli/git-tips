@@ -477,13 +477,20 @@ Now I want to merge the new main branch into my branch again.
 
 ```console
 ❯ git merge main
+
 Auto-merging internal/foo/api/v1beta1/mycrd_types.go
 CONFLICT (content): Merge conflict in internal/foo/api/v1beta1/mycrd_types.go
 ```
 
-I use `meld` for solving conflicts:
+I use `meld` for solving conflicts.
 
+Be sure to that this option first:
+
+```sh
+git config --global mergetool.meld.useAutoMerge true
 ```
+
+```sh
 git mergetool --tool=meld
 ```
 
@@ -493,15 +500,12 @@ On the left side you see your original code (before starting the merge).
 In the middle you see the result of the automatic merges done by git.
 On the right side you see "theirs" (new main branch).
 
-Green: Addition/Deletion
+You see conflicts with red background color.
 
-Blue: Changes, but no conflict
+You can take the left (your) side, or the right side (theirs). Additionally, you can modify the code by hand.
 
-Red: Conflict.
-
-Handling green and blue parts is usualy easy. Take yours (left <-> middle) or take theirs (middle <-> right).
-
-You need to be careul with the red parts.
+Finally go to the column in the middle and press `ctrl-s` to save your changes.
+Then close the UI. The UI will open again if there is a second file with a conflict.
 
 I tried several other tools, but `meld` is still my favorite.
 
