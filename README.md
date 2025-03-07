@@ -469,9 +469,9 @@ git difftool 8d73caed~1 8d73caed
 --> launches [meld](https://meldmerge.org/), if installed, or your
 prefered diff-tool. See [git-difftool](https://git-scm.com/docs/git-difftool)
 
-# Solving conflicts with `meld`
+# Solving Conflicts with `meld`
 
-I am on a branch which was created from the main branch some hours ago.
+I am on a branch that was created from the main branch some hours ago.
 
 Now I want to merge the new main branch into my branch again.
 
@@ -484,7 +484,7 @@ CONFLICT (content): Merge conflict in internal/foo/api/v1beta1/mycrd_types.go
 
 I use `meld` for solving conflicts.
 
-Be sure to that this option first:
+Be sure to set this option first:
 
 ```sh
 git config --global mergetool.meld.useAutoMerge true
@@ -494,20 +494,21 @@ git config --global mergetool.meld.useAutoMerge true
 git mergetool --tool=meld
 ```
 
-Now a nice UI opens. You see three columns.
+Now a nice UI opens, and you will see three columns:
 
-On the left side you see your original code (before starting the merge). 
-In the middle you see the result of the automatic merges done by git.
-On the right side you see "theirs" (new main branch).
+- On the left side, you see your original code (before starting the merge).  
+- In the middle, you see the result of the automatic merges done by Git.  
+- On the right side, you see "theirs" (new main branch).  
 
-You see conflicts with red background color.
+The green and blue parts are automatically resolved. You do not modify these in most cases.
 
-You can take the left (your) side, or the right side (theirs). Additionally, you can modify the code by hand.
+You will see conflicts marked with a red background. In the middle column of a conflict line, you see `(??)`.
 
-Finally go to the column in the middle and press `ctrl-s` to save your changes.
-Then close the UI. The UI will open again if there is a second file with a conflict.
+You can take the left (your side), the right side (theirs), or modify the code manually.
 
-I tried several other tools, but `meld` is still my favorite.
+Finally, go to the middle column and press `Ctrl+S` to save your changes. Then close the UI. The UI will reopen if there is a second file with a conflict.
+
+I have tried several other tools, but `meld` (with useAutoMerge) is still my favorite.
 
 # Resolve, take theirs
 
