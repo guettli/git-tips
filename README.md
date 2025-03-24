@@ -977,6 +977,18 @@ git update-index --assume-unchanged .vscode/settings.json
 
 Now I can pull without `stash`.
 
+# Clone a sub-folder
+
+```bash
+git clone -n --depth=1 --filter=tree:0 \
+  https://github.com/cirosantilli/test-git-partial-clone-big-small-no-bigtree
+cd test-git-partial-clone-big-small-no-bigtree
+git sparse-checkout set --no-cone /small
+git checkout
+```
+
+[Stackoverflow How do I clone a subdirectory only of a Git repository?](https://stackoverflow.com/a/52269934/633961)
+
 # Starship Prompt
 
 I use [Starship Prompt](https://starship.rs/config/#git-status), so that I get notified in the prompt, when the git status is not clean.
