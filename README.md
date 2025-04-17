@@ -81,7 +81,14 @@ But you want to work in a feature-branch before first. Then you can `git stash` 
 Then you switch or create the branch you want to work on. After that you `git stash pop` and
 take your changes out of your backpack. 
 
+## git stash++
 
+There is only one `stash`. If you need more, then just create a second branch. Usually you do not push
+that branch, but you keep it only locally:
+
+I use that pattern: When I work on branch `foo`, then I create `foo-some-idea`. Then I commit my changes there.
+
+I can easily switch back to `foo`, when my idea was not successful.
 
 
 ## `git diff` of pull-request
