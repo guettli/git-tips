@@ -383,6 +383,8 @@ git restore -s main path/to/file
 
 Source: https://stackoverflow.com/a/59756673/633961
 
+After that you can use `ctrl-shift-g` (vscode) to compare the local version with the current branch. This way you can easily restore some
+parts of a file.
 
 # List all files
 
