@@ -530,8 +530,12 @@ git restore --theirs path/to/file
 
 # After resolving conflict: git diff HEAD~1
 
-After resolving a conflict by hand, `git diff HEAD~1` shows the file compared
-to the previous version. Somehow `git diff` shows something else.
+You did `git merge ...`. There were conflicts you solved by hand. You did `git add path-to/file-which-had-conflict.foo` .
+You have not committed your chages yet.
+
+First you want to review the changes you did. But `git diff` outputs nothing, because your changes are staged.
+
+You need to use `git diff --staged` to see your changes.
 
 # git log over many git repos
 
