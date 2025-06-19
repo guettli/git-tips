@@ -478,6 +478,48 @@ git difftool 8d73caed~1 8d73caed
 --> launches [meld](https://meldmerge.org/), if installed, or your
 prefered diff-tool. See [git-difftool](https://git-scm.com/docs/git-difftool)
 
+# Solving Conflicts: Overview
+
+Before solving a git merge conflict, it is convinient to have an overview: What changed between base and remote, and what change between base and my local version?
+
+I found no tool which does this, so I use that small Bash script `diff-conflict.sh`:
+
+```bash
+#!/usr/bin/env bash
+# Bash Strict Mode: https://github.com/guettli/bash-strict-mode
+trap 'echo -e "\n🤷 🚨 🔥 Warning: A command has failed. Exiting the script. Line was ($0:$LINENO): $(sed -n "${LINENO}p" "$0" 2>/dev/null || true) 🔥 🚨 🤷 "; exit 3' ERR
+set -Eeuo pipefail
+
+function usage() {
+    echo "Usage: $0 <file>"
+    echo "This script opens DIFFTOOL twice:"
+    echo "  DIFFTOOL <file>.BASE <file>.REMOTE"
+    echo "  DIFFTOOL <file>.BASE <file>.LOCAL"
+    echo "This helps to resolve git merge conflicts."
+    echo "If env var DIFFTOOL is not set, it defaults to 'code -d'."
+    exit 1
+}
+
+if [[ $# -ne 1 ]]; then
+    usage
+fi
+
+if [[ ! -f "$1" ]]; then
+    echo "Error: File '$1' does not exist."
+    usage
+fi
+
+FILE="$1"
+difftool="${DIFFTOOL:-code -d}"
+git show :1:"$FILE" >"$FILE".BASE
+git show :2:"$FILE" >"$FILE".LOCAL
+git show :3:"$FILE" >"$FILE".REMOTE
+$difftool "$FILE".BASE "$FILE".LOCAL &
+$difftool "$FILE".BASE "$FILE".REMOTE &
+```
+
+Now I can choose the simpler change, then I apply the more complex change the the file, and after that I apply the simpler change by hand.
+
 # Solving Conflicts with `meld`
 
 I am on a branch that was created from the main branch some hours ago.
