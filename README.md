@@ -147,6 +147,14 @@ That's easy:
 > git switch foo
 ```
 
+### Changes to a single file
+
+`git log foo.txt` shows you the commits which changes the file.
+
+But it shows you only the commit message. If you want to see the changes which were done, you
+need to use `-p` (like patch): `git log -p foo.txt`.
+
+
 ## Find removed code
 
 You are looking for a variable/method/class name which was in the code once, but which
