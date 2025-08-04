@@ -948,6 +948,21 @@ I do this, when I work on the same git repo twice. I clone the repo twice (foo a
 
 BUT: `git commit .` will not ignore it. Still looking for a better solution than `git update-index --assume-unchanged`.
 
+You can use that [pre-commit](https://pre-commit.com), so that you do not commit changes to that file:
+
+```yaml
+- repo: local
+  hooks:
+    - id: block-vscode-settings
+      name: Block commits of .vscode/settings.json
+      entry: >
+        bash -c 'if git diff --cached --name-only | grep -q "^.vscode/settings.json$"; then
+          echo "ERROR: .vscode/settings.json must not be committed."
+          exit 1
+        fi'
+      language: system
+```
+
 # Chain of branches: Add base branch to name of second branch
 
 Sometime you create a chain/train of branches. The first branch is still in review,
