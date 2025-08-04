@@ -936,6 +936,17 @@ This means I want to ignore that file without modifing `.gitignore`. This is eas
 code .git/info/exclude
 ```
 
+This works, if the upstream repo does not contain `.vscode/settings.json`.
+
+If upstream repo has that file, and I want to git to ignore my local changes:
+
+```
+git update-index --assume-unchanged .vscode/settings.json
+```
+
+I do this, when I work on the same git repo twice. I clone the repo twice (foo and foo2), and then I change color, so I can easily distinguish between both editors.
+
+
 # Chain of branches: Add base branch to name of second branch
 
 Sometime you create a chain/train of branches. The first branch is still in review,
