@@ -946,6 +946,7 @@ git update-index --assume-unchanged .vscode/settings.json
 
 I do this, when I work on the same git repo twice. I clone the repo twice (foo and foo2), and then I change color, so I can easily distinguish between both editors.
 
+BUT: `git commit .` will not ignore it. Still looking for a better solution than `git update-index --assume-unchanged`.
 
 # Chain of branches: Add base branch to name of second branch
 
