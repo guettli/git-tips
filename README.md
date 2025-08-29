@@ -607,9 +607,9 @@ a copy of your git repo.
 
 Now you can checkout branch1 in one git repo, and branch2 in the second git repo.
 
-Especialy if you are new to git, and unsure what will happen. Then
-relax and create a copy of your git repo before you execute command which
-make you feel uncomfortable.
+I do that when implementing a non trivial refactoring. Then I can open my branch
+in one editor and the main branch in a second. In VSCode I use the Peacock plugin to change to color
+of the main branch, to easily distinguish between both.
 
 # Merging some parts of a different branch.
 
