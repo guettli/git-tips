@@ -742,6 +742,15 @@ git show-branch -a 2>/dev/null \
 
 Source: https://stackoverflow.com/a/74314172/633961
 
+# Automatically prune on fetch
+
+```console
+git config --global fetch.prune true
+```
+
+It sets a global Git config so every git fetch will prune stale remote-tracking branches—i.e.,
+it automatically deletes local refs like origin/foobar when they’ve been removed from the remote. 
+
 # delete merged branches
 
 After some months there are too many old branches. Time to clean up.
