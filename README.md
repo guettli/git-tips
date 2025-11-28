@@ -21,7 +21,7 @@ Update: I switched from the Bash shell to the Fish shell. This gives me a better
 
 In the past `git checkout` was used for different use-cases.
 
-I think it is time to use the new commands: 
+I think it is time to use the new commands:
 
 `git switch` to switch to a different branch
 
@@ -74,12 +74,12 @@ On the command-line you can use `git blame some-file`
 
 ## git stash
 
-`git stash` is like a backpack. 
+`git stash` is like a backpack.
 
 Example: You started to code. Then you realize (before you commit) that you work on the main branch.
 But you want to work in a feature-branch before first. Then you can `git stash` your uncommitted changes.
 Then you switch or create the branch you want to work on. After that you `git stash pop` and
-take your changes out of your backpack. 
+take your changes out of your backpack.
 
 ## git stash++
 
@@ -100,7 +100,7 @@ You want to see all changes of your pull-request.
 ```
 git diff main
 ```
-Above command might show you a lot of changes which happend on the main branch 
+Above command might show you a lot of changes which happend on the main branch
 since you created the branch. You don't want to see those changes.
 
 What was changed on your branch since the branch was created?
@@ -170,7 +170,7 @@ Attention: `git log -G=foo` will search for `=foo` (and I guess that is not what
 
 If you know a co-worker introduced a variable/method/class, but
 it is not in your code, and `git log -G my_name` does not help,
-then you can use `git log --all -G my_name`. This will search in 
+then you can use `git log --all -G my_name`. This will search in
 all branches.
 
 ## Find branch which contains a commit
@@ -182,7 +182,7 @@ want to know which branches contain this commit:
 
 ## Hyperlink from git commit hash to preview
 
-If I do `git log -Smysearchterm` in the vscode terminal, then I see 
+If I do `git log -Smysearchterm` in the vscode terminal, then I see
 a list of commits.
 
 Now I would like to see a preview of these commits.
@@ -225,7 +225,7 @@ to find the commit, which introduced an error. Unfortunately, it is not a
 one-liner for now. You can use it like this:
 
 ``` {.sourceCode .shell}
-user@host> git bisect start HEAD HEAD~10 
+user@host> git bisect start HEAD HEAD~10
 
 
 user@host> git bisect run py.test -k test_something
@@ -251,12 +251,12 @@ BRANCH=your_branch
 set -euxo pipefail
 log_report() {
     echo "Error on line $1"
-} 
+}
 trap 'log_report $LINENO' ERR
 
 
 git switch $BRANCH
-git log --oneline | cut -d' ' -f1 | while read hash; 
+git log --oneline | cut -d' ' -f1 | while read hash;
     do
     echo
     echo    $hash;
@@ -354,14 +354,14 @@ git push --force-with-lease
 
 # Change a git branch "inplace"
 
-Imagine you developed your changes on a branch called "feature-foo". 
+Imagine you developed your changes on a branch called "feature-foo".
 This branch was created from branch "feature-base".
 
 Requirements change, and now you need to merge your changes into the main branch,
 but not the changes from branch "feature-base".
 
 You could create a new branch, but since the central git-UI (github/gitlab) already references
-"feature-foo", you want to change the branch "inplace". 
+"feature-foo", you want to change the branch "inplace".
 
 This creates the patches in a directory:
 ```
@@ -449,10 +449,10 @@ BTW, many big companies use a gigantic monorepo for all their code. [Wikipedia M
 If you configured auto-completion, then you can easy switch a branch if you know the first characters of the branch name:
 
 ```
-git switch foo[TAB] 
+git switch foo[TAB]
  --->        foobar
 ```
- 
+
 # Show current branch (for loop)
 
 show the current branch name: `git rev-parse --abbrev-ref HEAD`
@@ -469,7 +469,6 @@ Most web-GUIs of CI-systems have a "retry" button. But sometimes this does not w
 ```
 git commit --allow-empty -m "Trigger CI"
 ```
-
 
 # side by side diff
 
@@ -494,6 +493,10 @@ I found no tool which does this, so I use that small Bash script `diff-conflict.
 
 ```bash
 #!/usr/bin/env bash
+#
+# conflict-overview.sh
+# https://github.com/guettli/git-tips/blob/main/README.md#solving-conflicts-overview
+#
 # Bash Strict Mode: https://github.com/guettli/bash-strict-mode
 trap 'echo -e "\n🤷 🚨 🔥 Warning: A command has failed. Exiting the script. Line was ($0:$LINENO): $(sed -n "${LINENO}p" "$0" 2>/dev/null || true) 🔥 🚨 🤷 "; exit 3' ERR
 set -Eeuo pipefail
@@ -505,6 +508,15 @@ function usage() {
     echo "  DIFFTOOL <file>.BASE <file>.LOCAL"
     echo "This helps to resolve git merge conflicts."
     echo "If env var DIFFTOOL is not set, it defaults to 'code -d'."
+    echo ""
+    echo "The two file comparison which get opened by the script can help you to see changes."
+    echo "  BASE vs LOCAL: These are the changes of your local branch. It is likely that you are more familiar with these changes."
+    echo "  BASE vs REMOTE: The upstream branch (often 'main') changed. These changes are the reason why are the merge has conflicts."
+    echo ""
+    echo "For resolving the conflicht (by hand), I recommend to configure 'meld' as mergetool."
+    echo "Then open meld for the current conflict: git mergetool"
+    echo ""
+    echo "Related: https://github.com/guettli/git-tips/blob/main/README.md#solving-conflicts-overview"
     exit 1
 }
 
@@ -517,6 +529,11 @@ if [[ ! -f "$1" ]]; then
     usage
 fi
 
+if [[ ! -e .git/MERGE_HEAD ]]; then
+    echo ".git/MERGE_HEAD does not exist. No merge seems to be active at the moment."
+    usage
+fi
+
 FILE="$1"
 difftool="${DIFFTOOL:-code -d}"
 git show :1:"$FILE" >"$FILE".BASE
@@ -526,7 +543,11 @@ $difftool "$FILE".BASE "$FILE".LOCAL &
 $difftool "$FILE".BASE "$FILE".REMOTE &
 ```
 
-Now I can choose the simpler change, then I apply the more complex change the the file, and after that I apply the simpler change by hand.
+Now I can choose the simpler change, then I apply the more complex change the the file, and after
+that I apply the simpler change by hand.
+
+BTW, I use the above tool just to help me see the changes. For resolving the conflict by hand I use
+`git mergetool` with `meld`. See next topic.
 
 # Solving Conflicts with `meld`
 
@@ -555,9 +576,9 @@ git mergetool --tool=meld
 
 Now a nice UI opens, and you will see three columns:
 
-- On the left side, you see your original code (before starting the merge).  
-- In the middle, you see the result of the automatic merges done by Git.  
-- On the right side, you see "theirs" (new main branch).  
+- On the left side, you see your original code (before starting the merge).
+- In the middle, you see the result of the automatic merges done by Git.
+- On the right side, you see "theirs" (new main branch).
 
 The green and blue parts are automatically resolved. You do not modify these in most cases.
 
@@ -603,7 +624,7 @@ for repo in *; do (cd "$repo"; git log -G FooBar --all --pretty="%ad %h in $repo
 # Think outside the box
 
 Your local git repo is just a simple directory. Sometimes it is easier to just use `cp -a my-repo my-repo2` to create
-a copy of your git repo. 
+a copy of your git repo.
 
 Now you can checkout branch1 in one git repo, and branch2 in the second git repo.
 
@@ -723,7 +744,7 @@ Example:
 
 You created "feature-1" by branching off "main".
 
-Then you create "feature-2" by branching off "feature-1" (because the second feature depends 
+Then you create "feature-2" by branching off "feature-1" (because the second feature depends
 on a change which was done in feature-1).
 
 Then for some weeks different things are more urgent, and now you are unsure
@@ -749,7 +770,7 @@ git config --global fetch.prune true
 ```
 
 It sets a global Git config so every git fetch will prune stale remote-tracking branches—i.e.,
-it automatically deletes local refs like origin/foobar when they’ve been removed from the remote. 
+it automatically deletes local refs like origin/foobar when they’ve been removed from the remote.
 
 # delete merged branches
 
@@ -777,7 +798,7 @@ Handy, if there are huge directories in you git-repo which you usualy want to sk
 Imagine you accidentally deleted a branch:
 
 ```
-❯ git branch -D foo-branch 
+❯ git branch -D foo-branch
 Deleted branch foo-branch (was d885d38).
 ```
 
@@ -812,7 +833,7 @@ git commit --amend . && git push --force-with-lease
 Image you up to now had only a personal Github account.
 
 Now you want to have two (on one computer): one for your personal
-stuff and one for work related stuff. 
+stuff and one for work related stuff.
 
 Create two gitconfig files:
 
@@ -873,7 +894,7 @@ repos:
 ```
 
 Related: https://stackoverflow.com/a/75543767/633961
- 
+
 # git submodules
 
 I like to update submodules automatically:
@@ -925,7 +946,7 @@ But don't be careful. Don't increase the "bus factor" by building a single-perso
 
 # Never commit a .envrc file
 
-I use [direnv](https://direnv.net/) to manage environment variables. The tool direnv uses `.envrc` files to 
+I use [direnv](https://direnv.net/) to manage environment variables. The tool direnv uses `.envrc` files to
 set environment variables.
 
 In never want the `.envrc` file to be part of a git repo, because it usualy contains credentials (for example GITHUB_TOKEN).
@@ -1019,7 +1040,7 @@ This is handy, because I see `[behind]` if you use the [my Starship prompt git c
 
 # Keep Github Action Workflows simple
 
-I prefer to keep Github Action Workflows simple. I like that Github does CI for me, but 
+I prefer to keep Github Action Workflows simple. I like that Github does CI for me, but
 calling third pary Github Actions has the draw back, that I can not reproduce that on my local machine.
 
 There are tools like [act](https://github.com/nektos/act), but I often it did not work for me.
@@ -1119,13 +1140,8 @@ gh run watch; music
 `gh run watch` gives you a list of jobs, you can select one. When it is finished, the next command is called `music`. Use whatever command you want for that. For
 me `music` is a smal script which plays a song I like.
 
-
 # Related
 
 * [Güttli's opinionated Programming Guidelines](https://github.com/guettli/programming-guidelines)
 * [Güttli's opinionated Python Tips](https://github.com/guettli/python-tips)
 * [Güttli working-out-loud](https://github.com/guettli/wol)
-
-
-
-
