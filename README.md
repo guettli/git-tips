@@ -944,15 +944,36 @@ code me/foo.txt
 But don't be careful. Don't increase the "bus factor" by building a single-person "information silo".
 
 
-# Never commit a .envrc file
+# Public .envrc file, private .env file
 
-I use [direnv](https://direnv.net/) to manage environment variables. The tool direnv uses `.envrc` files to
+I use [direnv](https://direnv.net/) to manage environments. The tool direnv uses `.envrc` files to
 set environment variables.
 
-In never want the `.envrc` file to be part of a git repo, because it usualy contains credentials (for example GITHUB_TOKEN).
+But for secrets I use `.env` files.
 
-To prevent accidental commits of .envrc files in all your Git repositories, you can set up a global .gitignore file like above,
-and add `.envrc` to the file.
+Example:
+
+```sh
+# shellcheck shell=bash
+
+# .envrc file of direnv.
+# If you use vsode, pleaes use the `direnv` extension.
+
+# Use nix-direnv
+# https://github.com/nix-community/nix-direnv
+# Ensures that flake.nix gets evaluated.
+use flake
+
+export PATH="$PWD/scripts:$PWD/node_modules/.bin:$PATH"
+
+# Load variables from .env
+dotenv
+```
+
+In never want the `.env` file to be part of a git repo, because it usualy contains credentials (for example GITHUB_TOKEN).
+
+To prevent accidental commits of .env files in all your Git repositories, you can set up a global .gitignore file like above,
+and add `.env` to the file.
 
 # Ignore a file, but only locally
 
