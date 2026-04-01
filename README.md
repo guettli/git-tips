@@ -498,13 +498,13 @@ This command opens the current PR in your browser:
 gh pr view --web
 ```
 
-## vscode: autoFetch
+## VS Code: autoFetch
 
-I like the vscode git [`autoFetch`
+I like the VS Code Git [`autoFetch`
 setting](https://code.visualstudio.com/docs/sourcecontrol/overview#_remotes). This fetches the
 latest changes from the remote every N seconds.
 
-This is handy, because I see `[behind]` if you use the [my Starship prompt git
+This is handy because I see `[behind]` if I use [my Starship prompt Git
 config](#starship-prompt).
 
 ## Keep Github Action Workflows simple
