@@ -4,9 +4,9 @@ This is not an introduction to Git. Just some hints about how I use `git`.
 
 ## How to use this Git Repo
 
-This repo contains some scripts in the directory [scripts](.scripts).
+This repo contains some scripts in the [scripts](scripts) directory.
 
-I add that to `$PATH`, so that I have these scripts available.
+I add that directory to `$PATH` so the scripts are available everywhere.
 
 Most of them use the [Bash Strict Mode](https://github.com/guettli/bash-strict-mode).
 
