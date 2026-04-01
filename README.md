@@ -141,7 +141,7 @@ git restore -s main -p path/to/file
 
 ## `git diff` of pull-request
 
-Imagine you work on a branch which is a pull-request.
+Imagine you work on a branch that backs a pull request.
 
 You want to see all changes of your pull-request.
 
@@ -149,8 +149,8 @@ You want to see all changes of your pull-request.
 git diff main
 ```
 
-Above command might show you a lot of changes which happend on the main branch since you created the
-branch. You don't want to see those changes.
+That command might show a lot of changes that happened on `main` since you created the branch. You
+do not want to see those changes.
 
 What was changed on your branch since the branch was created?
 
