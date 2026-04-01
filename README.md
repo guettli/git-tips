@@ -502,11 +502,12 @@ repos:
           echo $files; test -z "$files"'
 ```
 
-Related: <https://stackoverflow.com/a/75543767/633961>
-
 ## gitleaks via pre-commit
 
-This repository uses `gitleaks` in `.pre-commit-config.yaml`.
+This repo uses `gitleaks` in `.pre-commit-config.yaml`.
+
+It is a big risk that credentials get accidentally added to Git and then get pushed. Especially in
+open source projects.
 
 Why in `pre-commit` and not only in CI?
 
@@ -515,7 +516,7 @@ Why in `pre-commit` and not only in CI?
 - It protects all commits, not only the branch which later gets CI.
 
 I use `gitleaks` here because it is a maintained general-purpose secret scanner and its license is
-MIT, not AGPL.
+MIT.
 
 ## Public .envrc file, private .env file
 
