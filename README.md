@@ -115,7 +115,7 @@ Why?
 
 - conflicts stay small
 - test failures show up earlier
-- rebasing or merging later gets less painful
+- merge conflicts later are smaller and easier to resolve
 
 I usually do this while I am on my feature branch:
 
@@ -287,8 +287,7 @@ My default workflow:
 - While the PR is open, merge the base branch into the feature branch.
 - When the PR gets merged, squash it into one commit on `main`. This is usually done via the web UI.
 
-With that workflow, I rarely need `rebase` for syncing with the base branch.
-I still might use it locally to clean up unpublished commits.
+With that workflow, I rarely need `rebase`.
 
 ## List all files
 
