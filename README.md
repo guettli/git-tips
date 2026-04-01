@@ -100,7 +100,7 @@ Like `cd -` in the bash shell.
 You accidentally created a commit on your local main branch. That was a mistake because every change
 should be done via a pull request. You have not pushed your changes yet.
 
-Solution: Create backup, delete (your local) main, get main from origin again.
+Solution: create a backup, delete your local `main`, and recreate it from `origin`.
 
 ```console
 # Create a backup
