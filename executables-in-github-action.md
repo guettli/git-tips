@@ -6,7 +6,7 @@ There are two lists: from `/bin` and from `/usr/bin`.
 
 ... in bin
 
-```
+```text
 [
 add-apt-repository
 addpart
@@ -654,11 +654,11 @@ zipsplit
 zless
 zmore
 znew
-```
+```text
 
 ... in /usr/bin
 
-```
+```text
 [
 add-apt-repository
 addpart
