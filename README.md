@@ -211,12 +211,12 @@ is not the default. Without it, you won't see other branches.
 
 ## rebase vs merge
 
-I don't care much. In the past there have been endless discussion about this.
+I do not care much. In the past there have been endless discussions about this.
 
 My way:
 
-- in a PR: merge changes into the feature branch
-- Squash the PR, when it gets merged to main.
+- In a PR, merge changes into the feature branch.
+- Squash the PR when it gets merged to `main`.
 
 ## List all files
 
