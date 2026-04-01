@@ -812,10 +812,10 @@ for repo in *; do (
 
 I like [Meld](https://meldmerge.org/), which is a visual diff and merge tool.
 
-Imagine I changed several parts in a file. Now a realize that some parts are good, and should stay,
-and some parts should get removed again.
+Imagine I changed several parts of a file. Now I realize that some parts are good and should stay,
+while others should be removed again.
 
-I am on a feature-branch which was created from "main".
+I am on a feature branch that was created from "main".
 
 ```console
 # Create a copy of the file
@@ -832,8 +832,8 @@ don't need.
 
 ---
 
-Image you created a PR containing several changes. Now you decide that you want to create three PRs
-and not one.
+Imagine you created one PR containing several changes. Now you decide that you want to create three
+PRs instead.
 
 First, create a backup of your branch:
 
@@ -860,9 +860,9 @@ cd ..
 meld myrepo-main myrepo
 ```
 
-Now you can easily remove all changes from belonging to feature-2 and feature-3.
+Now you can easily remove all changes that belong to feature-2 and feature-3.
 
-I tried that with vscode, but somehow `meld` is more usable for that. You can copy files between
+I tried that with VS Code, but `meld` is more usable for this. You can copy files between
 both directories with the context menu.
 
 You can accept (click on arrow) or reject (shift-click) single changes.
