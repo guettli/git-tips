@@ -282,12 +282,12 @@ is not the default. Without it, you won't see other branches.
 
 ## rebase vs merge
 
-I do not care much. In the past there have been endless discussions about this.
+My default workflow:
 
-My way:
+- While the PR is open, merge the base branch into the feature branch.
+- When the PR gets merged, squash it into one commit on `main`.
 
-- In a PR, merge changes into the feature branch.
-- Squash the PR when it gets merged to `main`.
+With that workflow, I hardly need `rebase`.
 
 ## List all files
 
