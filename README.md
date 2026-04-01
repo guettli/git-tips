@@ -1063,8 +1063,9 @@ You can use `git check-ignore -v`:
 .gitignore:23:foo/*.baz foo/bar.baz
 ```
 
-## Related
+## More
 
-- [Güttli's opinionated Programming Guidelines](https://github.com/guettli/programming-guidelines)
-- [Güttli's opinionated Python Tips](https://github.com/guettli/python-tips)
-- [Güttli working-out-loud](https://github.com/guettli/wol)
+- [Bash Strict Mode](https://github.com/guettli/bash-strict-mode)
+- [How I use Direnv](https://github.com/guettli/How-I-use-direnv/)
+- [Switching to Nix](https://github.com/guettli/switching-to-nix)
+- [Thomas WOL: Working out Loud](https://github.com/guettli/wol)
