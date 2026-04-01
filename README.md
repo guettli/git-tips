@@ -487,20 +487,15 @@ This will open `meld` and you can take some lines to your local version.
 
 I use [pre-commit.com](//pre-commit.com).
 
-For example I use this to avoid committing, if there are untracked files:
+It is a simple way to run checks automatically before creating a commit.
 
-```yaml
-# See https://pre-commit.com/hooks.html for more hooks
-repos:
-  - repo: local
-    hooks:
-      - id: no-untracked-files-in-git
-        name: no-untracked-files-in-git
-        language: system
-        entry: >-
-          bash -c 'files=$(git ls-files --exclude-standard --others);
-          echo $files; test -z "$files"'
-```
+That means:
+
+- feedback comes early
+- trivial issues get caught before CI
+- the local workflow gets closer to the CI workflow
+
+Example from this repo: [.pre-commit-config.yaml](.pre-commit-config.yaml)
 
 ## gitleaks via pre-commit
 
