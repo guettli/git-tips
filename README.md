@@ -976,17 +976,12 @@ But Git cannot reliably tell you:
 
 - "feature-2 was created from feature-1"
 
-If you are not asking Git about branch ancestry, but the hosting platform about
-the current PR or MR, then a hosting CLI can help.
-
-Verified example:
+If you are not asking Git about branch ancestry, but the hosting platform about the current PR or
+MR, then CLI tools can help:
 
 - GitHub: `gh pr view --json baseRefName --jq .baseRefName`
-
-TODO: verify the best GitLab CLI command for "base branch of the current MR".
-
-TODO: verify the best Codeberg/Forgejo/Gitea CLI command for "base branch of
-the current PR".
+- GitLab: `glab mr view --output json | jq -r .target_branch`
+- Codeberg/Forgejo/Gitea: ...
 
 ## Undelete a branch
 
