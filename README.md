@@ -93,8 +93,16 @@ git fetch origin
 git diff origin/main...
 ```
 
-Hint: the missing right side means `HEAD`, so `git diff origin/main...` is
-short for `git diff origin/main...HEAD`.
+Why is this different?
+
+- `git diff origin/main` compares your current work against the current tip of
+  `origin/main`
+- `git diff origin/main...` compares your current work against the merge base
+  of your branch and `origin/main`
+
+That is why `git diff origin/main...` is usually closer to what you see in a
+pull request: it shows the changes on your branch since it diverged from
+`origin/main`.
 
 ## Create a backup of a branch
 
