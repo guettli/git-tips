@@ -659,14 +659,14 @@ branch which was not merged to main yet.
 But be careful. This re-writes the git history. This means other people developing on this branch
 will get trouble if you do this.
 
-But if this branch is your Merge-Request (aka Pull-Request), and you know nobody else uses this
+But if this branch is your merge request (or pull request), and you know nobody else uses this
 branch, then it is fine to do so:
 
 ```console
 git rebase -i HEAD~N
 ```
 
-N is the number of commits you want to work on. If you are working on a branch which was branched of
+`N` is the number of commits you want to work on. If you are working on a branch which was branched off
 "main", and you want to rebase all your changes: `git rebase -i $(git merge-base main @)`
 
 Interactive rebase asks you for every commit what you want to do.
@@ -674,13 +674,13 @@ Interactive rebase asks you for every commit what you want to do.
 More about rewriting the git history: [Git Book: Rewriting
 History](https://git-scm.com/book/en/v2/Git-Tools-Rewriting-History)
 
-But you can't push the branch with the re-written history. You need to use:
+But you cannot push the branch with the rewritten history. You need to use:
 
 ```console
 git push --force-with-lease
 ```
 
-But overall: Don't do this to often. This is not very productive (compared to writing new code,
+But overall: do not do this too often. This is not very productive (compared to writing new code,
 fixing old bugs or writing more detailed tests)
 
 ## Squash all commits into a single commit
