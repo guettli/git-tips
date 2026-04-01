@@ -893,7 +893,7 @@ manually.
 
 ## parent branch
 
-Unfortunately it is not straight forward to find the branch name of the parent branch.
+Unfortunately, it is not straightforward to find the name of the parent branch.
 
 Example:
 
@@ -902,10 +902,10 @@ You created "feature-1" by branching off "main".
 Then you create "feature-2" by branching off "feature-1" (because the second feature depends on a
 change which was done in feature-1).
 
-Then for some weeks different things are more urgent, and now you are unsure if you branched off
-main or from an other branch.
+Then other things are more urgent for a few weeks, and now you are unsure whether you branched off
+`main` or another branch.
 
-I stored this in my local script directory
+I stored this in my local script directory:
 
 ```bash
 #!/bin/bash
@@ -918,8 +918,6 @@ git show-branch -a 2>/dev/null \
 ```
 
 Source: <https://stackoverflow.com/a/74314172/633961>
-
-TODO: You can use the `gh` tool to get the base branch.
 
 ## Undelete a branch
 
