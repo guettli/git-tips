@@ -184,8 +184,6 @@ Which commit removed or renamed it?
 
 Attention: `git log -G=foo` will search for `=foo` (and I guess that is not what you wanted).
 
-TODO: briefly explain: git log -G
-
 ## Find string in all branches
 
 If you know a co-worker introduced a variable/method/class, but it is not in your code, and `git log
