@@ -38,7 +38,7 @@ If you use VS Code, you can give each directory a different border color:
 
 That makes it easier to switch between PRs.
 
-If you have a train of PRs, I like this mnemonic:
+If you have a train of PRs, I use this mnemonic to remember the order:
 
 - First PR: light blue
 - Second PR: yellow
