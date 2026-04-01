@@ -5,6 +5,7 @@ These executables are available in Github Actions.
 There are two lists: from `/bin` and from `/usr/bin`.
 
 ... in bin
+
 ```
 [
 add-apt-repository
@@ -656,6 +657,7 @@ znew
 ```
 
 ... in /usr/bin
+
 ```
 [
 add-apt-repository
