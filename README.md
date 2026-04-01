@@ -38,17 +38,11 @@ If you use VS Code, you can give each directory a different border color:
 
 That makes it easier to switch between PRs.
 
-If you have a train of PRs, I use this mnemonic to remember the order:
+If you have a train of PRs, I like this mnemonic to remember the order:
 
-- First PR: light blue
-- Second PR: yellow
-- Third PR: purple
-
-If you have a train of PRs, I like this color scheme because it makes them easy to distinguish:
-
-- First PR: light blue
-- Second PR: yellow
-- Third PR: purple
+- First PR: light blue (like "baby")
+- Second PR: yellow (like "youth")
+- Third PR: purple (like elderly)
 
 ## `git checkout` -> `git switch` + `git restore`
 
