@@ -794,9 +794,9 @@ git restore --theirs path/to/file
 
 ## git log over many git repos
 
-You have a directory called "all-repos". This contains many git-repos. Now you want to use `git log
--G FooBar` over all git repos. You only want to search for commits which where done during the last
-8 months and you want to sort the result by the timestamp of the commit.
+You have a directory called "all-repos". It contains many Git repos. Now you want to use
+`git log -G FooBar` across all of them. You only want to search for commits that were created
+during the last 8 months, and you want to sort the result by commit timestamp.
 
 A bit ugly, but works:
 
