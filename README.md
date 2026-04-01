@@ -986,14 +986,12 @@ I do 95% of my git actions on the command-line. But "history for selection" is s
 feature of IntelliJ-based IDEs. You can select a region in the code and then you can have a look at
 the history of this region.
 
-On the command-line you can use `git blame some-file`, but it is not that powerfull like the
+On the command line you can use `git blame some-file`, but it is not as powerful as the
 IntelliJ IDE solution.
 
-I switched to vscode several years ago, but still miss this feature.
+I switched to VS Code several years ago, but still miss this feature.
 
-If you know how to get that in vscode, please tell me!
-
-ööö
+If you know how to get that in VS Code, please tell me.
 
 ## Which line ignores a file?
 
