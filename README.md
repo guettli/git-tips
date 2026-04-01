@@ -593,8 +593,8 @@ Use `branch -rd` to delete the remote branch, too.
 
 ## git bisect
 
-"git bisect" is a great tool in conjunction with unit tests. It is easy to find the commit, which
-introduced an error. Unfortunately, it is not a one-liner for now. You can use it like this:
+`git bisect` is a great tool in combination with unit tests. It makes it easy to find the commit
+that introduced a bug. Unfortunately, it is not a one-liner. You can use it like this:
 
 ```console
 user@host> git bisect start HEAD HEAD~10
@@ -606,8 +606,8 @@ c8bed9b56861ea626833637e11a216555d7e7414 is the first bad commit
 Author: ...
 ```
 
-But if your pull-requests get tested before they get merged (Continous-Integration), then you hardly
-need "git bisect".
+But if your pull requests get tested before they get merged in continuous integration, you hardly
+need `git bisect`.
 
 ## git bisect for lazy people
 
