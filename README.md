@@ -300,7 +300,7 @@ But you can't push the branch with the re-written history. You need to use:
 But overall: Don't do this to often. This is not very productive (compared to
 writing new code, fixing old bugs or writing more detailed tests)
 
-# Squash via Github
+## Squash via Github
 
 During development I want to do many small commits on a branch. This gives me a
 better overview about the changes I do. When the diff gets too big, then it is
@@ -315,7 +315,7 @@ a small PRs, when looking at the Github UI of PR.
 But it keeps the history of the main branch clean: Every PR gets merged in one
 commit. Nice, I like it.
 
-# Squash all commits into a single commit
+## Squash all commits into a single commit
 
 Unfortunately in Kubernetes related projects squash via Github (like explained
 above) is disabled.
@@ -348,7 +348,7 @@ the changes between "main" and "your-pr-branch".
     git commit
     git push --force-with-lease
 
-# Change a git branch "inplace"
+## Change a git branch "inplace"
 
 Imagine you developed your changes on a branch called "feature-foo". This branch
 was created from branch "feature-base".
@@ -367,14 +367,14 @@ This creates the patches in a directory:
     git reset --hard origin/main
     patch -p0 < ~/tmp/foo-patches/000... (files one by one)
 
-# Apply difference between two branches on a third branch
+## Apply difference between two branches on a third branch
 
 The above tip *Change a git branch "inplace"* uses external patches.
 
 This can be used to [Apply difference between two branches on a third
 branch](https://stackoverflow.com/questions/73279330)
 
-# Restore a single file
+## Restore a single file
 
 Imagine you are working on a feature branch. But you want to restore one file to
 the original version of the main branch.
@@ -388,7 +388,7 @@ Source: <https://stackoverflow.com/a/59756673/633961>
 After that you can use `ctrl-shift-g` (vscode) to compare the local version with
 the current branch. This way you can easily restore some parts of a file.
 
-# List all files
+## List all files
 
 Git directories often contain a lot of auto-created files. For example files
 created by tests.
@@ -433,7 +433,7 @@ history (for example via `ctrl-r` (backward search)):
 Once you executed this once, you can easily get back to this line by ctrl-r
 (search backwards in history) and then type “over all”
 
-# Architecture: Keep Backend and Frontend in one git Repo
+## Architecture: Keep Backend and Frontend in one git Repo
 
 If you split your code into two repos. One for the backend code, one for the
 frontend code, then you will make your life harder. The problem is that often a
@@ -443,7 +443,7 @@ deployment of both changes is usualy easier if you have one repo.
 BTW, many big companies use a gigantic monorepo for all their code. [Wikipedia
 Monorepo](https://en.wikipedia.org/wiki/Monorepo)
 
-# Autocompletion
+## Autocompletion
 
 If you configured auto-completion, then you can easy switch a branch if you know
 the first characters of the branch name:
@@ -451,7 +451,7 @@ the first characters of the branch name:
     git switch foo[TAB]
      --->        foobar
 
-# Show current branch (for loop)
+## Show current branch (for loop)
 
 show the current branch name: `git rev-parse --abbrev-ref HEAD`
 
@@ -463,14 +463,14 @@ which one is not on the "main" branch:
       echo $repo $(git rev-parse --abbrev-ref HEAD)
     ); done | grep -v main
 
-# Empty commit
+## Empty commit
 
 Most web-GUIs of CI-systems have a "retry" button. But sometimes this does not
 work, or you don't want to leave your context.
 
     git commit --allow-empty -m "Trigger CI"
 
-# side by side diff
+## side by side diff
 
 Imagine you want to see an old commit side-by-side.
 
@@ -483,7 +483,7 @@ You could do `git show 8d73caed`, but this would not be side-by-side.
 --\> launches [meld](https://meldmerge.org/), if installed, or your prefered
 diff-tool. See [git-difftool](https://git-scm.com/docs/git-difftool)
 
-# Solving Conflicts: Overview
+## Solving Conflicts: Overview
 
 Before solving a git merge conflict, it is convinient to have an overview: What
 changed between base and remote, and what change between base and my local
@@ -498,7 +498,7 @@ the file, and after that I apply the simpler change by hand.
 BTW, I use the above tool just to help me see the changes. For resolving the
 conflict by hand I use `git mergetool` with `meld`. See next topic.
 
-# Solving Conflicts with `meld`
+## Solving Conflicts with `meld`
 
 I am on a branch that was created from the main branch some hours ago.
 
@@ -538,14 +538,14 @@ close the UI. The UI will reopen if there is a second file with a conflict.
 I have tried several other tools, but `meld` (with useAutoMerge) is still my
 favorite.
 
-# Resolve, take theirs
+## Resolve, take theirs
 
 You merged a branch into your branch, and now you have conflicts. You want to
 discard your change, and take their changes:
 
     git restore --theirs path/to/file
 
-# After resolving conflict: git diff HEAD~1
+## After resolving conflict: git diff HEAD~1
 
 You did `git merge ...`. There were conflicts you solved by hand. You did
 `git add path-to/file-which-had-conflict.foo` . You have not committed your
@@ -556,7 +556,7 @@ because your changes are staged.
 
 You need to use `git diff --staged` to see your changes.
 
-# git log over many git repos
+## git log over many git repos
 
 You have a directory called "all-repos". This contains many git-repos. Now you
 want to use `git log -G FooBar` over all git repos. You only want to search for
@@ -571,7 +571,7 @@ A bit ugly, but works:
         --date=iso --since="$(date -d "8 months ago" --iso)"
     ); done | sort -r | head
 
-# Think outside the box
+## Think outside the box
 
 Your local git repo is just a simple directory. Sometimes it is easier to just
 use `cp -a my-repo my-repo2` to create a copy of your git repo.
@@ -584,7 +584,7 @@ in one editor and the main branch in a second. In VSCode I use the Peacock
 plugin to change to color of the main branch, to easily distinguish between
 both.
 
-# Merging some parts of a different branch.
+## Merging some parts of a different branch.
 
 I like [Meld](https://meldmerge.org/), which is a visual diff and merge tool.
 
@@ -635,7 +635,7 @@ copy files between both directories with the context menu.
 
 You can accept (click on arrow) or reject (shift-click) single changes.
 
-# show change of merge commit
+## show change of merge commit
 
 This shows no changes for merge commits:
 
@@ -647,12 +647,12 @@ Use:
 
 The output of above command has several parts. For each parent commit one part.
 
-# Git pager
+## Git pager
 
 I use [delta](https://github.com/dandavison/delta) which shows `git diff`
 colorful, so that you can easily spot small changes in long lines.
 
-# revert a merge commit
+## revert a merge commit
 
 You want to revert this merge commit:
 
@@ -674,7 +674,7 @@ This following line will keep 14f8548e and drop 90d4ee9c.
 
 Related [Stackoverflow Answer](https://stackoverflow.com/a/7100005/633961)
 
-# cherry-pick -n
+## cherry-pick -n
 
 `git cherry-pick ...` creates a new commit automatically. Sometimes you don't
 want only some changes of the original commit.
@@ -682,7 +682,7 @@ want only some changes of the original commit.
 You can use the option `-n` to only get the changes. Now you can modify the
 changes and commit manually.
 
-# parent branch
+## parent branch
 
 Unfortunately it is not straight forward to find the branch name of the parent
 branch.
@@ -709,7 +709,7 @@ I stored this in my local script directory
 
 Source: <https://stackoverflow.com/a/74314172/633961>
 
-# Automatically prune on fetch
+## Automatically prune on fetch
 
     git config --global fetch.prune true
 
@@ -717,7 +717,7 @@ It sets a global Git config so every git fetch will prune stale remote-tracking
 branches—i.e., it automatically deletes local refs like origin/foobar when
 they’ve been removed from the remote.
 
-# delete merged branches
+## delete merged branches
 
 After some months there are too many old branches. Time to clean up.
 
@@ -733,7 +733,7 @@ script can decide if they can be deleted or not.
 
 Use `branch -rd` to delete the remote branch, too.
 
-# ripgrep: recursive grep which respects .gitignore
+## ripgrep: recursive grep which respects .gitignore
 
 [ripgrep](https://github.com/BurntSushi/ripgrep): recursive grep which respects
 .gitignore
@@ -741,7 +741,7 @@ Use `branch -rd` to delete the remote branch, too.
 Handy, if there are huge directories in you git-repo which you usualy want to
 skip.
 
-# Undelete a branch
+## Undelete a branch
 
 Imagine you accidentally deleted a branch:
 
@@ -755,7 +755,7 @@ Relax, you can easily create the branch again.
     ❯ git switch -d d885d38
     ❯ git switch -c foo-branch
 
-# Feature branch, only one commit
+## Feature branch, only one commit
 
 For some git repos exists a policy that your feature branch should contain only
 one commit before the branch can get merged.
@@ -770,7 +770,7 @@ it rewrites the history.
 
     git commit --amend . && git push --force-with-lease
 
-# How to Use Multiple Git Configs on One Computer
+## How to Use Multiple Git Configs on One Computer
 
 Image you up to now had only a personal Github account.
 
@@ -797,7 +797,7 @@ vi .gitconfig
 Source: [How to Use Multiple Git Configs on One
 Computer](https://www.freecodecamp.org/news/how-to-handle-multiple-git-configurations-in-one-machine/)
 
-# Pick some lines from an other branch with `git difftool`
+## Pick some lines from an other branch with `git difftool`
 
 Imagine you want to take some changes of a different branch into your code.
 
@@ -812,7 +812,7 @@ I like the GUI tool `meld` as difftool.
 
 This will open `meld` and you can take some lines to your local version.
 
-# pre-commit.com
+## pre-commit.com
 
 I use [pre-commit.com](//pre-commit.com).
 
@@ -831,7 +831,7 @@ For example I use this to avoid committing, if there are untracked files:
 
 Related: <https://stackoverflow.com/a/75543767/633961>
 
-# Taskfile stamp files per task name
+## Taskfile stamp files per task name
 
 If several independent Taskfile tasks watch the same directory, they should not
 share a single stamp file.
@@ -851,7 +851,7 @@ therefore requires a task name before the path:
 The task name becomes part of the stamp filename in `.tmp/`. Non filename-safe
 characters get replaced with underscores.
 
-# gitleaks via pre-commit
+## gitleaks via pre-commit
 
 This repository uses `gitleaks` in `.pre-commit-config.yaml`.
 
@@ -866,7 +866,7 @@ Why in `pre-commit` and not only in CI?
 I use `gitleaks` here because it is a maintained general-purpose secret scanner
 and its license is MIT, not AGPL.
 
-# git submodules
+## git submodules
 
 I like to update submodules automatically:
 
@@ -874,12 +874,12 @@ I like to update submodules automatically:
 
 Don't ask me why this is no the default.
 
-# git subrepo (Alternative to submodule)
+## git subrepo (Alternative to submodule)
 
 If you want to include code of a third-party into your git repo, you can
 "vendor" it via [git subrepo](https://github.com/ingydotnet/git-subrepo).
 
-# Personal Notes per git Repo
+## Personal Notes per git Repo
 
 I want to have personal notes per git repo which are not part of the git repo.
 
@@ -907,7 +907,7 @@ Now I can edit notes easily:
 But don't be careful. Don't increase the "bus factor" by building a
 single-person "information silo".
 
-# Public .envrc file, private .env file
+## Public .envrc file, private .env file
 
 I use [direnv](https://direnv.net/) to manage environments. The tool direnv uses
 `.envrc` files to set environment variables.
@@ -938,7 +938,7 @@ contains credentials (for example GITHUB_TOKEN).
 To prevent accidental commits of .env files in all your Git repositories, you
 can set up a global .gitignore file like above, and add `.env` to the file.
 
-# Chain of branches: Add base branch to name of second branch
+## Chain of branches: Add base branch to name of second branch
 
 Sometime you create a chain/train of branches. The first branch is still in
 review, but you start to work on the next items in a second branch.
@@ -956,25 +956,25 @@ The third would be: `name-of-third-branch--based-on-name-of-second-branch`.
 
 And so on.
 
-# Long branch names are fine
+## Long branch names are fine
 
 I think it is perfectly fine to have long branch names like:
 
     tg/check-workspace-providers-on-create-of-apc--based-on-disallow-change-of-controlplane-location
 
-# Github: Tab width: 4
+## Github: Tab width: 4
 
 If you use tabs for indentation (for example in Golang), then you might want to
 change the default tab width from 8 to 4:
 <https://github.com/settings/appearance>
 
-# Github: open PR in web UI.
+## Github: open PR in web UI.
 
 This command opens the current PR in your browser:
 
     gh pr view --web
 
-# vscode: autoFetch
+## vscode: autoFetch
 
 I like the vscode git [`autoFetch`
 setting](https://code.visualstudio.com/docs/sourcecontrol/overview#_remotes).
@@ -983,7 +983,7 @@ This fetches the latest changes from the remote every N seconds.
 This is handy, because I see `[behind]` if you use the [my Starship prompt git
 config](#starship-prompt).
 
-# Keep Github Action Workflows simple
+## Keep Github Action Workflows simple
 
 I prefer to keep Github Action Workflows simple. I like that Github does CI for
 me, but calling third pary Github Actions has the draw back, that I can not
@@ -997,7 +997,7 @@ Mode](https://github.com/guettli/bash-strict-mode).
 
 This works in Github CI and on my local Linux device.
 
-# Which line ignores a file?
+## Which line ignores a file?
 
 You have a file `foo/bar.baz` which gets somehow ignored by a line in a
 .gitignore.
@@ -1009,7 +1009,7 @@ You can use `git check-ignore -v`:
     ❯ git check-ignore -v foo/bar.baz
     .gitignore:23:foo/*.baz foo/bar.baz
 
-# Clone a sub-folder
+## Clone a sub-folder
 
     git clone -n --depth=1 --filter=tree:0 \
       https://github.com/cirosantilli/test-git-partial-clone-big-small-no-bigtree
@@ -1020,7 +1020,7 @@ You can use `git check-ignore -v`:
 [Stackoverflow How do I clone a subdirectory only of a Git
 repository?](https://stackoverflow.com/a/52269934/633961)
 
-# Starship Prompt
+## Starship Prompt
 
 I use [Starship Prompt](https://starship.rs/config/#git-status), so that I get
 notified in the prompt, when the git status is not clean.
@@ -1039,7 +1039,7 @@ My config:
 This shows nothing, when the git state is clean, and a readable warning, when
 something is wrong.
 
-# Github: Play sound, when CI Job is finished
+## Github: Play sound, when CI Job is finished
 
 Sometimes I need to wait until a Github CI Job is finished. Waiting is not very
 productive, so I do other things while waiting.
@@ -1052,7 +1052,7 @@ When the job is done, I want to get notified. This can be done like this:
 finished, the next command is called `music`. Use whatever command you want for
 that. For me `music` is a smal script which plays a song I like.
 
-# Related
+## Related
 
 - [Güttli's opinionated Programming
   Guidelines](https://github.com/guettli/programming-guidelines)
