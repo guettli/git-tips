@@ -285,7 +285,8 @@ I am on a branch that was created from the main branch some hours ago.
 Now I want to merge the new main branch into my branch again.
 
 ```console
-❯ git merge main
+❯ git fetch origin
+❯ git merge origin/main
 
 Auto-merging internal/foo/api/v1beta1/mycrd_types.go
 CONFLICT (content): Merge conflict in internal/foo/api/v1beta1/mycrd_types.go
