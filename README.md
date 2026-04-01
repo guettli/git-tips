@@ -268,15 +268,14 @@ history) and then type “over all”
 
 ## Autocompletion
 
-If you configured auto-completion, then you can easy get the list of branches if you know the first
+If you configured auto-completion, you can easily get a list of branches if you know the first
 characters of the branch name:
 
 ```console
-git diff branch[TAB]
+git switch branch[TAB]
  --->        branch-foo
  --->        branch-bar
  --->        ...
-
 ```
 
 ## Solving Conflicts with `meld`
