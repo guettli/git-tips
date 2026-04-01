@@ -132,8 +132,8 @@ git restore -s main path/to/file
 ## Restore interactively
 
 Imagine you are working on a feature branch. But you want to restore some changes to the original
-version of the main branch. For convenience you want that to be interactive, because some changes of
-the file should be kept. Use `-p`
+version of the main branch. You want to do that interactively because some changes in the file
+should stay. Use `-p`:
 
 ```console
 git restore -s main -p path/to/file
