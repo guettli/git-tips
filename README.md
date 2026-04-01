@@ -995,7 +995,7 @@ If you know how to get that in VS Code, please tell me.
 
 ## Which line ignores a file?
 
-You have a file `foo/bar.baz` which gets somehow ignored by a line in a .gitignore.
+You have a file `foo/bar.baz` that is being ignored by a line in a `.gitignore`.
 
 But you are unsure which line is responsible for ignoring this file.
 
