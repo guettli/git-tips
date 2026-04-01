@@ -725,8 +725,8 @@ branch "feature-base".
 Requirements change, and now you need to merge your changes into the main branch, but not the
 changes from branch "feature-base".
 
-You could create a new branch, but since the central git-UI (github/gitlab) already references
-"feature-foo", you want to change the branch "inplace".
+You could create a new branch, but since the central Git UI (GitHub or GitLab) already references
+"feature-foo", you want to change the branch in place.
 
 This creates the patches in a directory:
 
