@@ -616,7 +616,8 @@ This deletes all branches that are fully merged. It only deletes local branches.
 There will still be several branches left that are not merged yet. No script can decide whether
 they can be deleted or not.
 
-Use `branch -rd` to delete the remote branch, too.
+Use `git push origin --delete branch-name` to delete the remote branch itself.
+`git branch -rd origin/branch-name` only deletes your local remote-tracking ref.
 
 ## git bisect
 
