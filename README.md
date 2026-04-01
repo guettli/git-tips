@@ -446,7 +446,7 @@ MIT, not AGPL.
 
 ## Public .envrc file, private .env file
 
-I use [direnv](https://direnv.net/) to manage environments. The tool direnv uses `.envrc` files to
+I use [direnv](https://direnv.net/) to manage environments. `direnv` uses `.envrc` files to
 set environment variables.
 
 But for secrets I use `.env` files.
@@ -457,7 +457,7 @@ Example:
 # shellcheck shell=bash
 
 # .envrc file of direnv.
-# If you use vsode, pleaes use the `direnv` extension.
+# If you use VS Code, please use the `direnv` extension.
 
 # Use nix-direnv
 # https://github.com/nix-community/nix-direnv
@@ -471,8 +471,8 @@ PATH_add node_modules/.bin
 dotenv_if_exists
 ```
 
-In never want the `.env` file to be part of a git repo, because it usualy contains credentials (for
-example GITHUB_TOKEN).
+I never want the `.env` file to be part of a Git repo, because it usually contains credentials (for
+example `GITHUB_TOKEN`).
 
 To prevent accidental commits of .env files in all your Git repositories, you can set up a global
 .gitignore file like above, and add `.env` to the file.
