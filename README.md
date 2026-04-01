@@ -285,9 +285,10 @@ is not the default. Without it, you won't see other branches.
 My default workflow:
 
 - While the PR is open, merge the base branch into the feature branch.
-- When the PR gets merged, squash it into one commit on `main`.
+- When the PR gets merged, squash it into one commit on `main`. This is usually done via the web UI.
 
-With that workflow, I hardly need `rebase`.
+With that workflow, I rarely need `rebase` for syncing with the base branch.
+I still might use it locally to clean up unpublished commits.
 
 ## List all files
 
