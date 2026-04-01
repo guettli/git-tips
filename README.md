@@ -104,6 +104,27 @@ That is why `git diff origin/main...` is usually closer to what you see in a
 pull request: it shows the changes on your branch since it diverged from
 `origin/main`.
 
+## Merge upstream branch often
+
+If your branch lives for more than a day or two, I prefer to merge the upstream
+branch into it regularly.
+
+Why?
+
+- conflicts stay small
+- test failures show up earlier
+- rebasing or merging later gets less painful
+
+I usually do this:
+
+```console
+git fetch origin
+git merge origin/main
+```
+
+I prefer this over waiting a week and then resolving one huge conflict at the
+end.
+
 ## Create a backup of a branch
 
 ```console
@@ -429,13 +450,13 @@ mv .gitconfig .gitconfig-work
 
 # change the email address to your work address
 
-vi .gitconfig-work
+code .gitconfig-work
 ```
 
 Then create a new `~/.gitconfig`:
 
 ```console
-vi .gitconfig
+code .gitconfig
 ```
 
 Put this into it:
