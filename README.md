@@ -71,8 +71,8 @@ prefer this approach.
 
 ## Pull Requests
 
-Git itself does not know "Pull Requests" (PRs). That's something which was invented by tools like
-Github, Gitlab, or Codeberg.
+Git itself does not know about pull requests (PRs). That concept was added by platforms like
+GitHub, GitLab, and Codeberg.
 
 ## Squash PRs
 
