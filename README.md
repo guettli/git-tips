@@ -90,8 +90,11 @@ For that PR-like view, use the merge-base form:
 
 ```console
 git fetch origin
-git diff origin/main...HEAD
+git diff origin/main...
 ```
+
+Hint: the missing right side means `HEAD`, so `git diff origin/main...` is
+short for `git diff origin/main...HEAD`.
 
 ## Create a backup of a branch
 
@@ -192,7 +195,7 @@ branch. You do not want to see those changes.
 What was changed on your branch since the branch was created?
 
 ```console
-git diff origin/main...HEAD
+git diff origin/main...
 ```
 
 Unfortunately this does not show your local changes, which are not committed yet.
