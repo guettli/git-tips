@@ -367,10 +367,9 @@ automatically deletes local refs like origin/foobar when they’ve been removed 
 
 ## How to Use Multiple Git Configs on One Computer
 
-Image you up to now had only a personal Github account.
+Imagine you have used only a personal GitHub account so far.
 
-Now you want to have two (on one computer): one for your personal stuff and one for work related
-stuff.
+Now you want two identities on one computer: one for personal work and one for work-related repos.
 
 Create two gitconfig files:
 
@@ -379,12 +378,12 @@ cd $HOME
 cp .gitconfig .gitconfig-personal
 mv .gitconfig .gitconfig-work
 
-# change email address to your address for work related mails
+# change the email address to your work address
 
 vi .gitconfig-work
 ```
 
-vi .gitconfig
+Then edit `.gitconfig`:
 
 ```ini
 [includeIf "gitdir:~/personal/"]
