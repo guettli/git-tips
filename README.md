@@ -755,15 +755,17 @@ git commit --allow-empty -m "Trigger CI"
 
 ## Show one commit in difftool
 
-Imagine you want to see an old commit side-by-side.
+Imagine you want to review one old commit side by side in a GUI diff tool.
 
-You could do `git show 8d73caed`, but this would not be side-by-side.
+Usually I start with `git show 8d73caed` in the terminal.
+
+If you want a side-by-side view, use `git difftool` with the commit and its parent:
 
 ```console
-git difftool 8d73caed~1 8d73caed
+git difftool 8d73caed^ 8d73caed
 ```
 
-`~1` means "the commit before 8d73caed".
+`^` means "the parent commit of 8d73caed".
 
 This launches [meld](https://meldmerge.org/) if it is installed, or your preferred diff tool. See
 [git-difftool](https://git-scm.com/docs/git-difftool).
