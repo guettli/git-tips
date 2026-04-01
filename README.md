@@ -56,6 +56,32 @@ I think it is time to use the newer commands:
 
 I avoid `git checkout`.
 
+## `git diff main` vs `git diff origin/main`
+
+These two commands can show different results:
+
+- `git diff main`: compare against your local `main`
+- `git diff origin/main`: compare against your local remote-tracking ref for `origin/main`
+
+If your local `main` is outdated, then `git diff main` can be misleading.
+
+For example:
+
+- maybe you have not switched to `main` for a week
+- maybe you did not run `git pull` on `main`
+- but `git fetch origin` already updated `origin/main`
+
+If you want to compare against the current state of the remote main branch, I
+prefer this sequence:
+
+```console
+git fetch origin
+git diff origin/main
+```
+
+If you specifically want to compare against your local `main` branch, use
+`git diff main`.
+
 ## Create a backup of a branch
 
 ```console
@@ -106,7 +132,7 @@ Solution: create a backup, delete your local `main`, and recreate it from `origi
 # Create a backup
 git switch -c main--backup
 git branch -D main
-git switch --track -c main origin/main
+git switch main
 ```
 
 ## git stash
