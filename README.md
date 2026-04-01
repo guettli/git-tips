@@ -395,14 +395,14 @@ Then edit `.gitconfig`:
 Source: [How to Use Multiple Git Configs on One
 Computer](https://www.freecodecamp.org/news/how-to-handle-multiple-git-configurations-in-one-machine/)
 
-## Pick some lines from an other branch with `git difftool`
+## Pick some lines from another branch with `git difftool`
 
 Imagine you want to take some changes of a different branch into your code.
 
 If you care about the lines of code, not the commits, then you can use the following way to get the
 changed lines into your code.
 
-Switch to your branch (the branch which should get updated).
+Switch to the branch that should be updated.
 
 ```console
 git difftool other-branch -- your-file.txt
