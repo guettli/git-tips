@@ -90,7 +90,6 @@ I use that pattern: When I work on branch `foo`, then I create `foo-some-idea`. 
 
 I can easily switch back to `foo`, when my idea was not successful.
 
-
 ## `git diff` of pull-request
 
 Imagine you work on a branch which is a pull-request.
@@ -153,7 +152,6 @@ That's easy:
 
 But it shows you only the commit message. If you want to see the changes which were done, you
 need to use `-p` (like patch): `git log -p foo.txt`.
-
 
 ## Find removed code
 
@@ -563,7 +561,6 @@ You have a directory called "all-repos". This contains many git-repos. Now you w
 want to search for commits which where done during the last 8 months and you
 want to sort the result by the timestamp of the commit.
 
-
 A bit ugly, but works:
 
 ```
@@ -634,8 +631,6 @@ I tried that with vscode, but somehow `meld` is more usable for that. You can co
 
 You can accept (click on arrow) or reject (shift-click) single changes.
 
-
-
 # show change of merge commit
 
 This shows no changes for merge commits:
@@ -677,7 +672,6 @@ git revert 67181091 -m 2
 ```
 
 Related [Stackoverflow Answer](https://stackoverflow.com/a/7100005/633961)
-
 
 # cherry-pick -n
 
@@ -806,7 +800,6 @@ vi .gitconfig
   path = ~/.gitconfig-work
 ```
 
-
 Source: [How to Use Multiple Git Configs on One Computer](https://www.freecodecamp.org/news/how-to-handle-multiple-git-configurations-in-one-machine/)
 
 # Pick some lines from an other branch with `git difftool`
@@ -926,7 +919,6 @@ code me/foo.txt
 
 But don't be careful. Don't increase the "bus factor" by building a single-person "information silo".
 
-
 # Public .envrc file, private .env file
 
 I use [direnv](https://direnv.net/) to manage environments. The tool direnv uses `.envrc` files to
@@ -1014,7 +1006,6 @@ There are tools like [act](https://github.com/nektos/act), but I often it did no
 Keep things simple by using a reliable Bash script in [Bash Strict Mode](https://github.com/guettli/bash-strict-mode).
 
 This works in Github CI and on my local Linux device.
-
 
 # Which line ignores a file?
 
