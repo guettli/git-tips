@@ -525,9 +525,9 @@ git mergetool --tool=meld
 
 Now a nice UI opens, and you will see three columns:
 
-- On the left side, you see your original code (before starting the merge).
-- In the middle, you see the result of the automatic merges done by Git.
-- On the right side, you see "theirs" (new main branch).
+* On the left side, you see your original code (before starting the merge).
+* In the middle, you see the result of the automatic merges done by Git.
+* On the right side, you see "theirs" (new main branch).
 
 The green and blue parts are automatically resolved. You do not modify these in most cases.
 
