@@ -114,9 +114,9 @@ git switch main
 `git stash` is like a backpack.
 
 Example: You started to code. Then you realize (before you commit) that you work on the main branch.
-But you want to work in a feature-branch before first. Then you can `git stash` your uncommitted
-changes. Then you switch or create the branch you want to work on. After that you `git stash pop`
-and take your changes out of your backpack.
+But you want to move that work onto a feature branch first. You can `git stash` your uncommitted
+changes, switch to or create the branch you actually want, and then use `git stash pop` to bring
+the changes back.
 
 ## Restore a single file
 
