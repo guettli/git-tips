@@ -490,7 +490,7 @@ tg/check-workspace-providers-on-create-of-apc--based-on-disallow-change-of-contr
 If you use tabs for indentation (for example in Golang), then you might want to change the default
 tab width from 8 to 4: <https://github.com/settings/appearance>
 
-## Github: open PR in web UI
+## GitHub: open PR in web UI
 
 This command opens the current PR in your browser:
 
