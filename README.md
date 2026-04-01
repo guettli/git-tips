@@ -925,7 +925,7 @@ Oh my god! What have I done?
 Relax, you can easily create the branch again.
 
 ```console
-❯ git switch -d d885d38
+❯ git switch --detach d885d38
 ❯ git switch -c foo-branch
 ```
 
