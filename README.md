@@ -73,13 +73,13 @@ For example:
 
 - maybe you have not switched to `main` for a week
 - maybe you did not run `git pull` on `main`
-- but `git fetch origin` already updated `origin/main`
+- but `git fetch` already updated `origin/main`
 
 If you want to compare against the current state of the remote main branch, use
 this sequence:
 
 ```console
-git fetch origin
+git fetch
 git diff origin/main
 ```
 
@@ -89,7 +89,7 @@ changes from my branch since it was created".
 For that PR-like view, use the merge-base form:
 
 ```console
-git fetch origin
+git fetch
 git diff origin/main...
 ```
 
@@ -120,7 +120,7 @@ Why?
 I usually do this while I am on my feature branch:
 
 ```console
-git fetch origin
+git fetch
 git merge origin/main
 ```
 
@@ -356,7 +356,7 @@ I am on a branch that was created from the main branch some hours ago.
 Now I want to merge the new main branch into my branch again.
 
 ```console
-❯ git fetch origin
+❯ git fetch
 ❯ git merge origin/main
 
 Auto-merging internal/foo/api/v1beta1/mycrd_types.go
@@ -796,7 +796,7 @@ You can use `git reset --soft` and then create a new commit that contains all
 the changes between `origin/main` and `your-pr-branch`.
 
 ```console
-git fetch origin
+git fetch
 git switch your-pr-branch
 
 # create a backup, just in case something goes wrong
