@@ -58,6 +58,10 @@ I avoid `git checkout`.
 
 ## `git diff main` vs `git diff origin/main`
 
+If you work on a branch that was created from `main`, you might want to compare
+your current work against `main`. Similar to the view you see in web UIs like
+GitHub.
+
 These two commands can show different results:
 
 - `git diff main`: compare against your local `main`
@@ -71,16 +75,23 @@ For example:
 - maybe you did not run `git pull` on `main`
 - but `git fetch origin` already updated `origin/main`
 
-If you want to compare against the current state of the remote main branch, I
-prefer this sequence:
+If you want to compare against the current state of the remote main branch, use
+this sequence:
 
 ```console
 git fetch origin
 git diff origin/main
 ```
 
-If you specifically want to compare against your local `main` branch, use
-`git diff main`.
+But note: `git diff origin/main` is still not the same as "show me only the
+changes from my branch since it was created".
+
+For that PR-like view, use the merge-base form:
+
+```console
+git fetch origin
+git diff origin/main...HEAD
+```
 
 ## Create a backup of a branch
 
