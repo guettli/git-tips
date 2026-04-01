@@ -507,12 +507,12 @@ latest changes from the remote every N seconds.
 This is handy because I see `[behind]` if I use [my Starship prompt Git
 config](#starship-prompt).
 
-## Keep Github Action Workflows simple
+## Keep GitHub Action workflows simple
 
-I prefer to keep Github Action Workflows simple. I like that Github does CI for me, but calling
-third pary Github Actions has the draw back, that I can not reproduce that on my local machine.
+I prefer to keep GitHub Action workflows simple. I like that GitHub does CI for me, but third-party
+GitHub Actions have the drawback that I often cannot reproduce them on my local machine.
 
-There are tools like [act](https://github.com/nektos/act), but I often it did not work for me.
+There are tools like [act](https://github.com/nektos/act), but they often did not work for me.
 
 Keep things simple by using a reliable Bash script in [Bash Strict
 Mode](https://github.com/guettli/bash-strict-mode).
