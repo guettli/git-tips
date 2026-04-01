@@ -335,11 +335,11 @@ I use the above tool only to inspect the changes. To resolve the conflict by han
 
 ## Search with Editor, not with your eyes
 
-Not related to git, but helpful: Do not search in the code with your eyes. This hurts, if you do it
-the whole day. Use you IDE.
+Not related to Git, but still helpful: do not search through code with your eyes all day. Use your
+IDE.
 
-For example, I mark a place with "ööö" (German Umlauts), when I want to navigate to that point back
-later. Of course this should never ever be commited.
+For example, I mark a place with "ööö" (German umlauts) when I want to jump back to that point
+later. Of course this should never be committed.
 
 ## git diff shows no changes?
 
