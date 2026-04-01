@@ -578,7 +578,7 @@ Handy if there are huge directories in your Git repo that you usually want to sk
 
 After some months there are too many old branches. Time to clean up.
 
-This deletes all branches which are completely merged. This only deletes local branches.
+This deletes all branches that are fully merged. It only deletes local branches.
 
 ```console
 ❯ git branch --merged \
@@ -586,7 +586,7 @@ This deletes all branches which are completely merged. This only deletes local b
   | xargs -r git branch -d
 ```
 
-Unfortunately there will be several branches left which are not merged yet. No script can decide if
+There will still be several branches left that are not merged yet. No script can decide whether
 they can be deleted or not.
 
 Use `branch -rd` to delete the remote branch, too.
