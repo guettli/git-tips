@@ -778,10 +778,10 @@ You could do `git show 8d73caed`, but this would not be side-by-side.
 git difftool 8d73caed~1 8d73caed
 ```
 
-~1 means "commit before 8d73caed"
+`~1` means "the commit before 8d73caed".
 
---\> launches [meld](https://meldmerge.org/), if installed, or your prefered diff-tool. See
-[git-difftool](https://git-scm.com/docs/git-difftool)
+This launches [meld](https://meldmerge.org/) if it is installed, or your preferred diff tool. See
+[git-difftool](https://git-scm.com/docs/git-difftool).
 
 ## Resolve, take theirs
 
