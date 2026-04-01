@@ -44,11 +44,11 @@ If you have a train of PRs, I like this color scheme because it makes them easy 
 - Second PR: yellow
 - Third PR: purple
 
-## checkout --> switch+restore
+## `git checkout` -> `git switch` + `git restore`
 
-In the past `git checkout` was used for different use-cases.
+In the past, `git checkout` was used for different use cases.
 
-I think it is time to use the new commands:
+I think it is time to use the newer commands:
 
 `git switch` to switch to a different branch
 
