@@ -880,8 +880,13 @@ The output of the command above has several parts: one part for each parent comm
 `git cherry-pick ...` creates a new commit automatically. Sometimes you don't want only some changes
 of the original commit.
 
-You can use the option `-n` to only get the changes. Now you can modify the changes and commit
+You can use `--no-commit` (short form: `-n`) to apply the changes without
+creating a commit immediately. Then you can modify the result and commit
 manually.
+
+```console
+git cherry-pick --no-commit <commit-hash>
+```
 
 ## parent branch
 
