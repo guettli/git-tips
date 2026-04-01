@@ -109,6 +109,8 @@ pull request: it shows the changes on your branch since it diverged from
 If your branch lives for more than a day or two, I prefer to merge the base
 branch into it regularly.
 
+This is especially useful before you continue working on an existing branch.
+
 Why?
 
 - conflicts stay small
@@ -124,9 +126,6 @@ git merge origin/main
 
 If the branch is already published and others rely on it, then push the merge
 commit afterwards.
-
-I prefer this over waiting a week and then resolving one huge conflict at the
-end.
 
 ## Create a backup of a branch
 
