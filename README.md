@@ -685,14 +685,14 @@ fixing old bugs or writing more detailed tests)
 
 ## Squash all commits into a single commit
 
-Unfortunately in Kubernetes related projects squash via Github (like explained above) is disabled.
+Unfortunately, in Kubernetes-related projects, squash via GitHub (as explained above) is disabled.
 
 See [PR Guidelines](https://www.kubernetes.dev/docs/guide/pull-requests/#squashing).
 
-`git rebase -i HEAD~N` works fine, except you merged the main branch into your branch after creating
+`git rebase -i HEAD~N` works fine, except when you merged the main branch into your branch after creating
 the branch. Then your branch will contain merge commits, and the normal procedure won't work.
 
-You can use `git reset --soft`, and then create a new commit which contains all the changes between
+You can use `git reset --soft` and then create a new commit that contains all the changes between
 "main" and "your-pr-branch".
 
 ```console
