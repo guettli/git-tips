@@ -964,12 +964,12 @@ I try to avoid Git submodules.
 
 ## Chain of branches: Add base branch to name of second branch
 
-Sometime you create a chain/train of branches. The first branch is still in review, but you start to
-work on the next items in a second branch.
+Sometimes you create a chain or train of branches. The first branch is still in
+review, but you start to work on the next items in a second branch.
 
 This gets confusing if you have several branches in this chain.
 
-To makes things easier to understand, I sometimes add the branch name into the name of second
+To make things easier to understand, I sometimes add the base branch name to the name of the second
 branch.
 
 First branch: `foo`
