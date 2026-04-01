@@ -10,21 +10,21 @@ I add that directory to `$PATH` so the scripts are available everywhere.
 
 Most of them use the [Bash Strict Mode](https://github.com/guettli/bash-strict-mode).
 
-## One dir per PR
+## One directory per PR
 
-Imagine you work on one git repo, and there are three RPs. These PRs exist for some days, and
-constantly doing `git switch` is not convenient.
+Imagine you work on one Git repo and there are three PRs. These PRs stay open for several days, so
+constantly running `git switch` gets annoying.
 
-The solution is simple: Create several copies of your git repo. Imagine your repo is called `foo`.
+The solution is simple: create several copies of your Git repo. Imagine your repo is called `foo`.
 
-Then checkout that repo for times:
+Then check out that repo four times:
 
 - foo-main
 - foo-pr-one
 - foo-pr-two
 - foo-pr-three
 
-If you use vscode, you can set the colors of the borders in each directory differently:
+If you use VS Code, you can give each directory a different border color:
 
 ```json
 {
@@ -36,13 +36,13 @@ If you use vscode, you can set the colors of the borders in each directory diffe
 }
 ```
 
-Then it is easier to switch between the PRs.
+That makes it easier to switch between PRs.
 
-If you have a train of PRs, then I like this color theme to easily distinguish between them:
+If you have a train of PRs, I like this color scheme because it makes them easy to distinguish:
 
-- First PR gets light blue (like "Baby")
-- Second PR gets yellow (like "Youth")
-- Third PR gets purple (like elderly)
+- First PR: light blue
+- Second PR: yellow
+- Third PR: purple
 
 ## checkout --> switch+restore
 
