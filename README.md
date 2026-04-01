@@ -554,11 +554,39 @@ gh run watch; music
 command runs. Use whatever command you want for that. For me, `music` is a small script that plays
 a song I like.
 
----
+## restore, revert, reset
 
-Less important
+These three commands all start with `re`, so new Git users often mix them up.
 
----
+The order above is intentional. It goes from safer and more local to more dangerous:
+
+- `restore`: restore **files**
+- `revert`: reverse a **commit** by adding a new commit
+- `reset`: re-set the **branch pointer**
+
+Rough mental model:
+
+- `restore` changes files in your working tree or index.
+- `revert` keeps history intact and records a new commit that undoes an older one.
+- `reset` moves `HEAD` and usually the current branch.
+
+Examples:
+
+```console
+# Restore one file from main.
+git restore -s main path/to/file
+
+# Undo an old commit safely by creating a new commit.
+# Both the old commit and the new undo commit stay in the history.
+git revert <commit-hash>
+
+# Move HEAD and the current branch back by one commit.
+git reset --hard HEAD~1
+```
+
+If you are unsure, use `restore` for files and `revert` for published history.
+
+Be careful with `reset`, especially after pushing. If unsure, use `revert`, not `reset`.
 
 ## ripgrep: recursive grep which respects .gitignore
 
@@ -709,47 +737,12 @@ git commit
 git push --force-with-lease
 ```
 
-## Change a git branch "inplace"
-
-Imagine you developed your changes on a branch called "feature-foo". This branch was created from
-branch "feature-base".
-
-Requirements change, and now you need to merge your changes into the main branch, but not the
-changes from branch "feature-base".
-
-You could create a new branch, but since the central Git UI (GitHub or GitLab) already references
-"feature-foo", you want to change the branch in place.
-
-This creates the patches in a directory:
-
-```console
-git switch feature-foo
-git format-patch feature-base -o ~/tmp/foo-patches
-
-git reset --hard origin/main
-patch -p0 < ~/tmp/foo-patches/000... (files one by one)
-```
-
 ## Apply difference between two branches on a third branch
 
 The above tip *Change a git branch "inplace"* uses external patches.
 
 This can be used to [Apply difference between two branches on a third
 branch](https://stackoverflow.com/questions/73279330)
-
-## Show current branch (for loop)
-
-Show the current branch name with `git rev-parse --abbrev-ref HEAD`.
-
-Example: you are in a directory containing many git repos. You want to know which one is not on the
-"main" branch:
-
-```console
-for repo in *; do (
-  cd "$repo"
-  echo $repo $(git rev-parse --abbrev-ref HEAD)
-); done | grep -v main
-```
 
 ## Empty commit
 
