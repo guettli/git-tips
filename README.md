@@ -961,34 +961,44 @@ git cherry-pick --no-commit <commit-hash>
 
 ## parent branch
 
-Unfortunately, it is not straightforward to find the name of the parent branch.
+Unfortunately, it is not possible to find the name of the parent branch.
 
-Example:
+Git stores commits and pointers, not branch ancestry.
 
-You created "feature-1" by branching off "main".
+That means:
 
-Then you create "feature-2" by branching off "feature-1" (because the second feature depends on a
-change which was done in feature-1).
+- a branch is just a movable name that points to one commit
+- Git knows commit parents, but not "this branch was created from that branch"
+- after more commits, rebases, merges, or deleted branches, that information is
+  gone
 
-Then other things are more urgent for a few weeks, and now you are unsure whether you branched off
-`main` or another branch.
+So Git can tell you:
 
-I stored this in my local script directory:
+- the parent commit of a commit
+- the merge-base of two branches
+- which branches currently contain a commit
 
-```bash
-#!/bin/bash
-# parent-branch.sh
-git show-branch -a 2>/dev/null \
-| grep '\*' \
-| grep -v `git rev-parse --abbrev-ref HEAD` \
-| head -n1 \
-| perl -ple 's/\[[A-Za-z]+-\d+\][^\]]+$//; s/^.*\[([^~^\]]+).*$/$1/'
-```
+But Git cannot reliably tell you:
 
-Source: <https://stackoverflow.com/a/74314172/633961>
+- "feature-2 was created from feature-1"
 
-TODO: Is there a more reliable modern Git command for this, or is every
-solution necessarily heuristic?
+Sometimes you can guess it with heuristics, for example by looking at:
+
+- the merge-base
+- branch names
+- branch creation time
+- reflog entries
+
+But that is only a guess, not a guaranteed fact.
+
+If you are not asking Git about branch ancestry, but the hosting platform about
+the current PR or MR, then CLI tools can help:
+
+- GitHub: `gh pr view --json baseRefName --jq .baseRefName`
+- GitLab: `glab mr view --output json | jq -r '.target_branch'`
+- Codeberg/Forgejo:
+  `TODO: verify the best tea command for "base branch of the current PR".
+  Likely via tea API and jq on .base.ref.`
 
 ## Undelete a branch
 
