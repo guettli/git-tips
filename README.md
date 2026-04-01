@@ -584,7 +584,7 @@ in one editor and the main branch in a second. In VSCode I use the Peacock
 plugin to change to color of the main branch, to easily distinguish between
 both.
 
-## Merging some parts of a different branch.
+## Merging some parts of a different branch
 
 I like [Meld](https://meldmerge.org/), which is a visual diff and merge tool.
 
@@ -968,7 +968,7 @@ If you use tabs for indentation (for example in Golang), then you might want to
 change the default tab width from 8 to 4:
 <https://github.com/settings/appearance>
 
-## Github: open PR in web UI.
+## Github: open PR in web UI
 
 This command opens the current PR in your browser:
 
