@@ -38,6 +38,12 @@ If you use VS Code, you can give each directory a different border color:
 
 That makes it easier to switch between PRs.
 
+If you have a train of PRs, I like this mnemonic:
+
+- First PR: light blue
+- Second PR: yellow
+- Third PR: purple
+
 If you have a train of PRs, I like this color scheme because it makes them easy to distinguish:
 
 - First PR: light blue
