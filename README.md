@@ -694,8 +694,9 @@ branch, then it is fine to do so:
 git rebase -i HEAD~N
 ```
 
-`N` is the number of commits you want to work on. If you are working on a branch which was branched off
-"main", and you want to rebase all your changes: `git rebase -i $(git merge-base main @)`
+`N` is the number of commits you want to work on. If your branch was created from
+`main` and you want to rebase all your changes, use the merge-base with
+`origin/main`: `git rebase -i "$(git merge-base origin/main HEAD)"`
 
 Interactive rebase asks you for every commit what you want to do.
 
