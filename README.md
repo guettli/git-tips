@@ -721,16 +721,12 @@ See [PR Guidelines](https://www.kubernetes.dev/docs/guide/pull-requests/#squashi
 `git rebase -i HEAD~N` works fine, except when you merged the main branch into your branch after creating
 the branch. Then your branch will contain merge commits, and the normal procedure won't work.
 
-You can use `git reset --soft` and then create a new commit that contains all the changes between
-"main" and "your-pr-branch".
+You can use `git reset --soft` and then create a new commit that contains all
+the changes between `origin/main` and `your-pr-branch`.
 
 ```console
-git switch main
-git pull
-
+git fetch origin
 git switch your-pr-branch
-
-git merge main
 
 # create a backup, just in case something goes wrong
 git switch -c your-pr-branch-backup
@@ -741,7 +737,7 @@ git switch -
 # If you want to copy commit messages from your branch,
 # then copy them now. After the following command, you need
 # to look into your backup branch.
-git reset --soft $(git merge-base main HEAD)
+git reset --soft origin/main
 git commit
 git push --force-with-lease
 ```
