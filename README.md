@@ -58,9 +58,8 @@ I avoid `git checkout`.
 
 ## `git diff main` vs `git diff origin/main`
 
-If you work on a branch that was created from `main`, you might want to compare
-your current work against `main`. Similar to the view you see in web UIs like
-GitHub.
+If you work on a branch that was created from `main`, you might want to compare your current work
+against `main`. Similar to the view you see in web UIs like GitHub.
 
 These two commands can show different results:
 
@@ -75,16 +74,15 @@ For example:
 - maybe you did not run `git pull` on `main`
 - but `git fetch` already updated `origin/main`
 
-If you want to compare against the current state of the remote main branch, use
-this sequence:
+If you want to compare against the current state of the remote main branch, use this sequence:
 
 ```console
 git fetch
 git diff origin/main
 ```
 
-But note: `git diff origin/main` is still not the same as "show me only the
-changes from my branch since it was created".
+But note: `git diff origin/main` is still not the same as "show me only the changes from my branch
+since it was created".
 
 For that PR-like view, use the merge-base form:
 
@@ -95,19 +93,17 @@ git diff origin/main...
 
 Why is this different?
 
-- `git diff origin/main` compares your current work against the current tip of
+- `git diff origin/main` compares your current work against the current tip of `origin/main`
+- `git diff origin/main...` compares your current work against the merge base of your branch and
   `origin/main`
-- `git diff origin/main...` compares your current work against the merge base
-  of your branch and `origin/main`
 
-That is why `git diff origin/main...` is usually closer to what you see in a
-pull request: it shows the changes on your branch since it diverged from
-`origin/main`.
+That is why `git diff origin/main...` is usually closer to what you see in a pull request: it shows
+the changes on your branch since it diverged from `origin/main`.
 
 ## Merge upstream branch often
 
-If your branch lives for more than a day or two, I prefer to merge the base
-branch into it regularly.
+If your branch lives for more than a day or two, I prefer to merge the base branch into it
+regularly.
 
 This is especially useful before you continue working on an existing branch.
 
@@ -124,8 +120,7 @@ git fetch
 git merge origin/main
 ```
 
-If the branch is already published and others rely on it, then push the merge
-commit afterwards.
+If the branch is already published and others rely on it, then push the merge commit afterwards.
 
 ## Create a backup of a branch
 
@@ -142,8 +137,8 @@ prefer this approach.
 
 ## Pull Requests
 
-Git itself does not know about pull requests (PRs). That concept was added by platforms like
-GitHub, GitLab, and Codeberg.
+Git itself does not know about pull requests (PRs). That concept was added by platforms like GitHub,
+GitLab, and Codeberg.
 
 ## Squash PRs
 
@@ -186,8 +181,8 @@ git switch main
 
 Example: You started to code. Then you realize (before you commit) that you work on the main branch.
 But you want to move that work onto a feature branch first. You can `git stash` your uncommitted
-changes, switch to or create the branch you actually want, and then use `git stash pop` to bring
-the changes back.
+changes, switch to or create the branch you actually want, and then use `git stash pop` to bring the
+changes back.
 
 ## Restore a single file
 
@@ -399,11 +394,11 @@ base and the remote, and what changed between the base and your local version?
 I found no tool which does this, so I use that small Bash script
 [scripts/git-conflict-overview.sh](scripts/git-conflict-overview.sh).
 
-Now I can choose the simpler change, then apply the more complex change to the file, and after
-that I apply the simpler change by hand.
+Now I can choose the simpler change, then apply the more complex change to the file, and after that
+I apply the simpler change by hand.
 
-I use the above tool only to inspect the changes. To resolve the conflict by hand, I use
-`git mergetool` with `meld`. See the next section.
+I use the above tool only to inspect the changes. To resolve the conflict by hand, I use `git
+mergetool` with `meld`. See the next section.
 
 ## Search with Editor, not with your eyes
 
@@ -524,8 +519,8 @@ MIT, not AGPL.
 
 ## Public .envrc file, private .env file
 
-I use [direnv](https://direnv.net/) to manage environments. `direnv` uses `.envrc` files to
-set environment variables.
+I use [direnv](https://direnv.net/) to manage environments. `direnv` uses `.envrc` files to set
+environment variables.
 
 But for secrets I use `.env` files.
 
@@ -582,8 +577,7 @@ I like the VS Code Git [`autoFetch`
 setting](https://code.visualstudio.com/docs/sourcecontrol/overview#_remotes). This fetches the
 latest changes from the remote every N seconds.
 
-This is handy because I see `[behind]` if I use [my Starship prompt Git
-config](#starship-prompt).
+This is handy because I see `[behind]` if I use [my Starship prompt Git config](#starship-prompt).
 
 ## Keep GitHub Action workflows simple
 
@@ -599,8 +593,8 @@ This works in GitHub CI and on my local Linux device.
 
 ## Starship Prompt
 
-I use [Starship Prompt](https://starship.rs/config/#git-status) so I get notified in the prompt
-when the Git status is not clean.
+I use [Starship Prompt](https://starship.rs/config/#git-status) so I get notified in the prompt when
+the Git status is not clean.
 
 My config:
 
@@ -629,8 +623,8 @@ gh run watch; music
 ```
 
 `gh run watch` gives you a list of jobs, and you can select one. When it is finished, the next
-command runs. Use whatever command you want for that. For me, `music` is a small script that plays
-a song I like.
+command runs. Use whatever command you want for that. For me, `music` is a small script that plays a
+song I like.
 
 ## restore, revert, reset
 
@@ -684,11 +678,11 @@ This deletes all branches that are fully merged. It only deletes local branches.
   | xargs -r git branch -d
 ```
 
-There will still be several branches left that are not merged yet. No script can decide whether
-they can be deleted or not.
+There will still be several branches left that are not merged yet. No script can decide whether they
+can be deleted or not.
 
-Use `git push origin --delete branch-name` to delete the remote branch itself.
-`git branch -rd origin/branch-name` only deletes your local remote-tracking ref.
+Use `git push origin --delete branch-name` to delete the remote branch itself. `git branch -rd
+origin/branch-name` only deletes your local remote-tracking ref.
 
 ## git bisect
 
@@ -765,9 +759,9 @@ branch, then it is fine to do so:
 git rebase -i HEAD~N
 ```
 
-`N` is the number of commits you want to work on. If your branch was created from
-`main` and you want to rebase all your changes, use the merge-base with
-`origin/main`: `git rebase -i "$(git merge-base origin/main HEAD)"`
+`N` is the number of commits you want to work on. If your branch was created from `main` and you
+want to rebase all your changes, use the merge-base with `origin/main`: `git rebase -i "$(git
+merge-base origin/main HEAD)"`
 
 Interactive rebase asks you for every commit what you want to do.
 
@@ -789,11 +783,12 @@ Unfortunately, in Kubernetes-related projects, squash via GitHub (as explained a
 
 See [PR Guidelines](https://www.kubernetes.dev/docs/guide/pull-requests/#squashing).
 
-`git rebase -i HEAD~N` works fine, except when you merged the main branch into your branch after creating
-the branch. Then your branch will contain merge commits, and the normal procedure won't work.
+`git rebase -i HEAD~N` works fine, except when you merged the main branch into your branch after
+creating the branch. Then your branch will contain merge commits, and the normal procedure won't
+work.
 
-You can use `git reset --soft` and then create a new commit that contains all
-the changes between `origin/main` and `your-pr-branch`.
+You can use `git reset --soft` and then create a new commit that contains all the changes between
+`origin/main` and `your-pr-branch`.
 
 ```console
 git fetch
@@ -857,9 +852,9 @@ git restore --theirs path/to/file
 
 ## git log over many git repos
 
-You have a directory called "all-repos". It contains many Git repos. Now you want to use
-`git log -G FooBar` across all of them. You only want to search for commits that were created
-during the last 8 months, and you want to sort the result by commit timestamp.
+You have a directory called "all-repos". It contains many Git repos. Now you want to use `git log -G
+FooBar` across all of them. You only want to search for commits that were created during the last 8
+months, and you want to sort the result by commit timestamp.
 
 A bit ugly, but works:
 
@@ -925,8 +920,8 @@ meld myrepo-main myrepo
 
 Now you can easily remove all changes that belong to feature-2 and feature-3.
 
-I tried that with VS Code, but `meld` is more usable for this. You can copy files between
-both directories with the context menu.
+I tried that with VS Code, but `meld` is more usable for this. You can copy files between both
+directories with the context menu.
 
 You can accept (click on arrow) or reject (shift-click) single changes.
 
@@ -951,9 +946,8 @@ The output of the command above has several parts: one part for each parent comm
 `git cherry-pick ...` creates a new commit automatically. Sometimes you don't want only some changes
 of the original commit.
 
-You can use `--no-commit` (short form: `-n`) to apply the changes without
-creating a commit immediately. Then you can modify the result and commit
-manually.
+You can use `--no-commit` (short form: `-n`) to apply the changes without creating a commit
+immediately. Then you can modify the result and commit manually.
 
 ```console
 git cherry-pick --no-commit <commit-hash>
@@ -969,15 +963,14 @@ That means:
 
 - a branch is just a movable name that points to one commit
 - Git knows commit parents, but not "this branch was created from that branch"
-- after more commits, rebases, merges, or deleted branches, that information is
-  gone
+- after more commits, rebases, merges, or deleted branches, that information is gone
 
 But Git cannot reliably tell you:
 
 - "feature-2 was created from feature-1"
 
-If you are not asking Git about branch ancestry, but the hosting platform about the current PR or
-MR, then CLI tools can help:
+If you are not asking Git about branch ancestry, but the hosting platform about the current PR, then
+CLI tools can help:
 
 - GitHub: `gh pr view --json baseRefName --jq .baseRefName`
 - GitLab: `glab mr view --output json | jq -r .target_branch`
@@ -1028,8 +1021,8 @@ I try to avoid Git submodules.
 
 ## Chain of branches: Add base branch to name of second branch
 
-Sometimes you create a chain or train of branches. The first branch is still in
-review, but you start to work on the next items in a second branch.
+Sometimes you create a chain or train of branches. The first branch is still in review, but you
+start to work on the next items in a second branch.
 
 This gets confusing if you have several branches in this chain.
 
@@ -1050,8 +1043,8 @@ I do 95% of my git actions on the command-line. But "history for selection" is s
 feature of IntelliJ-based IDEs. You can select a region in the code and then you can have a look at
 the history of this region.
 
-On the command line you can use `git blame some-file`, but it is not as powerful as the
-IntelliJ IDE solution.
+On the command line you can use `git blame some-file`, but it is not as powerful as the IntelliJ IDE
+solution.
 
 I switched to VS Code several years ago, but still miss this feature.
 
