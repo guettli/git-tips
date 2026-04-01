@@ -958,9 +958,9 @@ tasks:
 The task name becomes part of the stamp filename in `.tmp/`. Non filename-safe characters get
 replaced with underscores.
 
-## git submodules
+## Git submodules
 
-I try to avoid git submodules.
+I try to avoid Git submodules.
 
 ## Chain of branches: Add base branch to name of second branch
 
