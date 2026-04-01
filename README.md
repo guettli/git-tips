@@ -572,7 +572,7 @@ Not that important
 
 [ripgrep](https://github.com/BurntSushi/ripgrep): recursive grep which respects .gitignore
 
-Handy, if there are huge directories in you git-repo which you usualy want to skip.
+Handy if there are huge directories in your Git repo that you usually want to skip.
 
 ## delete merged branches
 
