@@ -106,7 +106,7 @@ pull request: it shows the changes on your branch since it diverged from
 
 ## Merge upstream branch often
 
-If your branch lives for more than a day or two, I prefer to merge the upstream
+If your branch lives for more than a day or two, I prefer to merge the base
 branch into it regularly.
 
 Why?
@@ -115,12 +115,15 @@ Why?
 - test failures show up earlier
 - rebasing or merging later gets less painful
 
-I usually do this:
+I usually do this while I am on my feature branch:
 
 ```console
 git fetch origin
 git merge origin/main
 ```
+
+If the branch is already published and others rely on it, then push the merge
+commit afterwards.
 
 I prefer this over waiting a week and then resolving one huge conflict at the
 end.
