@@ -384,7 +384,13 @@ mv .gitconfig .gitconfig-work
 vi .gitconfig-work
 ```
 
-Then edit `.gitconfig`:
+Then create a new `~/.gitconfig`:
+
+```console
+vi .gitconfig
+```
+
+Put this into it:
 
 ```ini
 [includeIf "gitdir:~/personal/"]
