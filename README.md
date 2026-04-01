@@ -146,16 +146,16 @@ Imagine you work on a branch that backs a pull request.
 You want to see all changes of your pull-request.
 
 ```console
-git diff main
+git diff origin/main
 ```
 
-That command might show a lot of changes that happened on `main` since you created the branch. You
-do not want to see those changes.
+That command might show a lot of changes that happened on `origin/main` since you created the
+branch. You do not want to see those changes.
 
 What was changed on your branch since the branch was created?
 
 ```console
-git diff origin/main...
+git diff origin/main...HEAD
 ```
 
 Unfortunately this does not show your local changes, which are not committed yet.
@@ -163,7 +163,7 @@ Unfortunately this does not show your local changes, which are not committed yet
 To see them, too:
 
 ```text
-git diff $(git merge-base main HEAD)
+git diff "$(git merge-base origin/main HEAD)"
 ```
 
 ### Show Changes to a single file
