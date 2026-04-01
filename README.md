@@ -106,7 +106,7 @@ Solution: create a backup, delete your local `main`, and recreate it from `origi
 # Create a backup
 git switch -c main--backup
 git branch -D main
-git switch main
+git switch --track -c main origin/main
 ```
 
 ## git stash
