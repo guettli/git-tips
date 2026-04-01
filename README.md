@@ -321,17 +321,17 @@ I have tried several other tools, but `meld` (with useAutoMerge) is still my fav
 
 ## Solving Conflicts: Overview
 
-Before solving a git merge conflict, it is convinient to have an overview: What changed between base
-and remote, and what change between base and my local version?
+Before solving a Git merge conflict, it is convenient to have an overview: what changed between the
+base and the remote, and what changed between the base and your local version?
 
 I found no tool which does this, so I use that small Bash script
 [scripts/git-conflict-overview.sh](scripts/git-conflict-overview.sh).
 
-Now I can choose the simpler change, then I apply the more complex change the the file, and after
+Now I can choose the simpler change, then apply the more complex change to the file, and after
 that I apply the simpler change by hand.
 
-BTW, I use the above tool just to help me see the changes. For resolving the conflict by hand I use
-`git mergetool` with `meld`. See next topic.
+I use the above tool only to inspect the changes. To resolve the conflict by hand, I use
+`git mergetool` with `meld`. See the next section.
 
 ## Search with Editor, not with your eyes
 
