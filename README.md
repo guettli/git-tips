@@ -517,7 +517,7 @@ There are tools like [act](https://github.com/nektos/act), but they often did no
 Keep things simple by using a reliable Bash script in [Bash Strict
 Mode](https://github.com/guettli/bash-strict-mode).
 
-This works in Github CI and on my local Linux device.
+This works in GitHub CI and on my local Linux device.
 
 ## Starship Prompt
 
@@ -555,17 +555,9 @@ command runs. Use whatever command you want for that. For me, `music` is a small
 a song I like.
 
 ---
----
----
----
----
 
-Not that important
+Less important
 
----
----
----
----
 ---
 
 ## ripgrep: recursive grep which respects .gitignore
