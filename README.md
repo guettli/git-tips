@@ -66,8 +66,8 @@ git switch -c foobar-backup
 git switch -
 ```
 
-You could use [tagging](https://git-scm.com/book/en/v2/Git-Basics-Tagging) for this, too. But I
-prefer above solution.
+You could use [tagging](https://git-scm.com/book/en/v2/Git-Basics-Tagging) for this as well, but I
+prefer this approach.
 
 ## Pull Requests
 
