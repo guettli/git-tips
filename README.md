@@ -1,28 +1,14 @@
 # My opinionated tips about Git
 
-## Show branches
+This is not an introduction to Git. Just some hints about how I use `git`.
 
-You can show your branches with `git branch -l`. But if there are many branches,
-the output has a drawback. It is not sorted by date.
+## How to use this Git Repo
 
-`git branch --sort=-committerdate` this lists the branches with the most recent
-branches on top.
+This repo contains some scripts in the directory [scripts](.scripts).
 
-You can change the default sorting in you config like that:
+I add that to `$PATH`, so that I have these scripts available.
 
-    git config --global branch.sort -committerdate
-
-I have an alias in my .bashrc:
-
-    alias gbs="git branch --sort=-committerdate \
-      | fzf --header Checkout \
-      | tr '*' ' ' \
-      | xargs git switch"
-
-Update: I switched from the Bash shell to the Fish shell. This gives me a better
-autocomplete. When I type `git switch TABTAB`, then I get the latest branches.
-In Bash I get unfortunately just a long list of branches sorted by the alphabet.
-I think I won't use above alias any more.
+Most of them use the [Bash Strict Mode](https://github.com/guettli/bash-strict-mode).
 
 ## checkout --> switch+restore
 
@@ -36,7 +22,11 @@ I think it is time to use the new commands:
 
 I avoid `git checkout`.
 
-## Switch branches
+## List branches
+
+[git-list-branches.sh](scripts/git-list-branches.sh)
+
+## Switch back to previous branch
 
 Often I want to switch between two branches. This is handy:
 
@@ -52,30 +42,14 @@ You accidentally created a commit on your local main branch. That was a mistake
 because every change should be done via a pull request. You have not pushed your
 changes yet.
 
-You can help yourself like this:
+Solution: Create backup, delete (your local) main, get main from origin again.
 
-    # Create a new branch
-    git switch -c my-new-branch
-
-    # Push your new branch to origin
-    git push --set-upstream origin my-new-branch
-
-    # Create pull request. Usually you just need to follow
-    # the instructions which were printed by the previous command.
-
-    # Switch back to main
-    git switch main
-
-    # Remove the commit which was done accidentally on the main branch.
-    git reset --hard HEAD~1
-
-## History for selection
-
-I do 95% of my git actions on the command-line. But "history for selection" is
-super cool. It is a feature of IntelliJ-based IDEs. You can select a region in
-the code and then you can have a look at the history of this region.
-
-On the command-line you can use `git blame some-file`
+```console
+# Create a backup
+git switch -c main--backup
+git branch -D main
+git switch main
+```
 
 ## git stash
 
@@ -103,29 +77,37 @@ Imagine you work on a branch which is a pull-request.
 
 You want to see all changes of your pull-request.
 
-    git diff main
+```console
+git diff main
+```
 
 Above command might show you a lot of changes which happend on the main branch
 since you created the branch. You don't want to see those changes.
 
 What was changed on your branch since the branch was created?
 
-    git diff origin/main...
+```console
+git diff origin/main...
+```
 
 Unfortunately this does not show your local changes, which are not committed
 yet.
 
 To see them, too:
 
-    git diff $(git merge-base main HEAD)
+```text
+git diff $(git merge-base main HEAD)
+```
 
 ## Create a backup of a branch
 
-    # Create a new branch
-    git switch -c foobar-backup
+```console
+# Create a new branch
+git switch -c foobar-backup
 
-    # Switch back from "foobar-backup" to the previous branch
-    git switch -
+# Switch back from "foobar-backup" to the previous branch
+git switch -
+```
 
 You could use [tagging](https://git-scm.com/book/en/v2/Git-Basics-Tagging) for
 this, too. But I prefer above solution.
@@ -137,14 +119,16 @@ is to get back to the "origin/foo" branch.
 
 That's easy:
 
-    # create a backup of your current local branch
-    > git switch -c backup-of-foo
+```console
+# create a backup of your current local branch
+> git switch -c backup-of-foo
 
-    # delete the local copy of the branch.
-    > git branch -D foo
+# delete the local copy of the branch.
+> git branch -D foo
 
-    # switch to "origin/foo"
-    > git switch foo
+# switch to "origin/foo"
+> git switch foo
+```
 
 ### Changes to a single file
 
@@ -189,9 +173,11 @@ It is very easy, I was just not aware of that at the beginning.
 
 Example:
 
-    commit 6ae936342d2c3c30fba47eec5a543ce6c53d0ebb
-    Author: foobar <foobar@example.com>
-    Date:   Wed Feb 14 01:54:04 2024 +0530
+```console
+commit 6ae936342d2c3c30fba47eec5a543ce6c53d0ebb
+Author: foobar <foobar@example.com>
+Date:   Wed Feb 14 01:54:04 2024 +0530
+```
 
 The commit hash "6ae936..." is a **hyperlink**.
 
@@ -220,13 +206,15 @@ Avoid long running branches and then it matters even less.
 the commit, which introduced an error. Unfortunately, it is not a one-liner for
 now. You can use it like this:
 
-    user@host> git bisect start HEAD HEAD~10
+```console
+user@host> git bisect start HEAD HEAD~10
 
 
-    user@host> git bisect run py.test -k test_something
-     ...
-    c8bed9b56861ea626833637e11a216555d7e7414 is the first bad commit
-    Author: ...
+user@host> git bisect run py.test -k test_something
+ ...
+c8bed9b56861ea626833637e11a216555d7e7414 is the first bad commit
+Author: ...
+```
 
 But if your pull-requests get tested before they get merged
 (Continous-Integration), then you hardly need "git bisect".
@@ -237,32 +225,34 @@ This walks the git history down from the current commit to the older commits.
 
 Copy and adapt for your needs.
 
-    #!/bin/bash
+```bash
+#!/bin/bash
 
-    BRANCH=your_branch
+BRANCH=your_branch
 
-    set -euxo pipefail
-    log_report() {
-        echo "Error on line $1"
-    }
-    trap 'log_report $LINENO' ERR
+set -euxo pipefail
+log_report() {
+    echo "Error on line $1"
+}
+trap 'log_report $LINENO' ERR
 
 
-    git switch $BRANCH
-    git log --oneline | cut -d' ' -f1 | while read hash;
-        do
-        echo
-        echo    $hash;
-        git switch -d $hash
-        DO_SOMETHING
-        if YOUR_COMMAND; then
-            echo "this is good (the commit above this introduced the bug): $hash"
-            break
-        fi
-        git restore .
-        sleep 1
-    done
-    git switch $BRANCH
+git switch $BRANCH
+git log --oneline | cut -d' ' -f1 | while read hash;
+    do
+    echo
+    echo    $hash;
+    git switch -d $hash
+    DO_SOMETHING
+    if YOUR_COMMAND; then
+        echo "this is good (the commit above this introduced the bug): $hash"
+        break
+    fi
+    git restore .
+    sleep 1
+done
+git switch $BRANCH
+```
 
 You need to adapt these parts:
 
@@ -282,7 +272,9 @@ developing on this branch will get trouble if you do this.
 But if this branch is your Merge-Request (aka Pull-Request), and you know nobody
 else uses this branch, then it is fine to do so:
 
-    git rebase -i HEAD~N
+```console
+git rebase -i HEAD~N
+```
 
 N is the number of commits you want to work on. If you are working on a branch
 which was branched of "main", and you want to rebase all your changes:
@@ -295,7 +287,9 @@ History](https://git-scm.com/book/en/v2/Git-Tools-Rewriting-History)
 
 But you can't push the branch with the re-written history. You need to use:
 
-    git push --force-with-lease
+```console
+git push --force-with-lease
+```
 
 But overall: Don't do this to often. This is not very productive (compared to
 writing new code, fixing old bugs or writing more detailed tests)
@@ -330,23 +324,25 @@ and the normal procedure won't work.
 You can use `git reset --soft`, and then create a new commit which contains all
 the changes between "main" and "your-pr-branch".
 
-    git switch main
-    git pull
+```console
+git switch main
+git pull
 
-    git switch your-pr-branch
+git switch your-pr-branch
 
-    # create a backup, just in case something goes wrong
-    git switch -c your-pr-branch-backup
+# create a backup, just in case something goes wrong
+git switch -c your-pr-branch-backup
 
-    # switch back to your-pr-branch
-    git switch -
+# switch back to your-pr-branch
+git switch -
 
-    # If you want to copy commit messages from your branch,
-    # then copy them now. After the following command, you need
-    # to look into your backup branch.
-    git reset --soft $(git merge-base main HEAD)
-    git commit
-    git push --force-with-lease
+# If you want to copy commit messages from your branch,
+# then copy them now. After the following command, you need
+# to look into your backup branch.
+git reset --soft $(git merge-base main HEAD)
+git commit
+git push --force-with-lease
+```
 
 ## Change a git branch "inplace"
 
@@ -361,11 +357,13 @@ already references "feature-foo", you want to change the branch "inplace".
 
 This creates the patches in a directory:
 
-    git switch feature-foo
-    git format-patch feature-base -o ~/tmp/foo-patches
+```console
+git switch feature-foo
+git format-patch feature-base -o ~/tmp/foo-patches
 
-    git reset --hard origin/main
-    patch -p0 < ~/tmp/foo-patches/000... (files one by one)
+git reset --hard origin/main
+patch -p0 < ~/tmp/foo-patches/000... (files one by one)
+```
 
 ## Apply difference between two branches on a third branch
 
@@ -379,7 +377,9 @@ branch](https://stackoverflow.com/questions/73279330)
 Imagine you are working on a feature branch. But you want to restore one file to
 the original version of the main branch.
 
-    git restore -s main path/to/file
+```console
+git restore -s main path/to/file
+```
 
 `s` like "source branch"
 
@@ -396,7 +396,9 @@ created by tests.
 If you want to use `grep` on all files which get tracked by git, you can use
 this:
 
-    git ls-files | grep -vP 'exclude1|exclude2' | xargs -r -d'\n' grep -nP '...'
+```console
+git ls-files | grep -vP 'exclude1|exclude2' | xargs -r -d'\n' grep -nP '...'
+```
 
 In detail:
 
@@ -415,20 +417,24 @@ You can give `ls-files` a glob expression. This matches the whole filename
 Imagine you have a directory containing many git repos, and there are files in
 `REPO/foo/test_project_bar/settings.py`, you can use grep like this:
 
-    for repo in *; do (
-      cd "$repo"
-      git ls-files '*test_project*settings.py' | xargs -r -d'\n' grep RECAP
-    ); done
+```console
+for repo in *; do (
+  cd "$repo"
+  git ls-files '*test_project*settings.py' | xargs -r -d'\n' grep RECAP
+); done
+```
 
 Don't forget the `*` before "test_project".
 
 If you add a comment at the end, you can easily find this command in your shell
 history (for example via `ctrl-r` (backward search)):
 
-    (cd ~/projects/; for repo in * ; do (
-         cd "$repo"; git ls-files '*.my-extension' |
-         xargs -r -d'\n' grep -P 'my-term' ) ;
-     done) # grep over all repos
+```console
+(cd ~/projects/; for repo in * ; do (
+     cd "$repo"; git ls-files '*.my-extension' |
+     xargs -r -d'\n' grep -P 'my-term' ) ;
+ done) # grep over all repos
+```
 
 Once you executed this once, you can easily get back to this line by ctrl-r
 (search backwards in history) and then type “over all”
@@ -448,8 +454,10 @@ Monorepo](https://en.wikipedia.org/wiki/Monorepo)
 If you configured auto-completion, then you can easy switch a branch if you know
 the first characters of the branch name:
 
-    git switch foo[TAB]
-     --->        foobar
+```console
+git switch foo[TAB]
+ --->        foobar
+```
 
 ## Show current branch (for loop)
 
@@ -458,17 +466,21 @@ show the current branch name: `git rev-parse --abbrev-ref HEAD`
 Example: you are in a directory containing many git repos. You want to know
 which one is not on the "main" branch:
 
-    for repo in *; do (
-      cd "$repo"
-      echo $repo $(git rev-parse --abbrev-ref HEAD)
-    ); done | grep -v main
+```console
+for repo in *; do (
+  cd "$repo"
+  echo $repo $(git rev-parse --abbrev-ref HEAD)
+); done | grep -v main
+```
 
 ## Empty commit
 
 Most web-GUIs of CI-systems have a "retry" button. But sometimes this does not
 work, or you don't want to leave your context.
 
-    git commit --allow-empty -m "Trigger CI"
+```console
+git commit --allow-empty -m "Trigger CI"
+```
 
 ## side by side diff
 
@@ -476,7 +488,9 @@ Imagine you want to see an old commit side-by-side.
 
 You could do `git show 8d73caed`, but this would not be side-by-side.
 
-    git difftool 8d73caed~1 8d73caed
+```console
+git difftool 8d73caed~1 8d73caed
+```
 
 ~1 means "commit before 8d73caed"
 
@@ -504,18 +518,22 @@ I am on a branch that was created from the main branch some hours ago.
 
 Now I want to merge the new main branch into my branch again.
 
-    ❯ git merge main
+```console
+❯ git merge main
 
-    Auto-merging internal/foo/api/v1beta1/mycrd_types.go
-    CONFLICT (content): Merge conflict in internal/foo/api/v1beta1/mycrd_types.go
+Auto-merging internal/foo/api/v1beta1/mycrd_types.go
+CONFLICT (content): Merge conflict in internal/foo/api/v1beta1/mycrd_types.go
+```
 
 I use `meld` for solving conflicts.
 
 Be sure to set this option first:
 
-    git config --global mergetool.meld.useAutoMerge true
+```console
+git config --global mergetool.meld.useAutoMerge true
 
-    git mergetool --tool=meld
+git mergetool --tool=meld
+```
 
 Now a nice UI opens, and you will see three columns:
 
@@ -543,7 +561,9 @@ favorite.
 You merged a branch into your branch, and now you have conflicts. You want to
 discard your change, and take their changes:
 
-    git restore --theirs path/to/file
+```console
+git restore --theirs path/to/file
+```
 
 ## After resolving conflict: git diff HEAD~1
 
@@ -565,11 +585,13 @@ result by the timestamp of the commit.
 
 A bit ugly, but works:
 
-    for repo in *; do (
-      cd "$repo"
-      git log -G FooBar --all --pretty="%ad %h in $repo by %an, %s" \
-        --date=iso --since="$(date -d "8 months ago" --iso)"
-    ); done | sort -r | head
+```console
+for repo in *; do (
+  cd "$repo"
+  git log -G FooBar --all --pretty="%ad %h in $repo by %an, %s" \
+    --date=iso --since="$(date -d "8 months ago" --iso)"
+); done | sort -r | head
+```
 
 ## Think outside the box
 
@@ -593,13 +615,15 @@ good, and should stay, and some parts should get removed again.
 
 I am on a feature-branch which was created from "main".
 
-    # Create a copy of the file
-    cp my-dir/my-file.xyz ~/tmp/
+```console
+# Create a copy of the file
+cp my-dir/my-file.xyz ~/tmp/
 
-    # restore the file to the original version
-    git restore -s main my-dir/my-file.xyz
+# restore the file to the original version
+git restore -s main my-dir/my-file.xyz
 
-    meld my-dir/my-file.xyz ~/tmp/my-file.xyz
+meld my-dir/my-file.xyz ~/tmp/my-file.xyz
+```
 
 Now Meld opens and I can easily choose which parts I want to take into my
 branch, and which parts I don't need.
@@ -611,22 +635,28 @@ to create three PRs and not one.
 
 First, create a backup of your branch:
 
-    git switch -c my-backup; git switch -
+```console
+git switch -c my-backup; git switch -
+```
 
 Create the branch for the first feature, create a copy of your whole directory,
 and switch the copy to main:
 
-    git switch -c feature-1
-    cd ..
-    cp -a myrepo myrepo-main
-    cd myrepo-main
-    git switch main
-    git pull
+```console
+git switch -c feature-1
+cd ..
+cp -a myrepo myrepo-main
+cd myrepo-main
+git switch main
+git pull
+```
 
 Now launch `meld`:
 
-    cd ..
-    meld myrepo-main myrepo
+```console
+cd ..
+meld myrepo-main myrepo
+```
 
 Now you can easily remove all changes from belonging to feature-2 and feature-3.
 
@@ -639,11 +669,15 @@ You can accept (click on arrow) or reject (shift-click) single changes.
 
 This shows no changes for merge commits:
 
-    git show <commit-hash>
+```console
+git show <commit-hash>
+```
 
 Use:
 
-    git show -m <commit-hash>
+```console
+git show -m <commit-hash>
+```
 
 The output of above command has several parts. For each parent commit one part.
 
@@ -656,11 +690,13 @@ colorful, so that you can easily spot small changes in long lines.
 
 You want to revert this merge commit:
 
-    commit 67181091ac5069fc78cc2e79cc5641ee43516eee (HEAD -> main, origin/main, origin/HEAD)
-    Merge: 90d4ee9c 14f8548e
-    Author: Some One <someone@example.com>
+```console
+commit 67181091ac5069fc78cc2e79cc5641ee43516eee (HEAD -> main, origin/main, origin/HEAD)
+Merge: 90d4ee9c 14f8548e
+Author: Some One <someone@example.com>
 
-        Merge branch 'super-feature' into 'main'
+    Merge branch 'super-feature' into 'main'
+```
 
 A merge commit has two parents: 90d4ee9c and 14f8548e. You need to tell git
 which parent you want to choose.
@@ -670,7 +706,9 @@ use `-m 2`.
 
 This following line will keep 14f8548e and drop 90d4ee9c.
 
-    git revert 67181091 -m 2
+```console
+git revert 67181091 -m 2
+```
 
 Related [Stackoverflow Answer](https://stackoverflow.com/a/7100005/633961)
 
@@ -699,19 +737,23 @@ you branched off main or from an other branch.
 
 I stored this in my local script directory
 
-    #!/bin/bash
-    # parent-branch.sh
-    git show-branch -a 2>/dev/null \
-    | grep '\*' \
-    | grep -v `git rev-parse --abbrev-ref HEAD` \
-    | head -n1 \
-    | perl -ple 's/\[[A-Za-z]+-\d+\][^\]]+$//; s/^.*\[([^~^\]]+).*$/$1/'
+```bash
+#!/bin/bash
+# parent-branch.sh
+git show-branch -a 2>/dev/null \
+| grep '\*' \
+| grep -v `git rev-parse --abbrev-ref HEAD` \
+| head -n1 \
+| perl -ple 's/\[[A-Za-z]+-\d+\][^\]]+$//; s/^.*\[([^~^\]]+).*$/$1/'
+```
 
 Source: <https://stackoverflow.com/a/74314172/633961>
 
 ## Automatically prune on fetch
 
-    git config --global fetch.prune true
+```console
+git config --global fetch.prune true
+```
 
 It sets a global Git config so every git fetch will prune stale remote-tracking
 branches—i.e., it automatically deletes local refs like origin/foobar when
@@ -724,9 +766,11 @@ After some months there are too many old branches. Time to clean up.
 This deletes all branches which are completely merged. This only deletes local
 branches.
 
-    ❯ git branch --merged \
-      | grep -Pv '^\s*(\*|master|main|staging)' \
-      | xargs -r git branch -d
+```console
+❯ git branch --merged \
+  | grep -Pv '^\s*(\*|master|main|staging)' \
+  | xargs -r git branch -d
+```
 
 Unfortunately there will be several branches left which are not merged yet. No
 script can decide if they can be deleted or not.
@@ -745,15 +789,19 @@ skip.
 
 Imagine you accidentally deleted a branch:
 
-    ❯ git branch -D foo-branch
-    Deleted branch foo-branch (was d885d38).
+```console
+❯ git branch -D foo-branch
+Deleted branch foo-branch (was d885d38).
+```
 
 Oh my god! What have I done?
 
 Relax, you can easily create the branch again.
 
-    ❯ git switch -d d885d38
-    ❯ git switch -c foo-branch
+```console
+❯ git switch -d d885d38
+❯ git switch -c foo-branch
+```
 
 ## Feature branch, only one commit
 
@@ -768,7 +816,9 @@ is this:
 I use `--amend` to alter the previous commit. This needs a force-push, because
 it rewrites the history.
 
-    git commit --amend . && git push --force-with-lease
+```console
+git commit --amend . && git push --force-with-lease
+```
 
 ## How to Use Multiple Git Configs on One Computer
 
@@ -779,20 +829,24 @@ for work related stuff.
 
 Create two gitconfig files:
 
-    cd $HOME
-    cp .gitconfig .gitconfig-personal
-    mv .gitconfig .gitconfig-work
+```console
+cd $HOME
+cp .gitconfig .gitconfig-personal
+mv .gitconfig .gitconfig-work
 
-    # change email address to your address for work related mails
+# change email address to your address for work related mails
 
-    vi .gitconfig-work
+vi .gitconfig-work
+```
 
 vi .gitconfig
 
-    [includeIf "gitdir:~/personal/"]
-      path = ~/.gitconfig-personal
-    [includeIf "gitdir:~/work/"]
-      path = ~/.gitconfig-work
+```ini
+[includeIf "gitdir:~/personal/"]
+  path = ~/.gitconfig-personal
+[includeIf "gitdir:~/work/"]
+  path = ~/.gitconfig-work
+```
 
 Source: [How to Use Multiple Git Configs on One
 Computer](https://www.freecodecamp.org/news/how-to-handle-multiple-git-configurations-in-one-machine/)
@@ -808,7 +862,9 @@ Switch to your branch (the branch which should get updated).
 
 I like the GUI tool `meld` as difftool.
 
-    git difftool -t meld other-branch -- your-file.txt
+```console
+git difftool -t meld other-branch -- your-file.txt
+```
 
 This will open `meld` and you can take some lines to your local version.
 
@@ -818,16 +874,18 @@ I use [pre-commit.com](//pre-commit.com).
 
 For example I use this to avoid committing, if there are untracked files:
 
-    # See https://pre-commit.com/hooks.html for more hooks
-    repos:
-      - repo: local
-        hooks:
-          - id: no-untracked-files-in-git
-            name: no-untracked-files-in-git
-            language: system
-            entry: >-
-              bash -c 'files=$(git ls-files --exclude-standard --others);
-              echo $files; test -z "$files"'
+```yaml
+# See https://pre-commit.com/hooks.html for more hooks
+repos:
+  - repo: local
+    hooks:
+      - id: no-untracked-files-in-git
+        name: no-untracked-files-in-git
+        language: system
+        entry: >-
+          bash -c 'files=$(git ls-files --exclude-standard --others);
+          echo $files; test -z "$files"'
+```
 
 Related: <https://stackoverflow.com/a/75543767/633961>
 
@@ -838,15 +896,17 @@ share a single stamp file.
 [`scripts/git-worktree-has-changed.sh`](scripts/git-worktree-has-changed.sh)
 therefore requires a task name before the path:
 
-    version: "3"
+```yaml
+version: "3"
 
-    tasks:
-      lint:
-        status:
-          - bash ./scripts/git-worktree-has-changed.sh lint .
-        cmds:
-          - bash ./internal/lint.sh
-          - bash ./scripts/git-worktree-has-changed.sh --touch-stamp lint .
+tasks:
+  lint:
+    status:
+      - bash ./scripts/git-worktree-has-changed.sh lint .
+    cmds:
+      - bash ./internal/lint.sh
+      - bash ./scripts/git-worktree-has-changed.sh --touch-stamp lint .
+```
 
 The task name becomes part of the stamp filename in `.tmp/`. Non filename-safe
 characters get replaced with underscores.
@@ -870,7 +930,9 @@ and its license is MIT, not AGPL.
 
 I like to update submodules automatically:
 
-    git config --global submodule.recurse true
+```console
+git config --global submodule.recurse true
+```
 
 Don't ask me why this is no the default.
 
@@ -887,22 +949,30 @@ I use this pattern:
 
 First I create a global git ignore:
 
-    git config --global core.excludesfile ~/.gitignore
+```console
+git config --global core.excludesfile ~/.gitignore
+```
 
 Then I create ~/.gitignore, and add `me`:
 
-    me
+```text
+me
+```
 
 If I want to save personal notes or scripts I create a symlink from the git repo
 a file in ~/docs:
 
-    mkdir ~/doc/COMPANY/some-git-repo
-    cd ~/COMPANY/some-git-repo
-    ln -s ~/doc/COMPANY/some-git-repo me
+```console
+mkdir ~/doc/COMPANY/some-git-repo
+cd ~/COMPANY/some-git-repo
+ln -s ~/doc/COMPANY/some-git-repo me
+```
 
 Now I can edit notes easily:
 
-    code me/foo.txt
+```console
+code me/foo.txt
+```
 
 But don't be careful. Don't increase the "bus factor" by building a
 single-person "information silo".
@@ -916,21 +986,23 @@ But for secrets I use `.env` files.
 
 Example:
 
-    # shellcheck shell=bash
+```bash
+# shellcheck shell=bash
 
-    # .envrc file of direnv.
-    # If you use vsode, pleaes use the `direnv` extension.
+# .envrc file of direnv.
+# If you use vsode, pleaes use the `direnv` extension.
 
-    # Use nix-direnv
-    # https://github.com/nix-community/nix-direnv
-    # Ensures that flake.nix gets evaluated.
-    use flake
+# Use nix-direnv
+# https://github.com/nix-community/nix-direnv
+# Ensures that flake.nix gets evaluated.
+use flake
 
-    PATH_add scripts
-    PATH_add node_modules/.bin
+PATH_add scripts
+PATH_add node_modules/.bin
 
-    # Load variables from .env
-    dotenv_if_exists
+# Load variables from .env
+dotenv_if_exists
+```
 
 In never want the `.env` file to be part of a git repo, because it usualy
 contains credentials (for example GITHUB_TOKEN).
@@ -960,7 +1032,22 @@ And so on.
 
 I think it is perfectly fine to have long branch names like:
 
-    tg/check-workspace-providers-on-create-of-apc--based-on-disallow-change-of-controlplane-location
+```text
+tg/check-workspace-providers-on-create-of-apc--based-on-disallow-change-of-controlplane-location
+```
+
+## History for selection
+
+I do 95% of my git actions on the command-line. But "history for selection" is
+super cool. It is a feature of IntelliJ-based IDEs. You can select a region in
+the code and then you can have a look at the history of this region.
+
+On the command-line you can use `git blame some-file`, but it is not that
+powerfull like the IntelliJ IDE solution.
+
+I switched to vscode several years ago, but still miss this feature.
+
+If you know how to get that in vscode, please tell me!
 
 ## Github: Tab width: 4
 
@@ -972,7 +1059,9 @@ change the default tab width from 8 to 4:
 
 This command opens the current PR in your browser:
 
-    gh pr view --web
+```console
+gh pr view --web
+```
 
 ## vscode: autoFetch
 
@@ -1006,16 +1095,20 @@ But you are unsure which line is responsible for ignoring this file.
 
 You can use `git check-ignore -v`:
 
-    ❯ git check-ignore -v foo/bar.baz
-    .gitignore:23:foo/*.baz foo/bar.baz
+```console
+❯ git check-ignore -v foo/bar.baz
+.gitignore:23:foo/*.baz foo/bar.baz
+```
 
 ## Clone a sub-folder
 
-    git clone -n --depth=1 --filter=tree:0 \
-      https://github.com/cirosantilli/test-git-partial-clone-big-small-no-bigtree
-    cd test-git-partial-clone-big-small-no-bigtree
-    git sparse-checkout set --no-cone /small
-    git checkout
+```console
+git clone -n --depth=1 --filter=tree:0 \
+  https://github.com/cirosantilli/test-git-partial-clone-big-small-no-bigtree
+cd test-git-partial-clone-big-small-no-bigtree
+git sparse-checkout set --no-cone /small
+git checkout
+```
 
 [Stackoverflow How do I clone a subdirectory only of a Git
 repository?](https://stackoverflow.com/a/52269934/633961)
@@ -1027,14 +1120,16 @@ notified in the prompt, when the git status is not clean.
 
 My config:
 
-    [git_status]
-    conflicted = ' conflicted'
-    ahead = ' ahead'
-    behind = ' behind'
-    diverged = ' diverged'
-    up_to_date = ''
-    stashed = ' stashes'
-    untracked = ' untracked'
+```toml
+[git_status]
+conflicted = ' conflicted'
+ahead = ' ahead'
+behind = ' behind'
+diverged = ' diverged'
+up_to_date = ''
+stashed = ' stashes'
+untracked = ' untracked'
+```
 
 This shows nothing, when the git state is clean, and a readable warning, when
 something is wrong.
@@ -1046,7 +1141,9 @@ productive, so I do other things while waiting.
 
 When the job is done, I want to get notified. This can be done like this:
 
-    gh run watch; music
+```console
+gh run watch; music
+```
 
 `gh run watch` gives you a list of jobs, you can select one. When it is
 finished, the next command is called `music`. Use whatever command you want for
