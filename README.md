@@ -487,61 +487,10 @@ prefered diff-tool. See [git-difftool](https://git-scm.com/docs/git-difftool)
 
 # Solving Conflicts: Overview
 
-Before solving a git merge conflict, it is convinient to have an overview: What changed between base and remote, and what change between base and my local version?
+Before solving a git merge conflict, it is convinient to have an overview: What changed between base
+and remote, and what change between base and my local version?
 
-I found no tool which does this, so I use that small Bash script `diff-conflict.sh`:
-
-```bash
-#!/usr/bin/env bash
-#
-# conflict-overview.sh
-# https://github.com/guettli/git-tips/blob/main/README.md#solving-conflicts-overview
-#
-# Bash Strict Mode: https://github.com/guettli/bash-strict-mode
-trap 'echo -e "\n🤷 🚨 🔥 Warning: A command has failed. Exiting the script. Line was ($0:$LINENO): $(sed -n "${LINENO}p" "$0" 2>/dev/null || true) 🔥 🚨 🤷 "; exit 3' ERR
-set -Eeuo pipefail
-
-function usage() {
-    echo "Usage: $0 <file>"
-    echo "This script opens DIFFTOOL twice:"
-    echo "  DIFFTOOL <file>.BASE <file>.REMOTE"
-    echo "  DIFFTOOL <file>.BASE <file>.LOCAL"
-    echo "This helps to resolve git merge conflicts."
-    echo "If env var DIFFTOOL is not set, it defaults to 'code -d'."
-    echo ""
-    echo "The two file comparison which get opened by the script can help you to see changes."
-    echo "  BASE vs LOCAL: These are the changes of your local branch. It is likely that you are more familiar with these changes."
-    echo "  BASE vs REMOTE: The upstream branch (often 'main') changed. These changes are the reason why are the merge has conflicts."
-    echo ""
-    echo "For resolving the conflicht (by hand), I recommend to configure 'meld' as mergetool."
-    echo "Then open meld for the current conflict: git mergetool"
-    echo ""
-    echo "Related: https://github.com/guettli/git-tips/blob/main/README.md#solving-conflicts-overview"
-    exit 1
-}
-
-if [[ $# -ne 1 ]]; then
-    usage
-fi
-
-if [[ ! -f "$1" ]]; then
-    echo "Error: File '$1' does not exist."
-    usage
-fi
-
-if [[ ! -e .git/MERGE_HEAD ]]; then
-    echo ".git/MERGE_HEAD does not exist. No merge seems to be active at the moment."
-    usage
-fi
-
-FILE="$1"
-difftool="${DIFFTOOL:-code -d}"
-git show :1:"$FILE" >"$FILE".BASE
-git show :2:"$FILE" >"$FILE".LOCAL
-git show :3:"$FILE" >"$FILE".REMOTE
-$difftool "$FILE".BASE "$FILE".LOCAL &
-$difftool "$FILE".BASE "$FILE".REMOTE &
-```
+I found no tool which does this, so I use that small Bash script [scripts/git-conflict-overview.sh](scripts/git-conflict-overview.sh).
 
 Now I can choose the simpler change, then I apply the more complex change the the file, and after
 that I apply the simpler change by hand.
@@ -895,6 +844,40 @@ repos:
 
 Related: https://stackoverflow.com/a/75543767/633961
 
+# Taskfile stamp files per task name
+
+If several independent Taskfile tasks watch the same directory, they should not share a single stamp
+file. [`scripts/git-worktree-has-changed.sh`](scripts/git-worktree-has-changed.sh) therefore
+requires a task name before the path:
+
+```yaml
+version: "3"
+
+tasks:
+  lint:
+    status:
+      - bash ./scripts/git-worktree-has-changed.sh lint .
+    cmds:
+      - bash ./internal/lint.sh
+      - bash ./scripts/git-worktree-has-changed.sh --touch-stamp lint .
+```
+
+The task name becomes part of the stamp filename in `.tmp/`. Non filename-safe characters get
+replaced with underscores.
+
+# gitleaks via pre-commit
+
+This repository uses `gitleaks` in `.pre-commit-config.yaml`.
+
+Why in `pre-commit` and not only in CI?
+
+* The feedback is immediate. You notice accidental secrets before they leave your laptop.
+* It is cheaper to fix. Amending a local commit is easier than cleaning up after a pushed secret.
+* It protects all commits, not only the branch which later gets CI.
+
+I use `gitleaks` here because it is a maintained general-purpose secret scanner and its license is
+MIT, not AGPL.
+
 # git submodules
 
 I like to update submodules automatically:
@@ -964,55 +947,17 @@ Example:
 # Ensures that flake.nix gets evaluated.
 use flake
 
-export PATH="$PWD/scripts:$PWD/node_modules/.bin:$PATH"
+PATH_add scripts
+PATH_add node_modules/.bin
 
 # Load variables from .env
-dotenv
+dotenv_if_exists
 ```
 
 In never want the `.env` file to be part of a git repo, because it usualy contains credentials (for example GITHUB_TOKEN).
 
-To prevent accidental commits of .env files in all your Git repositories, you can set up a global .gitignore file like above,
-and add `.env` to the file.
-
-# Ignore a file, but only locally
-
-I like to change the colors for repos. I use the vscode plugin [peacock](https://marketplace.visualstudio.com/items?itemName=johnpapa.vscode-peacock) for that.
-
-This modifies `.vscode/settings.json`. In my own git repos, I add that file, but not for third party repos.
-
-This means I want to ignore that file without modifing `.gitignore`. This is easy:
-
-```
-code .git/info/exclude
-```
-
-This works, if the upstream repo does not contain `.vscode/settings.json`.
-
-If upstream repo has that file, and I want to git to ignore my local changes:
-
-```
-git update-index --assume-unchanged .vscode/settings.json
-```
-
-I do this, when I work on the same git repo twice. I clone the repo twice (foo and foo2), and then I change color, so I can easily distinguish between both editors.
-
-BUT: `git commit .` will not ignore it. Still looking for a better solution than `git update-index --assume-unchanged`.
-
-You can use that [pre-commit](https://pre-commit.com), so that you do not commit changes to that file:
-
-```yaml
-- repo: local
-  hooks:
-    - id: block-vscode-settings
-      name: Block commits of .vscode/settings.json
-      entry: >
-        bash -c 'if git diff --cached --name-only | grep -q "^.vscode/settings.json$"; then
-          echo "ERROR: .vscode/settings.json must not be committed."
-          exit 1
-        fi'
-      language: system
-```
+To prevent accidental commits of .env files in all your Git repositories, you can set up a global
+.gitignore file like above, and add `.env` to the file.
 
 # Chain of branches: Add base branch to name of second branch
 
@@ -1083,40 +1028,6 @@ You can use `git check-ignore -v`:
 ❯ git check-ignore -v foo/bar.baz
 .gitignore:23:foo/*.baz foo/bar.baz
 ```
-# Ignore files, but only locally
-
-We store `.vscode/settings.json` in the git repo and change the color. This has the benefit, that you can
-easier distinguish between different vscode windows. Repo foo has this color, and repo bar has an other color.
-
-Sometimes I want to open a git repo twice: main branch, and dev branch.
-
-I do `cp -a` and create a copy of the git repo. Now I want to have two different colors, so that I can
-easily see which vscode window is open.
-
-Now:
-
-```terminal
-❯ git status
-...
-        modified:   .vscode/settings.json
-```
-
-```sh
-git pull
-error: cannot pull with rebase: You have unstaged changes.
-error: Please commit or stash them.
-```
-
-I want to ignore the changes to the file, but only for me localy.
-
-This helps:
-
-
-```sh
-git update-index --assume-unchanged .vscode/settings.json
-```
-
-Now I can pull without `stash`.
 
 # Clone a sub-folder
 

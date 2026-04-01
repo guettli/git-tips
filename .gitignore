@@ -1,1 +1,11 @@
 .vscode
+.tmp
+
+# tempdir of direnv
+.direnv
+
+# This often contains credentials
+.env
+
+# tempdir of Taskfile
+.task
