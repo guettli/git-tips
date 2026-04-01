@@ -353,8 +353,8 @@ You need to use `git diff --staged` to see your changes.
 
 ## Git pager
 
-I use [delta](https://github.com/dandavison/delta) which shows `git diff` colorful, so that you can
-easily spot small changes in long lines.
+I use [delta](https://github.com/dandavison/delta), which shows `git diff` output with better
+colors, so small changes in long lines are easier to spot.
 
 ## Automatically prune on fetch
 
