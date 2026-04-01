@@ -972,33 +972,21 @@ That means:
 - after more commits, rebases, merges, or deleted branches, that information is
   gone
 
-So Git can tell you:
-
-- the parent commit of a commit
-- the merge-base of two branches
-- which branches currently contain a commit
-
 But Git cannot reliably tell you:
 
 - "feature-2 was created from feature-1"
 
-Sometimes you can guess it with heuristics, for example by looking at:
-
-- the merge-base
-- branch names
-- branch creation time
-- reflog entries
-
-But that is only a guess, not a guaranteed fact.
-
 If you are not asking Git about branch ancestry, but the hosting platform about
-the current PR or MR, then CLI tools can help:
+the current PR or MR, then a hosting CLI can help.
+
+Verified example:
 
 - GitHub: `gh pr view --json baseRefName --jq .baseRefName`
-- GitLab: `glab mr view --output json | jq -r '.target_branch'`
-- Codeberg/Forgejo:
-  `TODO: verify the best tea command for "base branch of the current PR".
-  Likely via tea API and jq on .base.ref.`
+
+TODO: verify the best GitLab CLI command for "base branch of the current MR".
+
+TODO: verify the best Codeberg/Forgejo/Gitea CLI command for "base branch of
+the current PR".
 
 ## Undelete a branch
 
