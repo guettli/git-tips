@@ -867,7 +867,7 @@ both directories with the context menu.
 
 You can accept (click on arrow) or reject (shift-click) single changes.
 
-## show change of merge commit
+## Show change of merge commit
 
 This shows no changes for merge commits:
 
@@ -881,7 +881,7 @@ Use:
 git show -m <commit-hash>
 ```
 
-The output of above command has several parts. For each parent commit one part.
+The output of the command above has several parts: one part for each parent commit.
 
 ## cherry-pick -n
 
