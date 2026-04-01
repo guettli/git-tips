@@ -521,8 +521,8 @@ This works in Github CI and on my local Linux device.
 
 ## Starship Prompt
 
-I use [Starship Prompt](https://starship.rs/config/#git-status), so that I get notified in the
-prompt, when the git status is not clean.
+I use [Starship Prompt](https://starship.rs/config/#git-status) so I get notified in the prompt
+when the Git status is not clean.
 
 My config:
 
@@ -537,7 +537,7 @@ stashed = ' stashes'
 untracked = ' untracked'
 ```
 
-This shows nothing, when the git state is clean, and a readable warning, when something is wrong.
+This shows nothing when the Git state is clean and a readable warning when something is wrong.
 
 ## Github: Play sound, when CI Job is finished
 
