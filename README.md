@@ -916,6 +916,9 @@ git show-branch -a 2>/dev/null \
 
 Source: <https://stackoverflow.com/a/74314172/633961>
 
+TODO: Is there a more reliable modern Git command for this, or is every
+solution necessarily heuristic?
+
 ## Undelete a branch
 
 Imagine you accidentally deleted a branch:
