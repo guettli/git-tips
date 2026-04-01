@@ -17,24 +17,18 @@ if [[ -z ${IN_NIX_SHELL:-} && -z ${DIRENV_DIR:-} ]]; then
 fi
 
 mapfile -d '' markdown_files < <(git ls-files -z -- '*.md')
-mapfile -d '' yaml_files < <(git ls-files -z -- '*.yml' '*.yaml')
-mapfile -d '' shell_files < <(git ls-files -z -- '*.sh')
-
-if [[ ${#markdown_files[@]} -eq 0 && ${#yaml_files[@]} -eq 0 && ${#shell_files[@]} -eq 0 ]]; then
-    echo "No tracked Markdown, YAML, or shell files to lint."
-    exit 0
-fi
-
 if [[ ${#markdown_files[@]} -gt 0 ]]; then
     echo "Running markdownlint..."
-    markdownlint "${markdown_files[@]}"
+    markdownlint --fix "${markdown_files[@]}"
 fi
 
+mapfile -d '' yaml_files < <(git ls-files -z -- '*.yml' '*.yaml')
 if [[ ${#yaml_files[@]} -gt 0 ]]; then
     echo "Running yamllint..."
     yamllint "${yaml_files[@]}"
 fi
 
+mapfile -d '' shell_files < <(git ls-files -z -- '*.sh')
 if [[ ${#shell_files[@]} -gt 0 ]]; then
     echo "Running shellcheck..."
     shellcheck "${shell_files[@]}"
