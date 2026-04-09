@@ -9,3 +9,6 @@
 
 # tempdir of Taskfile
 .task
+
+__pycache__
+slides/

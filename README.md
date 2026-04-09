@@ -2,6 +2,8 @@
 
 This is not an introduction to Git. Just some hints about how I use `git`.
 
+Slides: <https://guettli.github.io/git-tips/>
+
 ## How to use this Git Repo
 
 This repo contains some scripts in the [scripts](scripts) directory.
@@ -9,6 +11,24 @@ This repo contains some scripts in the [scripts](scripts) directory.
 I add that directory to `$PATH` so the scripts are available everywhere.
 
 Most of them use the [Bash Strict Mode](https://github.com/guettli/bash-strict-mode).
+
+To generate HTML slides from this README into the `slides/` directory, run `task slides`.
+
+## Git Hosting Providers
+
+GitHub is very popular, but it is no the only Git hosting provider.
+
+For example, Git itself does not know about pull requests (PRs). That concept was added by platforms
+like GitHub, GitLab, and Codeberg.
+
+Different platforms use different names for nearly the same thing:
+
+- GitHub: pull request (PR)
+- Codeberg: pull request (PR)
+- GitLab: merge request (MR)
+- Gerrit/Google: changelist (CL)
+
+I use "pull request" as the generic term here, even if a platform uses a different name.
 
 ## One directory per PR
 
@@ -44,22 +64,101 @@ If you have a train of PRs, I like this mnemonic to remember the order:
 - Second PR: yellow (like "youth")
 - Third PR: purple (like elderly)
 
-## `git checkout` -> `git switch` + `git restore`
+## `checkout` -> `switch` + `restore`
 
-In the past, `git checkout` was used for different use cases.
+The command `git checkout` is confusing, and no longer needed.
 
-I think it is time to use the newer commands:
+- `git switch` to switch to a different branch
+- `git restore` to restore files
 
-`git switch` to switch to a different branch
+## `git diff` via Pager, not IDE
 
-`git restore` to restore files
+I use [pager delta](https://github.com/dandavison/delta), which shows `git diff` output with better
+colors, so small changes in long lines are easier to spot.
 
-I avoid `git checkout`.
+I usualy do not use the git features of the IDE (vscode in most cases).
+
+Depending on your system, the package is often called `git-delta`, but the
+executable is called `delta`.
+
+Examples:
+
+```console
+brew install git-delta
+dnf install git-delta
+cargo install git-delta
+nix profile add nixpkgs#delta
+```
+
+Then configure Git to use it as `pager`:
+
+```ini
+[core]
+    pager = delta
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    navigate = true
+```
+
+After that, commands like `git diff`, `git show`, `git log -p`, and `git add -p` will use delta.
+
+Screenshot:
+
+![delta screenshot](https://user-images.githubusercontent.com/52205/81058911-6abcf700-8e9d-11ea-93be-e212824ec03d.png)
+
+## How to Use Multiple Git Configs on One Computer
+
+Imagine you have used only a personal GitHub account so far.
+
+Now you want two identities on one computer: one for personal work and one for work-related repos.
+
+Create two gitconfig files:
+
+```console
+cd $HOME
+cp .gitconfig .gitconfig-personal
+mv .gitconfig .gitconfig-work
+
+# change the email address to your work address
+
+code .gitconfig-work
+```
+
+Then create a new `~/.gitconfig`:
+
+```console
+code .gitconfig
+```
+
+Put this into it:
+
+```ini
+[includeIf "gitdir:~/personal/"]
+  path = ~/.gitconfig-personal
+[includeIf "gitdir:~/work/"]
+  path = ~/.gitconfig-work
+```
+
+Source: [How to Use Multiple Git Configs on One
+Computer](https://www.freecodecamp.org/news/how-to-handle-multiple-git-configurations-in-one-machine/)
 
 ## `git diff main` vs `git diff origin/main`
 
 If you work on a branch that was created from `main`, you might want to compare your current work
 against `main`. Similar to the view you see in web UIs like GitHub.
+
+```mermaid
+flowchart LR
+    remote["origin (Git hosting platform)"]
+    tracking["your local origin/main"]
+    localmain["your local main"]
+
+    remote -- "git fetch updates this" --> tracking
+    tracking -. "local main may lag behind" .-> localmain
+```
 
 These two commands can show different results:
 
@@ -70,7 +169,8 @@ If your local `main` is outdated, then `git diff main` can be misleading.
 
 For example:
 
-- maybe you have not switched to `main` for a week
+- maybe you have not switched to `main` for a week, and other developers have merge to main
+  meanwhile.
 - maybe you did not run `git pull` on `main`
 - but `git fetch` already updated `origin/main`
 
@@ -116,11 +216,15 @@ Why?
 I usually do this while I am on my feature branch:
 
 ```console
-git fetch
+# Maybe someone else pushed to your branch. Get these change to your local directory
+git pull
+
+# Get changes from base branch. In most cases this is "main".
 git merge origin/main
 ```
 
-If the branch is already published and others rely on it, then push the merge commit afterwards.
+I use `origin/main` here instead of local `main` because local `main` might be outdated. A `git fetch`
+updates `origin/main`, even if you have not switched to `main` or pulled it recently.
 
 ## Create a backup of a branch
 
@@ -135,21 +239,30 @@ git switch -
 You could use [tagging](https://git-scm.com/book/en/v2/Git-Basics-Tagging) for this as well, but I
 prefer this approach.
 
-## Pull Requests
-
-Git itself does not know about pull requests (PRs). That concept was added by platforms like GitHub,
-GitLab, and Codeberg.
-
 ## Squash PRs
 
-The easiest way to keep the Git history clean: Squash PRs. Create as many commits as you like in
-your PR. Do not rebase in the PR, don't do force-pushes.
+The easiest way to keep the Git history clean: Squash PRs.
+
+- In your branch: Create as many commits as you like
+- Do not rebase
+- Don't force-push
 
 At the end, just squash the PR into a single commit.
 
 ## List branches
 
 [git-list-branches.sh](scripts/git-list-branches.sh)
+
+This script shows local branches and `origin/<branch>` branches in one combined list.
+
+It sorts them by recent activity and shows, for each branch:
+
+- when the last commit happened
+- the commit subject
+- whether the local branch is synced with `origin`, ahead, behind, diverged, local-only, or remote-only
+
+By default it runs `git fetch --prune origin` first, so the view is based on fresh remote-tracking
+refs.
 
 ## Switch back to previous branch
 
@@ -161,20 +274,6 @@ This switches to the previous branch. And to get back ... again `git switch -`.
 
 Like `cd -` in the bash shell.
 
-## Accidentally Commit on Branch Main
-
-You accidentally created a commit on your local main branch. That was a mistake because every change
-should be done via a pull request. You have not pushed your changes yet.
-
-Solution: create a backup, delete your local `main`, and recreate it from `origin`.
-
-```console
-# Create a backup
-git switch -c main--backup
-git branch -D main
-git switch main
-```
-
 ## git stash
 
 `git stash` is like a backpack.
@@ -183,6 +282,28 @@ Example: You started to code. Then you realize (before you commit) that you work
 But you want to move that work onto a feature branch first. You can `git stash` your uncommitted
 changes, switch to or create the branch you actually want, and then use `git stash pop` to bring the
 changes back.
+
+## Accidentally Commit on Branch `main`
+
+You accidentally created a commit on your local main branch. That was a mistake because every change
+should be done via a pull request. You have not pushed your changes yet.
+
+Solution: create a feature branch, delete your local `main`, and recreate it from `origin`.
+
+```console
+# Create the branch you want to use for your feature.
+git switch -c feature-foo
+
+# Delete your `main` branch.
+# Relax: You still have the "main" branch on origin (like Github/Gitlab/Codeberg/...)
+git branch -D main
+
+# re-create branch "main" from origin
+git switch main
+
+# Now develop on your feature branch.
+git switch feature-foo
+```
 
 ## Restore a single file
 
@@ -195,28 +316,36 @@ git restore -s main path/to/file
 
 `s` like "source branch"
 
+(avoid `git checkout`)
+
 ## Restore interactively
 
 Imagine you are working on a feature branch. But you want to restore some changes to the original
 version of the main branch. You want to do that interactively because some changes in the file
-should stay. Use `-p`:
+should stay. Use `-p` like "patch":
 
 ```console
-git restore -s main -p path/to/file
+git restore -s main -p -- path/to/file.txt
+```
+
+This works for directories, too:
+
+```console
+git restore -s main -p -- path/to/dir
 ```
 
 ## `git diff` of pull-request
 
-Imagine you work on a branch that backs a pull request.
-
-You want to see all changes of your pull-request.
+You work on a PR, and you execute:
 
 ```console
 git diff origin/main
 ```
 
-That command might show a lot of changes that happened on `origin/main` since you created the
-branch. You do not want to see those changes.
+But this might look very different from what you see in the web UI of your Git hosting provider.
+
+That simple `git diff` command might show a lot of changes that happened on `origin/main` since you
+created the branch. You do not want to see those changes.
 
 What was changed on your branch since the branch was created?
 
@@ -232,12 +361,20 @@ To see them, too:
 git diff "$(git merge-base origin/main HEAD)"
 ```
 
-### Show Changes to a single file
+## Show Changes to a single file
 
-`git log foo.txt` shows you the commits which changes the file.
+```console
+git log foo.txt
+```
+
+... shows you the commits which changes the file.
 
 But it shows you only the commit message. If you want to see the changes which were done, you need
-to use `-p` (like patch): `git log -p foo.txt`.
+to use `-p` (like patch):
+
+```console
+git log -p foo.txt
+```
 
 ## Find removed code
 
@@ -248,9 +385,14 @@ Which commit removed or renamed it?
 
 `git log -G my_name`
 
-Attention: `git log -G=foo` will search for `=foo` (and I guess that is not what you wanted).
+Difference to `-S`:
 
-## Find string in all branches
+- `-G my_name`: find commits where added or removed lines match the regex
+- `-S my_name`: find commits where the number of occurrences of the exact string changed
+
+I use `-G` more often for code archaeology, because renames or rewritten lines are easier to find.
+
+Attention: `git log -G=foo` will search for `=foo` (and I guess that is not what you wanted).
 
 If you know a co-worker introduced a variable/method/class, but it is not in your code, and `git log
 -G my_name` does not help, then you can use `git log --all -G my_name`. This will search in all
@@ -263,14 +405,23 @@ commit:
 
 `git branch --contains 684d9cc74d2`
 
-## I don't care much for the git tree
+Works for git tags, too:
 
-Many developers like to investigate the git tree.
+`git tag --contains 684d9cc74d2`
+
+## I don't care much for git history
+
+Many developers like to investigate the Git history.
 
 I almost never do this.
 
-If you avoid long running git branches, then you almost never need to inspect the git branch
-history.
+If you need to inspect the Git history graph often, then that is usually a smell: something is off
+in the way the work gets sliced.
+
+If you are in a hurry, go slowly.
+
+Avoid long-living branches. Release early, release often. Then the Git history usually does not
+matter much, because each step stays small and easy to understand.
 
 The native GUI `gitk --all` gives you a graphical overview. Don't ask me why the `--all` parameter
 is not the default. Without it, you won't see other branches.
@@ -307,31 +458,6 @@ In detail:
 You can give `ls-files` a glob expression. This matches the whole filename (including the parent
 directories).
 
-Imagine you have a directory containing many git repos, and there are files in
-`REPO/foo/test_project_bar/settings.py`, you can use grep like this:
-
-```console
-for repo in *; do (
-  cd "$repo"
-  git ls-files '*test_project*settings.py' | xargs -r -d'\n' grep RECAP
-); done
-```
-
-Don't forget the `*` before "test_project".
-
-If you add a comment at the end, you can easily find this command in your shell history (for example
-via `ctrl-r` (backward search)):
-
-```console
-(cd ~/projects/; for repo in * ; do (
-     cd "$repo"; git ls-files '*.my-extension' |
-     xargs -r -d'\n' grep -P 'my-term' ) ;
- done) # grep over all repos
-```
-
-Once you executed this once, you can easily get back to this line by ctrl-r (search backwards in
-history) and then type “over all”
-
 ## Autocompletion
 
 If you configured auto-completion, you can easily get a list of branches if you know the first
@@ -344,11 +470,21 @@ git switch branch[TAB]
  --->        ...
 ```
 
+[git-switch-branches.sh](scripts/git-switch-branches.sh)
+
+This is a small interactive branch switcher based on `fzf`. It shows local and remote branches in
+one list, previews recent commits, and if you select a remote-only branch it creates the local
+tracking branch for you.
+
 ## Solving Conflicts with `meld`
 
-I am on a branch that was created from the main branch some hours ago.
+I am on a branch that was created from the main branch.
 
 Now I want to merge the new main branch into my branch again.
+
+But someone else changed parts which I also changed on my branch.
+
+There is a conflict.
 
 ```console
 ❯ git fetch
@@ -388,25 +524,54 @@ I have tried several other tools, but `meld` (with useAutoMerge) is still my fav
 
 ## Solving Conflicts: Overview
 
-Before solving a Git merge conflict, it is convenient to have an overview: what changed between the
-base and the remote, and what changed between the base and your local version?
+Before solving a complex Git merge conflict, it is convenient to have an overview:
+
+> What changed between the base and the remote, and what changed between the base and your local
+> version?
 
 I found no tool which does this, so I use that small Bash script
-[scripts/git-conflict-overview.sh](scripts/git-conflict-overview.sh).
+[git-conflict-overview.sh](scripts/git-conflict-overview.sh).
 
-Now I can choose the simpler change, then apply the more complex change to the file, and after that
-I apply the simpler change by hand.
+The script opens three diffs for one conflicted file:
+
+- `BASE` vs `LOCAL`
+- `BASE` vs `REMOTE`
+- `REMOTE` vs `LOCAL`
+
+That gives me a quick overview of what my branch changed, what the upstream branch changed, and
+where the two sides overlap.
+
+Now I can choose the simpler change first, then apply the more complex change to the file, and
+after that I apply the simpler change by hand.
 
 I use the above tool only to inspect the changes. To resolve the conflict by hand, I use `git
-mergetool` with `meld`. See the next section.
+mergetool` with `meld`. See the previous section.
 
-## Search with Editor, not with your eyes
+## Misc: Search with Editor, not with your eyes
 
 Not related to Git, but still helpful: do not search through code with your eyes all day. Use your
 IDE.
 
-For example, I mark a place with "ööö" (German umlauts) when I want to jump back to that point
+For example, I mark a place with `ööö` (German umlauts) when I want to jump back to that point
 later. Of course this should never be committed.
+
+Code editors have fancy plugins for this, too. But somehow this simple pattern works well for me.
+
+## Misc: ripgrep: recursive grep which respects .gitignore
+
+[ripgrep](https://github.com/BurntSushi/ripgrep): recursive grep which respects .gitignore
+
+Handy if there are huge directories in your Git repo that you usually want to skip.
+
+## Misc: atuin
+
+[atuin](https://atuin.sh/) is a shell history tool with very good search.
+
+This is handy for Git because many useful commands are too rare to memorize exactly. Instead of
+retyping them or scrolling through old terminals, press `Ctrl-r` and search your history.
+
+It helps me find commands like `git restore ...`, `git diff ...`, or some complicated `git log`
+invocation that worked before.
 
 ## git diff shows no changes?
 
@@ -418,11 +583,6 @@ Run `git status` to see if you have staged changes.
 
 You need to use `git diff --staged` to see your changes.
 
-## Git pager
-
-I use [delta](https://github.com/dandavison/delta), which shows `git diff` output with better
-colors, so small changes in long lines are easier to spot.
-
 ## Automatically prune on fetch
 
 ```console
@@ -431,42 +591,6 @@ git config --global fetch.prune true
 
 It sets a global Git config so every git fetch will prune stale remote-tracking branches—i.e., it
 automatically deletes local refs like origin/foobar when they’ve been removed from the remote.
-
-## How to Use Multiple Git Configs on One Computer
-
-Imagine you have used only a personal GitHub account so far.
-
-Now you want two identities on one computer: one for personal work and one for work-related repos.
-
-Create two gitconfig files:
-
-```console
-cd $HOME
-cp .gitconfig .gitconfig-personal
-mv .gitconfig .gitconfig-work
-
-# change the email address to your work address
-
-code .gitconfig-work
-```
-
-Then create a new `~/.gitconfig`:
-
-```console
-code .gitconfig
-```
-
-Put this into it:
-
-```ini
-[includeIf "gitdir:~/personal/"]
-  path = ~/.gitconfig-personal
-[includeIf "gitdir:~/work/"]
-  path = ~/.gitconfig-work
-```
-
-Source: [How to Use Multiple Git Configs on One
-Computer](https://www.freecodecamp.org/news/how-to-handle-multiple-git-configurations-in-one-machine/)
 
 ## Pick some lines from another branch with `git difftool`
 
@@ -482,6 +606,13 @@ git difftool other-branch -- your-file.txt
 ```
 
 This will open `meld` and you can take some lines to your local version.
+
+This is related to [Restore interactively](#restore-interactively), but the use case is different:
+
+- `git restore -p -s other-branch your-file.txt`: interactively restore selected hunks from
+  `other-branch`
+- `git difftool other-branch -- your-file.txt`: inspect another branch side by side and copy over
+  only the lines you want
 
 ## pre-commit.com
 
@@ -513,7 +644,7 @@ Why in `pre-commit` and not only in CI?
 I use `gitleaks` here because it is a maintained general-purpose secret scanner and its license is
 MIT.
 
-## Public .envrc file, private .env file
+## Public `.envrc` file, private `.env` file
 
 I use [direnv](https://direnv.net/) to manage environments. `direnv` uses `.envrc` files to set
 environment variables.
@@ -543,8 +674,8 @@ dotenv_if_exists
 I never want the `.env` file to be part of a Git repo, because it usually contains credentials (for
 example `GITHUB_TOKEN`).
 
-To prevent accidental commits of .env files in all your Git repositories, you can set up a global
-.gitignore file like above, and add `.env` to the file.
+To prevent accidental commits of `.env` files in all your Git repositories, you can set up a global
+`.gitignore` file like above, and add `.env` to the file.
 
 ## Long branch names are fine
 
@@ -567,15 +698,22 @@ This command opens the current PR in your browser:
 gh pr view --web
 ```
 
-## VS Code: autoFetch
+## GitHub: Play a sound when a CI job is finished
 
-I like the VS Code Git [`autoFetch`
-setting](https://code.visualstudio.com/docs/sourcecontrol/overview#_remotes). This fetches the
-latest changes from the remote every N seconds.
+Sometimes I need to wait until a GitHub CI job is finished. Waiting is not very productive, so I do
+other things while waiting.
 
-This is handy because I see `[behind]` if I use [my Starship prompt Git config](#starship-prompt).
+When the job is done, I want to get notified. This can be done like this:
 
-## Keep GitHub Action workflows simple
+```console
+gh run watch; music
+```
+
+`gh run watch` gives you a list of jobs, and you can select one. When it is finished, the next
+command runs. Use whatever command you want for that. For me, `music` is a small script that plays a
+song I like.
+
+## GitHub: Keep Actions/Workflows simple
 
 I prefer to keep GitHub Action workflows simple. I like that GitHub does CI for me, but third-party
 GitHub Actions have the drawback that I often cannot reproduce them on my local machine.
@@ -586,6 +724,14 @@ Keep things simple by using a reliable Bash script in [Bash Strict
 Mode](https://github.com/guettli/bash-strict-mode).
 
 This works in GitHub CI and on my local Linux device.
+
+## VS Code: autoFetch
+
+I like the VS Code Git [`autoFetch`
+setting](https://code.visualstudio.com/docs/sourcecontrol/overview#_remotes). This fetches the
+latest changes from the remote every N seconds.
+
+This is handy because I see `[behind]` via [my Starship prompt Git config](#starship-prompt).
 
 ## Starship Prompt
 
@@ -607,20 +753,9 @@ untracked = ' untracked'
 
 This shows nothing when the Git state is clean and a readable warning when something is wrong.
 
-## GitHub: Play a sound when a CI job is finished
+Official screenshot:
 
-Sometimes I need to wait until a GitHub CI job is finished. Waiting is not very productive, so I do
-other things while waiting.
-
-When the job is done, I want to get notified. This can be done like this:
-
-```console
-gh run watch; music
-```
-
-`gh run watch` gives you a list of jobs, and you can select one. When it is finished, the next
-command runs. Use whatever command you want for that. For me, `music` is a small script that plays a
-song I like.
+![Starship demo](https://raw.githubusercontent.com/starship/starship/master/media/demo.gif)
 
 ## restore, revert, reset
 
@@ -655,12 +790,6 @@ git reset --hard HEAD~1
 If you are unsure, use `restore` for files and `revert` for published history.
 
 Be careful with `reset`, especially after pushing. If unsure, use `revert`, not `reset`.
-
-## ripgrep: recursive grep which respects .gitignore
-
-[ripgrep](https://github.com/BurntSushi/ripgrep): recursive grep which respects .gitignore
-
-Handy if there are huge directories in your Git repo that you usually want to skip.
 
 ## delete merged branches
 
@@ -740,42 +869,10 @@ You need to adapt these parts:
 - YOUR_COMMAND: Should return `0` if everything is fine.
 - remove "sleep 1", if you need to walk back a lot of commits.
 
-## Merge several commits into one commit
-
-Sometimes you want to merge small commits into one bigger commit. For example if you worked on a
-branch which was not merged to main yet.
-
-But be careful. This re-writes the git history. This means other people developing on this branch
-will get trouble if you do this.
-
-But if this branch is your merge request (or pull request), and you know nobody else uses this
-branch, then it is fine to do so:
-
-```console
-git rebase -i HEAD~N
-```
-
-`N` is the number of commits you want to work on. If your branch was created from `main` and you
-want to rebase all your changes, use the merge-base with `origin/main`: `git rebase -i "$(git
-merge-base origin/main HEAD)"`
-
-Interactive rebase asks you for every commit what you want to do.
-
-More about rewriting the git history: [Git Book: Rewriting
-History](https://git-scm.com/book/en/v2/Git-Tools-Rewriting-History)
-
-But you cannot push the branch with the rewritten history. You need to use:
-
-```console
-git push --force-with-lease
-```
-
-But overall: do not do this too often. This is not very productive (compared to writing new code,
-fixing old bugs or writing more detailed tests)
-
 ## Squash all commits into a single commit
 
-Unfortunately, in Kubernetes-related projects, squash via GitHub (as explained above) is disabled.
+Unfortunately, in Kubernetes-related projects, squash via GitHub as described in [Squash
+PRs](#squash-prs) is disabled.
 
 See [PR Guidelines](https://www.kubernetes.dev/docs/guide/pull-requests/#squashing).
 
@@ -803,13 +900,6 @@ git reset --soft origin/main
 git commit
 git push --force-with-lease
 ```
-
-## Apply difference between two branches on a third branch
-
-The above tip *Change a git branch "inplace"* uses external patches.
-
-This can be used to [Apply difference between two branches on a third
-branch](https://stackoverflow.com/questions/73279330)
 
 ## Empty commit
 
@@ -1039,8 +1129,14 @@ I do 95% of my git actions on the command-line. But "history for selection" is s
 feature of IntelliJ-based IDEs. You can select a region in the code and then you can have a look at
 the history of this region.
 
-On the command line you can use `git blame some-file`, but it is not as powerful as the IntelliJ IDE
-solution.
+On the command line, the closest things I know are:
+
+- `git blame -L 120,150 some-file`: show who last changed lines 120 to 150
+- `git log -L 120,150:some-file`: show the history of that line range as patches
+- `git log -L :my_function:some-file`: show the history of one function
+
+This is still not as convenient as the IntelliJ IDE solution, because on the command line you need
+line numbers or a function name first.
 
 I switched to VS Code several years ago, but still miss this feature.
 

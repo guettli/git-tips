@@ -10,6 +10,9 @@
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
+        pythonEnv = pkgs.python3.withPackages (ps: with ps; [
+          markdown
+        ]);
       in
       {
         devShells.default = pkgs.mkShell {
@@ -18,6 +21,7 @@
             gitleaks
             markdownlint-cli
             pre-commit
+            pythonEnv
             shellcheck
             yamllint
           ];

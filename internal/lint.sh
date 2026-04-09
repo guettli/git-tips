@@ -16,6 +16,12 @@ if [[ -z ${IN_NIX_SHELL:-} && -z ${DIRENV_DIR:-} ]]; then
     exit 1
 fi
 
+tmpdir="$(mktemp -d)"
+cleanup() {
+    rm -rf "$tmpdir"
+}
+trap cleanup EXIT
+
 mapfile -d '' markdown_files < <(git ls-files -z -- '*.md')
 if [[ ${#markdown_files[@]} -gt 0 ]]; then
     echo "Running markdownlint..."
@@ -32,4 +38,12 @@ mapfile -d '' shell_files < <(git ls-files -z -- '*.sh')
 if [[ ${#shell_files[@]} -gt 0 ]]; then
     echo "Running shellcheck..."
     shellcheck "${shell_files[@]}"
+fi
+
+echo "Checking slide generation..."
+python3 ./scripts/build_slides.py --output-dir "$tmpdir/slides-generated"
+
+if [[ ! -f "$tmpdir/slides-generated/index.html" ]]; then
+    echo "Slide generation failed: missing index.html"
+    exit 1
 fi

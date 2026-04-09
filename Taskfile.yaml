@@ -18,3 +18,9 @@ tasks:
     cmds:
       - bash ./internal/lint.sh
       - bash ./scripts/git-worktree-has-changed.sh --touch-stamp lint .
+
+  slides:
+    desc: Generate HTML slides from README.md
+    deps: [_nix-check]
+    cmds:
+      - python3 ./scripts/build_slides.py
