@@ -409,6 +409,32 @@ Works for git tags, too:
 
 `git tag --contains 684d9cc74d2`
 
+## `gitk`
+
+`gitk` is the native GUI for browsing Git history.
+
+I do not use it often, but if you want a quick graphical overview, it is practical and usually good
+enough.
+
+Common usages:
+
+```console
+# Usual default: show all local branches, remote-tracking branches, and tags
+gitk --all
+
+# Focus on a few branches only
+gitk main my-feature-branch
+
+# Inspect the history of one file across all branches
+gitk --all -- path/to/file
+```
+
+I think `--all` makes sense in most repos. Without it, `gitk` only shows the history reachable from
+the current branch, which is often too narrow.
+
+The exception is a huge repo: then `--all` can become noisy or slow, and it is better to limit by
+date, branch, or path.
+
 ## I don't care much for git history
 
 Many developers like to investigate the Git history.
@@ -422,9 +448,6 @@ If you are in a hurry, go slowly.
 
 Avoid long-living branches. Release early, release often. Then the Git history usually does not
 matter much, because each step stays small and easy to understand.
-
-The native GUI `gitk --all` gives you a graphical overview. Don't ask me why the `--all` parameter
-is not the default. Without it, you won't see other branches.
 
 ## rebase vs merge
 
