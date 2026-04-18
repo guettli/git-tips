@@ -5,15 +5,15 @@ set -Eeuo pipefail
 
 usage() {
     cat <<EOF
-Usage: $(basename "$0") [--fetch] [--dry-run]
+Usage: $(basename "$0") [--no-fetch] [--dry-run]
 
 Merge the current PR base branch into the current branch.
 
 If your branch was created from main, your PR base is usualy origin/main
 
 Options:
-  --fetch    Fetch the PR base branch before merging
-  --dry-run  Print the merge command without executing it
+  --no-fetch Skip fetching the PR base branch before merging
+  --dry-run  Print the commands without executing them
   -h, --help Show this help
 
 Requires: gh
@@ -22,12 +22,12 @@ so this script uses GitHub CLI to resolve the base branch first.
 EOF
 }
 
-fetch_first=false
+fetch_first=true
 dry_run=false
 while [[ $# -gt 0 ]]; do
     case "$1" in
-    --fetch)
-        fetch_first=true
+    --no-fetch)
+        fetch_first=false
         shift
         ;;
     --dry-run)
@@ -48,7 +48,7 @@ done
 
 remote=$(git config branch."$(git branch --show-current)".remote)
 if [[ -z "$remote" ]]; then
-    echo "Failed to find remote. (often it is origin)"
+    echo "Failed to find remote. (often it is 'origin')"
     exit 1
 fi
 
