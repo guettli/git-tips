@@ -583,6 +583,18 @@ I use `git mergetool` with `meld`. See the previous section.
 `git mergetool` with `meld`: after reviewing both diffs, I resolve the conflict in the three-way
 merge view and save the middle pane.
 
+---
+
+If you want to test it, use this Git repo (git-tips), then:
+
+```console
+git switch dummy-branch-to-create-conflict
+
+git merge dummy-branch-to-create-conflict
+
+dummy-branch-to-create-conflict
+```
+
 ## Misc: Search with Editor, not with your eyes
 
 Not related to Git, but still helpful: do not search through code with your eyes all day. Use your
