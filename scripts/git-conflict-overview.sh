@@ -8,21 +8,19 @@ set -Eeuo pipefail
 
 function usage() {
     echo "Usage: $0 <file>"
-    echo "This script opens DIFFTOOL three times:"
+    echo "This script opens DIFFTOOL twice:"
     echo "  DIFFTOOL <file>.BASE <file>.REMOTE"
     echo "  DIFFTOOL <file>.BASE <file>.LOCAL"
-    echo "  DIFFTOOL <file>.REMOTE <file>.LOCAL"
+    echo "Then it opens git mergetool for <file>."
     echo "This helps to resolve git merge conflicts."
     echo "If env var DIFFTOOL is not set, it defaults to your git 'diff.tool' setting (or 'code -d')."
     echo ""
-    echo "The three file comparison which get opened by the script can help you to see changes."
+    echo "The two file comparisons opened by the script can help you to see the changes."
     echo "  BASE vs LOCAL: These are the changes of your local branch. It is likely that you are more familiar with these changes."
-    echo "  BASE vs REMOTE: The upstream branch (often 'main') changed. These changes are the reason why are the merge has conflicts."
+    echo "  BASE vs REMOTE: The upstream branch (often 'main') changed. These changes are why the merge has conflicts."
     echo ""
-    echo "For resolving the conflict (by hand), I recommend to configure 'meld' as mergetool."
-    echo "Then open meld for the current conflict: git mergetool"
-    echo "This means you have meld opened for times. But for complex conflicts, this"
-    echo "is really useful."
+    echo "For resolving the conflict, I recommend to configure 'meld' as mergetool."
+    echo "This script opens the two overview diffs first and then launches git mergetool."
     echo ""
     echo "Related: https://github.com/guettli/git-tips/"
     exit 1
@@ -76,6 +74,6 @@ fi
 
 git show :2:"$FILE" >"$FILE".LOCAL
 git show :3:"$FILE" >"$FILE".REMOTE
-$difftool "$FILE".BASE "$FILE".LOCAL &
 $difftool "$FILE".BASE "$FILE".REMOTE &
-$difftool "$FILE".REMOTE "$FILE".LOCAL &
+$difftool "$FILE".BASE "$FILE".LOCAL &
+git mergetool --no-prompt -- "$FILE"

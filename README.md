@@ -555,20 +555,33 @@ Before solving a complex Git merge conflict, it is convenient to have an overvie
 I found no tool which does this, so I use that small Bash script
 [git-conflict-overview.sh](scripts/git-conflict-overview.sh).
 
-The script opens three diffs for one conflicted file:
+The script opens two diffs for one conflicted file:
 
 - `BASE` vs `LOCAL`
 - `BASE` vs `REMOTE`
-- `REMOTE` vs `LOCAL`
 
-That gives me a quick overview of what my branch changed, what the upstream branch changed, and
-where the two sides overlap.
+Then it opens `git mergetool` for that file.
+
+That gives me a quick overview of what my branch changed and what the upstream branch changed
+before I resolve the conflict.
 
 Now I can choose the simpler change first, then apply the more complex change to the file, and
 after that I apply the simpler change by hand.
 
-I use the above tool only to inspect the changes. To resolve the conflict by hand, I use `git
-mergetool` with `meld`. See the previous section.
+I use `git mergetool` with `meld`. See the previous section.
+
+![`BASE` vs `LOCAL`](meld-base-vs-local.png)
+
+`BASE` vs `LOCAL`: this shows what changed on my branch compared to the common ancestor.
+
+![`BASE` vs `REMOTE`](meld-base-vs-remote.png)
+
+`BASE` vs `REMOTE`: this shows what changed on the upstream branch compared to the common ancestor.
+
+![`git mergetool` with `meld`](mergetool-meld.png)
+
+`git mergetool` with `meld`: after reviewing both diffs, I resolve the conflict in the three-way
+merge view and save the middle pane.
 
 ## Misc: Search with Editor, not with your eyes
 
