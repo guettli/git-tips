@@ -7,18 +7,18 @@ usage() {
     cat <<EOF
 Usage: $(basename "$0") [--fetch] [--dry-run]
 
-Merge the current PR base branch into the current branch.
+Merge the current PR base/parent branch into the current branch.
 
 If your branch was created from main, your PR base is usualy origin/main
 
 Options:
-  --fetch    Fetch the PR base branch before merging
+  --fetch    Fetch the PR base/parent branch before merging
   --dry-run  Print the merge command without executing it
   -h, --help Show this help
 
 Requires: gh
-Reason: Git has no concept of pull requests or a PR base branch,
-so this script uses GitHub CLI to resolve the base branch first.
+Reason: Git has no concept of pull requests or a PR base/parent branch,
+so this script uses GitHub CLI to resolve the base/parent branch first.
 EOF
 }
 
