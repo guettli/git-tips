@@ -590,9 +590,9 @@ If you want to test it, use this Git repo (git-tips), then:
 ```console
 git switch dummy-branch-to-create-conflict
 
-git merge dummy-branch-to-create-conflict
+git merge dummy-to-merge-to-get-merge-conflict
 
-dummy-branch-to-create-conflict
+git-conflict-overview.sh scripts/git-merge-pr-base.sh
 ```
 
 ## Misc: Search with Editor, not with your eyes
