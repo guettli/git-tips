@@ -561,9 +561,6 @@ Then it opens `git mergetool` for that file.
 That gives me a quick overview of what my branch changed and what the upstream branch changed
 before I resolve the conflict.
 
-Now I can choose the simpler change first, then apply the more complex change to the file, and
-after that I apply the simpler change by hand.
-
 I use `git mergetool` with `meld`. See the previous section.
 
 ![`BASE` vs `LOCAL`](meld-base-vs-local.png)
