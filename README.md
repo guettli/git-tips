@@ -1062,9 +1062,9 @@ immediately. Then you can modify the result and commit manually.
 git cherry-pick --no-commit <commit-hash>
 ```
 
-## parent branch
+## parent branch / base branch
 
-Unfortunately, it is not possible to find the name of the parent branch.
+Unfortunately, it is not possible to find the name of the parent/base branch.
 
 Git stores commits and pointers, not branch ancestry.
 
@@ -1084,6 +1084,21 @@ CLI tools can help:
 - GitHub: `gh pr view --json baseRefName --jq .baseRefName`
 - GitLab: `glab mr view --output json | jq -r .target_branch`
 - Codeberg/Forgejo/Gitea: ...
+
+## Merge PR base branch into current branch
+
+[`scripts/git-merge-pr-base.sh`](scripts/git-merge-pr-base.sh)
+
+Git itself does not know "this branch was originally created from that branch". But GitHub knows
+the base branch of the current pull request.
+
+This script uses `gh pr view` to resolve that base branch, then merges it into your current branch.
+
+That is useful if you want to refresh your branch with the latest changes from the branch your PR
+targets, without typing `main` or another branch name.
+
+This is especially handy if you work with a chain/train of branches, because the base branch is not
+always `main`.
 
 ## Undelete a branch
 
