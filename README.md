@@ -522,8 +522,6 @@ I use `meld` for solving conflicts.
 Be sure to set this option first:
 
 ```console
-git config --global mergetool.meld.useAutoMerge true
-
 git mergetool --tool=meld
 ```
 
@@ -542,8 +540,6 @@ You can take the left (your side), the right side (theirs), or modify the code m
 
 Finally, go to the middle column and press `Ctrl+S` to save your changes. Then close the UI. The UI
 will reopen if there is a second file with a conflict.
-
-I have tried several other tools, but `meld` (with useAutoMerge) is still my favorite.
 
 ## Solving Conflicts: Overview
 
