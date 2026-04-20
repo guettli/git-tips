@@ -1100,18 +1100,20 @@ If you are not asking Git about branch ancestry, but the hosting platform about 
 CLI tools can help:
 
 - GitHub: `gh pr view --json baseRefName --jq .baseRefName`
-- GitLab: `glab mr view --output json | jq -r .target_branch`
-- Codeberg/Forgejo/Gitea: ...
+- GitLab: `glab mr view --output json | jq -r .target_branch` - Codeberg: `berg --output json
+--non-interactive pull list --state open | jq -r --arg branch "$(git branch --show-current)" '[.[] |
+select(.head.ref == $branch)][0].base.ref'`
 
 ## Merge PR base branch into current branch
 
 [`scripts/git-merge-pr-base.sh`](scripts/git-merge-pr-base.sh)
 
-Git itself does not know "this branch was originally created from that branch". But GitHub knows
-the base branch of the current pull request.
+Git itself does not know "this branch was originally created from that branch". But GitHub,
+GitLab, and Codeberg know the base branch of the current PR/MR.
 
-This script uses `gh pr view` to resolve that base branch, fetches it, then merges it into your
-current branch.
+This script autodetects the hosting provider from the URL of the current branch remote, uses `gh`,
+`glab`, or `berg` to resolve that base branch, fetches it, then merges it into your current
+branch.
 
 That is useful if you want to refresh your branch with the latest changes from the branch your PR
 targets, without typing `main` or another branch name.
