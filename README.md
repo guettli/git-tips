@@ -30,6 +30,13 @@ Different platforms use different names for nearly the same thing:
 
 I use "pull request" as the generic term here, even if a platform uses a different name.
 
+## `checkout` -> `switch` + `restore`
+
+The command `git checkout` is confusing, and no longer needed.
+
+- `git switch` to switch to a different branch
+- `git restore` to restore files
+
 ## One directory per PR
 
 Imagine you work on one Git repo and there are three PRs. These PRs stay open for several days, so
@@ -64,12 +71,22 @@ If you have a train of PRs, I like this mnemonic to remember the order:
 - Second PR: yellow (like "youth")
 - Third PR: purple (like elderly)
 
-## `checkout` -> `switch` + `restore`
+## Creating a PR easily
 
-The command `git checkout` is confusing, and no longer needed.
+```console
+# Go to the base branch of you PR
+git switch main
 
-- `git switch` to switch to a different branch
-- `git restore` to restore files
+# Get the latest changes from origin
+git pull
+
+# Create a new branch. Give it a better name than "my-branch" :-)
+git switch -c my-branch
+
+# Now do you changes
+
+git push
+```
 
 ## `git diff` via Pager, not IDE
 
