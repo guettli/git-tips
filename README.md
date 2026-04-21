@@ -85,7 +85,27 @@ git switch -c my-branch
 
 # Now do you changes
 
+# Commit all changes you did.
+git commit .
+
+# Now your changes are in your **local** git history.
+
+# Push your changes to the central git repo (origin by default)
+# This command will fail:
+# fatal: The current branch my-branc has no upstream branch.
 git push
+
+# Copy and past the command which you see in the error message.
+# No need to remember the argument :-)
+git push --set-upstream origin fooo
+
+# The push should be successfull, and it is likely that your
+# Git hosting provider shows you a message to easily create a PR:
+# remote: Create a pull request for 'my-branch' on GitHub by visiting:
+# remote:      https://github.com/example/some-repo/pull/new/my-branch
+
+# Open the URL, create the PR via web UI.
+# done
 ```
 
 ## `git diff` via Pager, not IDE
