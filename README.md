@@ -74,7 +74,7 @@ If you have a train of PRs, I like this mnemonic to remember the order:
 ## Creating a PR easily
 
 ```console
-# Go to the base branch of you PR
+# Go to the base branch of your PR
 git switch main
 
 # Get the latest changes from origin
@@ -83,29 +83,23 @@ git pull
 # Create a new branch. Give it a better name than "my-branch" :-)
 git switch -c my-branch
 
-# Now do you changes
+# Now make your changes
 
-# Commit all changes you did.
+# See what changed
+git status
+
+# Commit your work to the **local** Git history.
 git commit .
 
-# Now your changes are in your **local** git history.
-
-# Push your changes to the central git repo (origin by default)
+# Push your changes to the central Git repo (origin by default)
 # This command will fail:
-# fatal: The current branch my-branc has no upstream branch.
+# fatal: The current branch my-branch has no upstream branch.
 git push
 
-# Copy and past the command which you see in the error message.
-# No need to remember the argument :-)
-git push --set-upstream origin fooo
-
-# The push should be successfull, and it is likely that your
-# Git hosting provider shows you a message to easily create a PR:
+# The push should be successful, and your Git hosting provider
+# will likely show you a message with a URL to create a PR:
 # remote: Create a pull request for 'my-branch' on GitHub by visiting:
 # remote:      https://github.com/example/some-repo/pull/new/my-branch
-
-# Open the URL, create the PR via web UI.
-# done
 ```
 
 ## `git diff` via Pager, not IDE
@@ -1252,6 +1246,14 @@ You can use `git check-ignore -v`:
 ```console
 ❯ git check-ignore -v foo/bar.baz
 .gitignore:23:foo/*.baz foo/bar.baz
+```
+
+## TODO
+
+Add this?
+
+```console
+git config --global pull.ff only
 ```
 
 ## More
