@@ -550,7 +550,7 @@ CONFLICT (content): Merge conflict in internal/foo/api/v1beta1/mycrd_types.go
 
 I use `meld` for solving conflicts.
 
-Be sure to set this option first:
+If you want to launch plain `meld` for one merge, use:
 
 ```console
 git mergetool --tool=meld
@@ -582,17 +582,42 @@ Before solving a complex Git merge conflict, it is convenient to have an overvie
 I found no tool which does this, so I use that small Bash script
 [git-conflict-overview.sh](scripts/git-conflict-overview.sh).
 
+The script can be used in two ways:
+
+- standalone: `git-conflict-overview.sh path/to/conflicted-file`
+- as Git mergetool: `git mergetool --tool=conflict-overview`
+
+To use it as mergetool, register it once in Git:
+
+```console
+git config --global merge.tool conflict-overview
+git config --global mergetool.conflict-overview.cmd \
+  'git-conflict-overview.sh "$BASE" "$LOCAL" "$REMOTE" "$MERGED"'
+git config --global mergetool.conflict-overview.trustExitCode true
+```
+
+If you want the two overview diffs to open in `meld`, configure your Git difftool like this:
+
+```console
+git config --global diff.tool meld
+git config --global difftool.prompt false
+```
+
 The script opens two diffs for one conflicted file:
 
 - `BASE` vs `LOCAL`
 - `BASE` vs `REMOTE`
 
-Then it opens `git mergetool` for that file.
+At the same time, it opens `meld` for the three-way merge and writes the result to `MERGED`.
 
 That gives me a quick overview of what my branch changed and what the upstream branch changed
 before I resolve the conflict.
 
-I use `git mergetool` with `meld`. See the previous section.
+If the overview diffs are opened with `meld` and `wmctrl` plus `xdotool` are available, then the
+script places `BASE` vs `REMOTE` on the left half of the screen and `BASE` vs `LOCAL` on the right
+half, so both overview windows together use the full screen.
+
+I use the actual merge UI with `meld`. See the previous section.
 
 ![`BASE` vs `LOCAL`](meld-base-vs-local.png)
 
@@ -616,7 +641,7 @@ git switch dummy-branch-to-create-conflict
 
 git merge dummy-to-merge-to-get-merge-conflict
 
-git-conflict-overview.sh scripts/git-merge-pr-base.sh
+git mergetool --tool=conflict-overview --no-prompt -- scripts/git-merge-pr-base.sh
 ```
 
 ## Misc: Search with Editor, not with your eyes
@@ -1143,8 +1168,7 @@ Git itself does not know "this branch was originally created from that branch". 
 GitLab, and Codeberg know the base branch of the current PR/MR.
 
 This script autodetects the hosting provider from the URL of the current branch remote, uses `gh`,
-`glab`, or `berg` to resolve that base branch, fetches it, then merges it into your current
-branch.
+`glab`, or `berg` to resolve that base branch, then pulls it into your current branch.
 
 That is useful if you want to refresh your branch with the latest changes from the branch your PR
 targets, without typing `main` or another branch name.
@@ -1152,8 +1176,8 @@ targets, without typing `main` or another branch name.
 This is especially handy if you work with a chain/train of branches, because the base branch is not
 always `main`.
 
-By default it fetches the PR base branch first, so the merge uses a fresh remote-tracking ref. Use
-`--no-fetch` if you want to skip that step.
+By default it pulls the PR base branch into your current branch. Use `--no-pull` if you want to
+skip that step and merge the existing remote-tracking ref instead.
 
 ## Undelete a branch
 

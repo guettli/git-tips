@@ -5,14 +5,14 @@ set -Eeuo pipefail
 
 usage() {
     cat <<EOF
-Usage: $(basename "$0") [--no-fetch] [--dry-run]
+Usage: $(basename "$0") [--no-pull] [--dry-run]
 
 Merge the current PR/MR base branch into the current branch.
 
 The hosting provider is autodetected from the URL of the current branch remote.
 
 Options:
-  --no-fetch Skip fetching the PR base branch before merging
+  --no-pull  Skip pulling the PR base branch before merging
   --dry-run  Print the commands without executing them
   -h, --help Show this help
 
@@ -116,12 +116,12 @@ resolve_base_ref_name() {
     esac
 }
 
-fetch_first=true
+pull_first=true
 dry_run=false
 while [[ $# -gt 0 ]]; do
     case "$1" in
-    --no-fetch)
-        fetch_first=false
+    --no-pull | --no-fetch)
+        pull_first=false
         shift
         ;;
     --dry-run)
@@ -179,22 +179,23 @@ fi
 pr_base="$remote/$base_ref_name"
 echo "PR base: $pr_base ($provider)"
 
-fetch_command=(git fetch "$remote" "$base_ref_name")
+pull_command=(git pull --ff --no-rebase "$remote" "$base_ref_name")
 merge_command=(git merge "$pr_base")
 if [[ "$dry_run" == true ]]; then
-    if [[ "$fetch_first" == true ]]; then
+    if [[ "$pull_first" == true ]]; then
         printf 'Dry run:'
-        printf ' %q' "${fetch_command[@]}"
+        printf ' %q' "${pull_command[@]}"
+        printf '\n'
+    else
+        printf 'Dry run:'
+        printf ' %q' "${merge_command[@]}"
         printf '\n'
     fi
-    printf 'Dry run:'
-    printf ' %q' "${merge_command[@]}"
-    printf '\n'
     exit 0
 fi
 
-if [[ "$fetch_first" == true ]]; then
-    "${fetch_command[@]}"
+if [[ "$pull_first" == true ]]; then
+    exec "${pull_command[@]}"
 fi
 
-"${merge_command[@]}"
+exec "${merge_command[@]}"
