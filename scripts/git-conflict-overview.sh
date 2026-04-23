@@ -7,6 +7,7 @@ trap 'echo -e "\n🤷 🚨 🔥 Warning: A command has failed. Exiting the scrip
 set -Eeuo pipefail
 
 POSITIONER_PIDS=()
+OVERVIEW_WINDOWS_FILE=""
 LAST_BG_PID=""
 
 function usage() {
@@ -45,6 +46,45 @@ function usage() {
 
 function command_exists() {
     command -v "$1" >/dev/null 2>&1
+}
+
+function init_runtime_state() {
+    OVERVIEW_WINDOWS_FILE="$(mktemp)"
+}
+
+function remember_overview_window_id() {
+    local window_id="$1"
+
+    [[ -n "${OVERVIEW_WINDOWS_FILE:-}" ]] || return 0
+    [[ -n "$window_id" ]] || return 0
+
+    printf '%s\n' "$window_id" >>"$OVERVIEW_WINDOWS_FILE"
+}
+
+function cleanup() {
+    local windows_file="${OVERVIEW_WINDOWS_FILE:-}"
+
+    [[ -n "$windows_file" ]] || return 0
+    [[ -f "$windows_file" ]] || return 0
+
+    if [[ ! -s "$windows_file" ]]; then
+        rm -f "$windows_file"
+        return 0
+    fi
+
+    # shellcheck disable=SC2016
+    nohup bash -lc '
+        sleep 0.5
+        while IFS= read -r window_id; do
+            [[ -n "$window_id" ]] || continue
+            if command -v wmctrl >/dev/null 2>&1; then
+                wmctrl -i -c "$window_id" >/dev/null 2>&1 || true
+            elif command -v xdotool >/dev/null 2>&1; then
+                xdotool windowclose "$window_id" >/dev/null 2>&1 || true
+            fi
+        done < <(sort -u "$1")
+        rm -f "$1"
+    ' _ "$windows_file" >/dev/null 2>&1 &
 }
 
 function resolve_difftool_cmd() {
@@ -169,6 +209,7 @@ function position_window_for_pid() {
     command_exists xdotool || return 0
 
     window_id="$(wait_for_window_id "$pid")" || return 0
+    remember_overview_window_id "$window_id"
     position_window_id "$window_id" "$side"
 }
 
@@ -182,6 +223,7 @@ function position_window_for_pattern() {
     command_exists xdotool || return 0
 
     window_id="$(wait_for_new_window_id_by_pattern "$pattern" "$known_ids")" || return 0
+    remember_overview_window_id "$window_id"
     position_window_id "$window_id" "$side"
 }
 
@@ -229,7 +271,9 @@ function run_overview_diffs() {
         local_known_ids="$(capture_window_ids_by_pattern 'BASE.*LOCAL')"
 
         launch_meld_diff_in_background "$meld_bin" "BASE" "REMOTE" "$base_file" "$remote_file"
+        remote_pid="$LAST_BG_PID"
         launch_meld_diff_in_background "$meld_bin" "BASE" "LOCAL" "$base_file" "$local_file"
+        local_pid="$LAST_BG_PID"
     else
         run_shell_difftool_in_background "$diff_cmd" "$base_file" "$remote_file"
         remote_pid="$LAST_BG_PID"
@@ -336,6 +380,9 @@ function main() {
     local diff_cmd base_file local_file remote_file merged_file overview_base_file
     local -a inputs
 
+    init_runtime_state
+    trap cleanup EXIT
+
     if [[ "${1:-}" == "--help" ]] || [[ "${1:-}" == "-h" ]]; then
         usage
     fi
@@ -366,8 +413,8 @@ function main() {
     fi
 
     run_overview_diffs "$diff_cmd" "$overview_base_file" "$local_file" "$remote_file"
-    run_meld_merge "$base_file" "$local_file" "$remote_file" "$merged_file"
     wait_for_positioners
+    run_meld_merge "$base_file" "$local_file" "$remote_file" "$merged_file"
 
     if [[ $# -eq 1 ]] && git ls-files -u -- "$merged_file" | grep -q .; then
         git add -- "$merged_file"

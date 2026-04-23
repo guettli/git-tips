@@ -177,4 +177,4 @@ if [[ "$pull_first" == true ]]; then
     git pull
 fi
 
-git pull --ff --no-rebase "$remote" "$base_ref_name"
+exec git pull --ff --no-rebase "$remote" "$base_ref_name"
