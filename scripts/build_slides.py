@@ -139,12 +139,12 @@ class LinkRewriter(Treeprocessor):
                 target = element.get(attribute)
                 if not target:
                     continue
-                rewritten = self.rewrite_target(target)
+                rewritten = self.rewrite_target(target, attribute)
                 if rewritten != target:
                     element.set(attribute, rewritten)
         return root
 
-    def rewrite_target(self, target: str) -> str:
+    def rewrite_target(self, target: str, attribute: str) -> str:
         if target.startswith(("http://", "https://", "mailto:", "data:", "javascript:", "//")):
             return target
 
@@ -166,12 +166,15 @@ class LinkRewriter(Treeprocessor):
                 relative_target = None
 
             if relative_target is not None and source_target.is_file():
-                output_relpath = build_file_page_relpath(self.source_dir, source_target)
-                self.file_pages[source_target] = FilePage(
-                    source_path=source_target,
-                    output_relpath=output_relpath,
-                )
-                rewritten_path = output_relpath
+                if attribute == "src":
+                    rewritten_path = os.path.relpath(source_target, self.output_dir)
+                else:
+                    output_relpath = build_file_page_relpath(self.source_dir, source_target)
+                    self.file_pages[source_target] = FilePage(
+                        source_path=source_target,
+                        output_relpath=output_relpath,
+                    )
+                    rewritten_path = output_relpath
             else:
                 rewritten_path = os.path.relpath(source_target, self.output_dir)
 
@@ -442,6 +445,62 @@ def page_script(prev_href: str | None, next_href: str | None, home_href: str = "
 """.strip()
 
 
+def generated_warning_css(bg: str, ink: str, border: str) -> str:
+    return f"""
+    .generated-warning {{
+      margin: 1rem 0;
+      padding: 1rem 1.25rem;
+      border: 3px solid {border};
+      border-radius: 1rem;
+      background: {bg};
+      color: {ink};
+      font-family: "Avenir Next", "Segoe UI", sans-serif;
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      text-align: center;
+    }}
+
+    .generated-warning strong {{
+      display: block;
+      margin-bottom: 0.2rem;
+      font-size: 1.05rem;
+    }}
+
+    .generated-warning span {{
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-transform: none;
+    }}
+    """.strip()
+
+
+def render_generated_warning() -> str:
+    return """
+    <div class="generated-warning" role="note" aria-label="Generated file warning">
+      <strong>Generated File: Do Not Edit Directly</strong>
+      <span>Edit the source files and rerun the generator.</span>
+    </div>
+    """.strip()
+
+
+def generated_file_comment() -> str:
+    return """<!--
+###############################################################################
+# GENERATED FILE - DO NOT EDIT DIRECTLY
+# Edit the source files and rerun the generator instead.
+###############################################################################
+-->"""
+
+
+def wrap_generated_html(document: str) -> str:
+    warning = generated_file_comment()
+    return f"{warning}\n{document}\n{warning}\n"
+
+
 def render_page(
     section: Section,
     article_html: str,
@@ -460,7 +519,7 @@ def render_page(
         else '<span class="nav-link disabled">Next</span>'
     )
 
-    return f"""<!DOCTYPE html>
+    return wrap_generated_html(f"""<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -659,6 +718,8 @@ def render_page(
       font-size: 0.94rem;
     }}
 
+    {generated_warning_css(bg="#ffe8a3", ink="#442c00", border="#b7791f")}
+
     .mermaid {{
       margin: 1.5rem 0;
       padding: 1rem;
@@ -701,8 +762,9 @@ def render_page(
     }}
   </style>
 </head>
-<body>
+  <body>
   <div class="shell">
+    {render_generated_warning()}
     <div class="topbar">
       <div>Git Tips Slides</div>
       <div class="hint">PageUp x2: previous · PageDown x2: next · Home: index</div>
@@ -720,12 +782,13 @@ def render_page(
         {article_html}
       </article>
     </div>
+    {render_generated_warning()}
   </div>
   {page_script(prev_href=prev_href, next_href=next_href)}
   {mermaid_bootstrap_script(has_mermaid)}
 </body>
 </html>
-"""
+""")
 
 
 def render_index(sections: list[Section]) -> str:
@@ -739,7 +802,7 @@ def render_index(sections: list[Section]) -> str:
             f"</li>"
         )
 
-    return f"""<!DOCTYPE html>
+    return wrap_generated_html(f"""<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -861,6 +924,8 @@ def render_index(sections: list[Section]) -> str:
       font-size: 0.95rem;
     }}
 
+    {generated_warning_css(bg="#ffe8a3", ink="#442c00", border="#b7791f")}
+
     @media (max-width: 700px) {{
       main {{
         width: min(100vw - 1rem, 78rem);
@@ -875,6 +940,7 @@ def render_index(sections: list[Section]) -> str:
 </head>
 <body>
   <main>
+    {render_generated_warning()}
     <section class="hero">
       <div class="hero-head">
         <h1>Git Tips</h1>
@@ -886,11 +952,12 @@ def render_index(sections: list[Section]) -> str:
         {''.join(items)}
       </ol>
     </section>
+    {render_generated_warning()}
   </main>
   {page_script(prev_href=None, next_href=sections[0].filename)}
 </body>
 </html>
-"""
+""")
 
 
 def render_file_page(file_page: FilePage, output_dir: Path, source_dir: Path) -> str:
@@ -898,7 +965,7 @@ def render_file_page(file_page: FilePage, output_dir: Path, source_dir: Path) ->
     raw_href = os.path.relpath(file_page.source_path, output_dir / Path(file_page.output_relpath).parent)
     file_content = file_page.source_path.read_text(encoding="utf-8", errors="replace")
 
-    return f"""<!DOCTYPE html>
+    return wrap_generated_html(f"""<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -975,10 +1042,13 @@ def render_file_page(file_page: FilePage, output_dir: Path, source_dir: Path) ->
       font-size: 0.95rem;
       line-height: 1.5;
     }}
+
+    {generated_warning_css(bg="#facc15", ink="#1f2937", border="#f59e0b")}
   </style>
 </head>
 <body>
   <main>
+    {render_generated_warning()}
     <section class="panel">
       <div class="topbar">
         <div>
@@ -989,10 +1059,11 @@ def render_file_page(file_page: FilePage, output_dir: Path, source_dir: Path) ->
       </div>
       <pre><code>{html.escape(file_content)}</code></pre>
     </section>
+    {render_generated_warning()}
   </main>
 </body>
 </html>
-"""
+""")
 
 
 def build_markdown_source(section: Section) -> str:
