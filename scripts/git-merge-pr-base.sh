@@ -5,7 +5,7 @@ set -Eeuo pipefail
 
 usage() {
     cat <<EOF
-Usage: $(basename "$0") [--no-pull] [--dry-run]
+Usage: $(basename "$0") [--no-pull]
 
 Merge the current PR/MR base branch into the current branch.
 
@@ -13,7 +13,6 @@ The hosting provider is autodetected from the URL of the current branch remote.
 
 Options:
   --no-pull  Skip pulling the PR base branch before merging
-  --dry-run  Print the commands without executing them
   -h, --help Show this help
 
 Requires:
@@ -117,15 +116,10 @@ resolve_base_ref_name() {
 }
 
 pull_first=true
-dry_run=false
 while [[ $# -gt 0 ]]; do
     case "$1" in
     --no-pull | --no-fetch)
         pull_first=false
-        shift
-        ;;
-    --dry-run)
-        dry_run=true
         shift
         ;;
     -h | --help)
@@ -179,23 +173,8 @@ fi
 pr_base="$remote/$base_ref_name"
 echo "PR base: $pr_base ($provider)"
 
-pull_command=(git pull --ff --no-rebase "$remote" "$base_ref_name")
-merge_command=(git merge "$pr_base")
-if [[ "$dry_run" == true ]]; then
-    if [[ "$pull_first" == true ]]; then
-        printf 'Dry run:'
-        printf ' %q' "${pull_command[@]}"
-        printf '\n'
-    else
-        printf 'Dry run:'
-        printf ' %q' "${merge_command[@]}"
-        printf '\n'
-    fi
-    exit 0
-fi
-
 if [[ "$pull_first" == true ]]; then
-    exec "${pull_command[@]}"
+    git pull
 fi
 
-exec "${merge_command[@]}"
+git pull --ff --no-rebase "$remote" "$base_ref_name"
