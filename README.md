@@ -92,9 +92,14 @@ git status
 git commit .
 
 # Push your changes to the central Git repo (origin by default)
-# This command will fail:
-# fatal: The current branch my-branch has no upstream branch.
+# The `git push` command will fail:
+#  fatal: The current branch my-branch has no upstream branch.
+#  To push the current branch and set the remote as upstream, use
+#    git push --set-upstream origin my-branch
 git push
+
+# I copy+paste the above command, and then execute it.
+git push --set-upstream origin my-branch
 
 # The push should be successful, and your Git hosting provider
 # will likely show you a message with a URL to create a PR:
