@@ -517,6 +517,18 @@ In detail:
 You can give `ls-files` a glob expression. This matches the whole filename (including the parent
 directories).
 
+## List all files in sibling repos
+
+If you want to do the same across all sibling git repositories, use
+[`scripts/git-ls-files-all.sh`](scripts/git-ls-files-all.sh):
+
+```console
+./scripts/git-ls-files-all.sh '*.py' | xargs -r -d'\n' grep -n 'TODO'
+```
+
+This prints file names like `../some-repo/path/to/file.py`, one per line, so `xargs -d'\n'` splits
+on newline only and does not break on spaces in file names.
+
 ## Autocompletion
 
 If you configured auto-completion, you can easily get a list of branches if you know the first
