@@ -165,7 +165,7 @@ provider=$(detect_provider "$remote_host") || {
     exit 1
 }
 
-base_ref_name=$(resolve_base_ref_name "$provider" "$current_branch")
+base_ref_name=$(resolve_base_ref_name "$provider" "$current_branch" || true)
 if [[ -z "$base_ref_name" ]]; then
     echo "Failed to find PR/MR base for provider '$provider' and branch '$current_branch'."
     exit 1
