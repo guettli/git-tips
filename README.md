@@ -1289,6 +1289,14 @@ You can use `git check-ignore -v`:
 .gitignore:23:foo/*.baz foo/bar.baz
 ```
 
+## cli tool `forge`
+
+If you switch between Github/GitLab/Forgejo you might want to use a cli which works for all of them.
+
+Try [git-pkgs/forge](https://github.com/git-pkgs/forge).
+
+Especially handy, when you want to develop an application which can work with several git hosting platforms.
+
 ## TODO
 
 Add this?
