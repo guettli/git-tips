@@ -820,12 +820,11 @@ other things while waiting.
 When the job is done, I want to get notified. This can be done like this:
 
 ```console
-gh run watch; music
+gh pr checks --watch ; music
 ```
 
-`gh run watch` gives you a list of jobs, and you can select one. When it is finished, the next
-command runs. Use whatever command you want for that. For me, `music` is a small script that plays a
-song I like.
+For me, `music` is a small script that plays a song I like, so I get a notification when Checks are
+finished.
 
 ## GitHub: Keep Actions/Workflows simple
 
