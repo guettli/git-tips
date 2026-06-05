@@ -1186,17 +1186,12 @@ too. You find `vscode-merge-base` in `.git/config`.
 Git itself does not know "this branch was originally created from that branch". But GitHub,
 GitLab, and Codeberg know the base branch of the current PR/MR.
 
-This script autodetects the hosting provider from the URL of the current branch remote, uses `gh`,
-`glab`, or `berg` to resolve that base branch, then pulls it into your current branch.
-
-That is useful if you want to refresh your branch with the latest changes from the branch your PR
-targets, without typing `main` or another branch name.
-
-This is especially handy if you work with a chain/train of branches, because the base branch is not
-always `main`.
-
-By default it pulls the PR base branch into your current branch. Use `--no-pull` if you want to
-skip that step and merge the existing remote-tracking ref instead.
+Instead of querying external APIs, the current tool I use is
+[sync-branch](https://github.com/guettli/sync-branch). If you use VS Code, it automatically stores
+the base branch in your `.git/config` under `branch.<name>.vscode-merge-base`. The `sync-branch`
+tool reads this local configuration to reliably determine your parent branch and merge its latest
+changes. This is especially handy when working with a chain or train of branches, as it synchronizes
+your branch offline without having to explicitly type the base branch name.
 
 ## Undelete a branch
 
