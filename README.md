@@ -1172,9 +1172,12 @@ If you are not asking Git about branch ancestry, but the hosting platform about 
 CLI tools can help:
 
 - GitHub: `gh pr view --json baseRefName --jq .baseRefName`
-- GitLab: `glab mr view --output json | jq -r .target_branch` - Codeberg: `berg --output json
---non-interactive pull list --state open | jq -r --arg branch "$(git branch --show-current)" '[.[] |
-select(.head.ref == $branch)][0].base.ref'`
+- GitLab: `glab mr view --output json | jq -r .target_branch`
+
+If you use VS Code, it stores the per-branch base automatically in
+`branch.<name>.vscode-merge-base`. Other tools (like my
+[pre-commit-sync-branch](https://github.com/guettli/pre-commit-sync-branch) tool) use that value,
+too. You find `vscode-merge-base` in `.git/config`.
 
 ## Merge PR base branch into current branch
 
