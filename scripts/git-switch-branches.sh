@@ -80,3 +80,4 @@ if [[ "$branch_kind" == "remote" ]]; then
 fi
 
 git switch "$branch_ref"
+git-merge-pr-base.sh
