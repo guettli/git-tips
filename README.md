@@ -740,11 +740,12 @@ That means:
 - trivial issues get caught before CI
 - the local workflow gets closer to the CI workflow
 
-Example from this repo: [.pre-commit-config.yaml](.pre-commit-config.yaml)
+Example from this repo: [prek.toml](prek.toml)
 
-## gitleaks via pre-commit
+## betterleaks via pre-commit
 
-This repo uses `gitleaks` in `.pre-commit-config.yaml`.
+This repo uses [betterleaks](https://github.com/betterleaks/betterleaks) in `prek.toml`. The binary is
+pinned in `mise.toml`.
 
 It is a big risk that credentials get accidentally added to Git and then get pushed. Especially in
 open source projects.
@@ -755,8 +756,8 @@ Why in `pre-commit` and not only in CI?
 - It is cheaper to fix. Amending a local commit is easier than cleaning up after a pushed secret.
 - It protects all commits, not only the branch which later gets CI.
 
-I use `gitleaks` here because it is a maintained general-purpose secret scanner and its license is
-MIT.
+I use `betterleaks` here. It is the successor of `gitleaks`, written by the original author of
+`gitleaks`. It is a maintained general-purpose secret scanner and its license is MIT.
 
 ## Public `.envrc` file, private `.env` file
 

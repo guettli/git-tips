@@ -18,16 +18,16 @@
         devShells.default = pkgs.mkShell {
           packages = with pkgs; [
             go-task
-            gitleaks
+            mise
             markdownlint-cli
-            pre-commit
+            prek
             pythonEnv
             shellcheck
             yamllint
           ];
 
           shellHook = ''
-            pre-commit install --install-hooks >/dev/null
+            prek install --prepare-hooks >/dev/null
           '';
         };
       });
