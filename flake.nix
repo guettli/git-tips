@@ -18,7 +18,7 @@
         devShells.default = pkgs.mkShell {
           packages = with pkgs; [
             go-task
-            gitleaks
+            betterleaks
             markdownlint-cli
             pre-commit
             pythonEnv

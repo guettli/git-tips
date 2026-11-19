@@ -742,9 +742,9 @@ That means:
 
 Example from this repo: [.pre-commit-config.yaml](.pre-commit-config.yaml)
 
-## gitleaks via pre-commit
+## betterleaks via pre-commit
 
-This repo uses `gitleaks` in `.pre-commit-config.yaml`.
+This repo uses [betterleaks](https://github.com/betterleaks/betterleaks) in `.pre-commit-config.yaml`.
 
 It is a big risk that credentials get accidentally added to Git and then get pushed. Especially in
 open source projects.
@@ -755,8 +755,8 @@ Why in `pre-commit` and not only in CI?
 - It is cheaper to fix. Amending a local commit is easier than cleaning up after a pushed secret.
 - It protects all commits, not only the branch which later gets CI.
 
-I use `gitleaks` here because it is a maintained general-purpose secret scanner and its license is
-MIT.
+I use `betterleaks` here. It is the successor of `gitleaks`, written by the original author of
+`gitleaks`. It is a maintained general-purpose secret scanner and its license is MIT.
 
 ## Public `.envrc` file, private `.env` file
 
