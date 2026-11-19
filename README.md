@@ -740,11 +740,12 @@ That means:
 - trivial issues get caught before CI
 - the local workflow gets closer to the CI workflow
 
-Example from this repo: [.pre-commit-config.yaml](.pre-commit-config.yaml)
+Example from this repo: [prek.toml](prek.toml)
 
 ## betterleaks via pre-commit
 
-This repo uses [betterleaks](https://github.com/betterleaks/betterleaks) in `.pre-commit-config.yaml`.
+This repo uses [betterleaks](https://github.com/betterleaks/betterleaks) in `prek.toml`. The binary is
+pinned in `mise.toml`.
 
 It is a big risk that credentials get accidentally added to Git and then get pushed. Especially in
 open source projects.
